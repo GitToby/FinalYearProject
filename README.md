@@ -1,4 +1,4 @@
-#FinalYearProject
+# FinalYearProject
 
 ~~This is the edit for github to make Vince happy.~~ <br>
 This is the edit for github to make Toby happy in the future.
@@ -13,7 +13,7 @@ Things ive read so far:
 - looked into the Dojo and pulled it down as a dev package
 
 
-##These are the articles I will be summarising for meeting 3 (17/10)
+## These are the articles I will be summarising for meeting 3 (17/10)
 * [This one](http://mojones.net/evolving-strategies-for-an-iterated-prisoners-dilemma-tournament.html)
     > TBD
 
@@ -24,22 +24,17 @@ Things ive read so far:
     > this is just a gif of a puppy :point_up:
 
 
-##Main problem
+## Main problem
 Here I will look into the problem that I have been asked to solve.
-####Problem:
+#### Problem:
 *Given a certain opponent, O, (with a provided strategy, S) what is the best possible sequence of moves, in a game of n 
 turns, made by my strategy to maximise my players score?*
 
 Examples of solutions include:
-<details>
-    <summary>Table</summary>
-    <p>
-        Opponent  | Sequence
-        ----------|---------
-        Cooperator| D,D,D,D,D,D,...
-        Defector  | D,D,D,D,D,D,...
-        TitForTat | C,C,C,C,C,C,...
-    </p>
-</details>
+Opponent  | Sequence
+----------|---------
+Cooperator| D,D,D,D,D,D,...
+Defector  | D,D,D,D,D,D,...
+TitForTat | C,C,C,C,C,C,...
 
 How do we generate this sequence for each opponent? idk yet, but I'll let you know
