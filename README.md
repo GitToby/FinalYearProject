@@ -18,7 +18,7 @@ Things ive read so far:
     > TBD
 
 * [Yet to be decided on](https://support.google.com/webmasters/answer/93641?hl=en)
-    > surprisingly, lacking details
+    > Lazyest 404 I've ever made
 
 * [Final totally legit academic article source](https://i.imgur.com/AXcyili.gifv)
     > this is just a gif of a puppy :point_up:
@@ -31,10 +31,12 @@ Here I will look into the problem that I have been asked to solve.
 turns, made by my strategy to maximise my players score?*
 
 Examples of solutions include:
+
 Opponent  | Sequence
 ----------|---------
 Cooperator| D,D,D,D,D,D,...
 Defector  | D,D,D,D,D,D,...
 TitForTat | C,C,C,C,C,C,...
+
 
 How do we generate this sequence for each opponent? idk yet, but I'll let you know
