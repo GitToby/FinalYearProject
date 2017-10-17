@@ -40,7 +40,7 @@ TitForTat | [CCCCCCCC...]
 
 How do we generate this sequence for each opponent?  we will use a sequence Archetype:
 
->The sequence archetype will use the |X Something X| player for our strategy each time, only editing the 
+>The sequence archetype will use the Cycler() player for our strategy each time, only editing the 
  input to improve our score. To this model we can apply an optimised input of length n (tbd) to the player, this 
  sequence, as per the design of the strategy will then be repeated until the games end(if n = len(game) then we are
  just calculating the sequence for the whole game). 
