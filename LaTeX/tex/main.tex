@@ -1,9 +1,39 @@
 
-\documentclass{article}
+\documentclass{report}
 \begin{document}
 
-Hello universe! This is the bedsst!!
+    \include{frontcover}
+    \include{acknowledgments}
+
+    \tableofcontents
+    \listoffigures
+	
+	\newpage
+
+Hello universe! 
 $2^2 = \sqrt{16}$
 
-\footnote{somthing}
+\section{Intro}
+
+What is the IPD? 
+
+Why study it?
+
+What am i studying?
+
+\section{background}
+Here I will look into the problem that I have been asked to solve.
+
+\begin{quotation}
+    Problem:\\
+    Given a certain opponent, O, (with a provided strategy, S) what is the best possible sequence of moves, in a game of n turns, made by my strategy to maximise my players score?
+\end{quotation}
+
+\section{The Cycler Archetype}
+
+The sequence archetype will use the Cycler() player for our strategy each time, only editing the input to improve our score. To this model we can apply an optimised input of length n (tbd) to the player, this sequence, as per the design of the strategy will then be repeated until the games end(if n = len(game) then we are just calculating the sequence for the whole game).\\
+
+The input sequence itself will be created using a genetic optimisation. Starting with a set of randomly generated sequences, we will have each one play the opponent and return with a score. These sequences will be ranked and the lowest x\% will be discarded, resulting in a fitter, but smaller, population than before. This smaller population will then create offspring using a |X TBD method X| pairing algorithm before mutating with |X TBD method X|. This new set of offspring will be included in the next scoring round and the process repeats for k number of rounds\\
+
+This sequence of Play-Rank-Create-LOOP will be the basis of creating the optimal strategy for each other opponent.
 \end{document}
