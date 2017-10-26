@@ -12,7 +12,7 @@ cycler = axl_dojo.CyclerParams
 
 # params to pass through
 cycler_kwargs = {
-    "sequence_length": 50
+    "sequence_length": 10
 }
 
 population = axl_dojo.Population(params_class=cycler,
@@ -22,8 +22,7 @@ population = axl_dojo.Population(params_class=cycler,
                                  output_filename="cyclerOutput.csv",
                                  opponents=opponent_list)
 
-axl.seed(0)
-cycler_generations = 4
+cycler_generations = 300
 population.run(cycler_generations)
 
 
