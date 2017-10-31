@@ -9,4 +9,4 @@ install:
 
 #find and run unit tests
 script:
- - python Tests.py
+ - python code/Tests.py

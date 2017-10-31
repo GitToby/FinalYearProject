@@ -1,0 +1,40 @@
+\documentclass{report}
+
+% settings (todo: extract to settings file)
+\setlength{\parindent}{0cm}
+
+
+
+% preamble stuff
+\title{Final Year Project}
+\author{Toby Devlin}
+\date{\today}
+
+\includeonly{
+    tex/chapters/01/introduction,
+    tex/chapters/02/literature,
+    tex/chapters/03/approach,
+    tex/chapters/04/implementation,
+    tex/chapters/05/results,
+    tex/chapters/06/applications,
+    tex/chapters/07/summary
+}
+
+\begin{document}
+
+    \maketitle
+
+    \tableofcontents
+
+    \include{tex/chapters/01/introduction}
+    \include{tex/chapters/02/literature}
+    \include{tex/chapters/03/approach}
+    \include{tex/chapters/04/implementation}
+    \include{tex/chapters/05/results}
+    \include{tex/chapters/06/applications}
+    \include{tex/chapters/07/summary}
+
+    \bibliography{tex/bibliography}
+    \bibliographystyle{alpha}
+    
+\end{document}
