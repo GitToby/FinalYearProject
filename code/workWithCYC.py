@@ -4,7 +4,7 @@ import axelrod_dojo as axl_dojo
 C, D = axl.Action
 
 # Cycler ##############################
-cycler_objective = axl_dojo.prepare_objective(name="score", turns=10, repetitions=1)
+cycler_objective = axl_dojo.prepare_objective(name="score", turns=20, repetitions=1)
 
 # Lets use an opponent_list of just one:
 opponent_list = [axl.TitForTat()]
@@ -19,7 +19,7 @@ population = axl_dojo.Population(params_class=cycler,
                                  params_kwargs=cycler_kwargs,
                                  size=20,
                                  objective=cycler_objective,
-                                 output_filename="cyclerOutput.csv",
+                                 output_filename="output/cyclerOutput.csv",
                                  opponents=opponent_list)
 
 cycler_generations = 300
