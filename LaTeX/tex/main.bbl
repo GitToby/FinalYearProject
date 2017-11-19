@@ -1,0 +1,9 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{A{\etalchar{+}}87}
+
+\bibitem[A{\etalchar{+}}87]{axelrod1987evolution}
+Robert Axelrod et~al.
+\newblock The evolution of strategies in the iterated prisoner’s dilemma.
+\newblock {\em The dynamics of norms}, pages 1--16, 1987.
+
+\end{thebibliography}
