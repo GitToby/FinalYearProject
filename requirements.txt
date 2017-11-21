@@ -1,2 +1,4 @@
+pandas
+matplotlib
 axelrod_dojo
 axelrod
