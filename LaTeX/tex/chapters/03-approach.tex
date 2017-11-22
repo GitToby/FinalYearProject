@@ -29,36 +29,39 @@ This sequence of Play-Rank-Create-LOOP will be the basis of creating the optimal
     
     The concept of population increase is simple, all we need to look for is the solution distance as we increase our population: \([25,50,100,150,200,250,500]\)
 
-   \[def populationChecker(opponent):
-    \# make a nice file name
-    file_name = "data/" + str(opponent).replace(" ", "_").replace(":","_").lower() + "_pop.csv"
-    \# if the file exists dont run, it takes forever, make sure it exists 
+    % TODO: use "minted"
+   \begin{lstlisting}    
+    def populationChecker(opponent):
+    # make a nice file name
+    file_name = "data/" + str(opponent).replace(" ", "_").replace(":", "_").lower() + "_pop.csv"
+    # if the file exists dont run, it takes forever, make sure it exists 
     if not os.path.isfile(file_name):
-        df_main = pd.DataFrame(data=None, columns=col_names)  
+        df_main = pd.DataFrame(data=None, columns=col_names)
         for pop_size in populations:
             start_time = time.clock()
             pop_run = runGeneticAlgo(opponent,
                                  population_size=pop_size,
                                  number_of_game_turns=200,
-                                 cycle_length=200, 
+                                 cycle_length=200,
                                  generations=150,
-                                 mutation_probability=0.1, 
+                                 mutation_probability=0.1,
                                  reset_file=True)
-            end_time = time.clock()
-            tmp_df = pd.read_csv(pop_run[0], names=col_names)
-            tmp_df["population"] = pop_size
-            tmp_df["time_taken"] = end_time-start_time
-            df_main = df_main.append(tmp_df, ignore_index=True)
+        end_time = time.clock()
+        tmp_df = pd.read_csv(pop_run[0], names=col_names)
+        tmp_df["population"] = pop_size
+        tmp_df["time_taken"] = end_time - start_time
+        df_main = df_main.append(tmp_df, ignore_index=True)
         df_main.to_csv(file_name)
-        print("List Complete:",file_name)
+        print("List Complete:", file_name)
         return df_main
     else:
         print("file already exists, no calcs to do.")
-        file_df = pd.read_csv(file_name) 
-        \# remove first column
+        file_df = pd.read_csv(file_name)
+        # remove first column
         file_df = file_df[list(file_df)[1:]]
-        return file_df \]
-        
+        return file_df
+\end{lstlisting}
+    
     % TODO: \include{img/plot`1.png}
     % also include tables of the raw data summary (learn tables) 
 
@@ -116,8 +119,13 @@ This sequence of Play-Rank-Create-LOOP will be the basis of creating the optimal
     Generation size analysis is a bit different as we want to see what length of generation will provide us with the largest change in score from first iteration to last, but we don't want a huge calculation time. If we look at the scatter of mean best score difference against the number of generations we can observe how, on average, the number of generations effects the overall change in our best score.\\ 
 
     % TODO: plots for Average increase of score vs # of generations coloured by time (s)
+    \begin{figure}[!hbtp]
+        \includegraphics[width=0.8\textwidth]{plots/gen_len/gen_len-avg-diff-vs-total-gens-all-opponents.png}      \caption{This is a picture}
+        % TODO: hyper ref might be useful
+        \label{fig:pic1}
+    \end{figure}
 
-    This is is showing that for both Alternator and Tit For Tat opponents, the mean increase per generation is declining. On this result we can conclude as we increase generations there is less and less benefit per generation. From these plots it can be concluded that running 150 generations has the best time vs mean best score increase per generation. However in this investigation we will want to find the absolute optimal, so an indefinite generation length would be preferable\\
+    This is is showing that for both Alternator and Tit For Tat opponents, the mean increase per generation is declining. On this result we can conclude as we increase generations there is less and less benefit per generation. From these plots it can be concluded that running 150 generations has the best time vs mean best score increase per generation. However in this investigation we will want to find the absolute optimal, so an indefinite generation length would be preferable \ref{fig:pic1}.
         
     Now we can look at proximity the solution sequence once the analysis has concluded, this will provide details on what the solution looks like as we extend our generation length. Obviously we want to find the absolute solution sequence, if it exists, every time; the reason for looing at length is so that we can observe what the average number of generations is required to find the solution sequence.\\
     
@@ -127,8 +135,10 @@ This sequence of Play-Rank-Create-LOOP will be the basis of creating the optimal
 
     A quick note on Grudger It appears that the grudger opponent is being optimised into becoming 2 sections of opposing moves. if we look at the start and end of a generation set we can see that the genetic algorithm is trying to remove Cs after the defect point and add Cs before the defect point. This solution is due to the fact a good solution will have found that ending in lots off defections is good, and as it progressed there isn't a chance to observe an ending of cooperation moves. This is a clear sign of the algorithm locating a local maximum, looking into the mutation rate might provide a reason why this is happening.\\
     
+    % TODO: move to code
     Grudger best start:\([C, C, C, C, C, C, D, D, D, D, D, D, D, D, C, C, D, C, C, D, C, C, C, C, C, C, D, C, C, D, D, C, C, C, C, D, D, C, D, C, C, D, D, D, D, D, D, D, D, D, D, C, D, C, D, D, D, C, D, D, D, C, D, C, D, C, C, D, D, C, D, C, D, D, C, C, C, D, D, D, D, D, C, C, D, D, C, C, D, C, D, D, C, D, C, C, C, C, D, C, C, D, C, D, C, C, D, D, D, C, D, C, C, D, D, C, D, D, D, D, D, D, D, C, C, C, D, D, C, D, D, C, C, C, D, C, D, D, D, D, D, C, D, C, D, C, D, C, D, C, D, C, C, C, C, D, C, D, C, D, D, D, D, C, C, D, C, D, D, D, C, D, C, C, D, D, D, C, C, C, C, D, C, D, D, D, C, C, D, D, D, D, C, C, D, C, C, D, D, D]\)\\ 
 
+    % TODO: add underbracing 
     Grudger best end:\([C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D]\)\\
     
 
@@ -293,6 +303,8 @@ This sequence of Play-Rank-Create-LOOP will be the basis of creating the optimal
             crossed_sequence = seq_p1 + seq_p2
             return CyclerParams(sequence=crossed_sequence)\]
 
+
+            % TODO: look into tikz
             We want to allow the crossover to have more of an impact than just halving the sequence and optimizing each section. i.e. go from:\\ 
             \(|--------------------| and |++++++++++++++++++++| = |----------++++++++++|\) 
             to, say:\\ 

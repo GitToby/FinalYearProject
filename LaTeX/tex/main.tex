@@ -3,6 +3,12 @@
 % settings (TODO: extract to settings file)
 \setlength{\parindent}{0cm}
 
+\usepackage{listings}
+% TODO: change to "minted"
+\usepackage{graphicx}
+\graphicspath{ {img/} }
+
+\usepackage{hyperref}
 
 % preamble stuff
 \title{Final Year Project}
@@ -32,7 +38,7 @@
     \include{chapters/05-results}
     \include{chapters/06-applications}
     \include{chapters/07-summary}
-
+    
     \bibliography{bibliography}
     \bibliographystyle{alpha}
     
