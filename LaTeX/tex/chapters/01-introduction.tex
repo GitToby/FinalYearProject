@@ -4,7 +4,10 @@
 
 General discussion on what game theory is and what the PD is. What this topic is and how it fits into the big picture.\\
 
-The Prisoners Dilemma is a classic game theory topic\ldots  Its important to game theory because\ldots  creating general sequences to strategies is important because\ldots  models in the real world that follow certain strategies\ldots  how we can leverage these to peruse goals.
+The Prisoners Dilemma is a classic game theory topic\ldots  Its important to game theory because\ldots  
+Creating general sequences to strategies is important because\ldots 
+Models in the real world that follow certain strategies\ldots  
+How we can leverage these to peruse goals.
 
 \section{Background}
 fill this section with background on game theory in when I do the course?
@@ -22,9 +25,13 @@ The Iterated Prisoners Dilemma is the iterated version of the Prisoners Dilemma\
 
 \subsection{Machine Learning Concepts}
 This section will briefly provide a background to machine learning algorithms implemented in the axelrod-dojo\footnote{referencing opportunity here}. This is by no means a comprehensive look into these subjects but will provide sufficient background on technical discussion later on.
-\subsubsection{Genetic Algorithms}
+\subsubsection{Genetic Algorithms}\label{ssec:genetic algorthems}
 % rephrase this section
 Genetic Algorithms are a description of techniques for generating solutions complex problems such as searching and, in our case, optimization\footnote{Mitchell, Melanie (1996). An Introduction to Genetic Algorithms. Cambridge, MA: MIT Press. ISBN 9780585030944. learn to reference soon}. The basis of a genetic algorithm is focused on a cycle of evolution. Like nature, we create a survival of the fittest concept\footnote{need to reference Darwin?} to evaluate a population, kill off the weakest members and create offspring from the most successful population.\\
+
+Starting with a set of randomly generated sequences, we will have each one play the opponent and return with a score. 
+These sequences will be ranked and the lowest x\% will be discarded, resulting in a fitter, but smaller, population than before. 
+This smaller population will then create offspring using a |X TBD method X| pairing algorithm before mutating with |X TBD method X|. This new set of offspring will be included in the next scoring round and the process repeats for k number of rounds\\
 
 Put a figure of the cycle here.\label{fig:genetic algo cycle} \\
 

@@ -1,87 +1,185 @@
 % !TEX root = ../main.tex
 
-\chapter{Approach To Problems}\label{ch:approach}
+\chapter{Approach To The Problem}\label{ch:approach}
 \section{In Depth Definition Of Task}
 What is the task?
-What is the motivation for the task?\\
+{\itshape When playing an Iterated Prisoners Dilemma strategy what is the best ordered series of moves to play such for us to obtain the highest possible average score per move across the game.}
+
+What is the motivation for the task?
 
 What are we expecting to come from the task?
 
-\section{Solution Form}
-The sequence archetype will use the \(Cycler()\) player for our strategy each time, only editing the input to improve our score.
-To this model we can apply an optimised input of length 200 to the player, this sequence, as per the design of the strategy will then be repeated until the games end (if n = length of game, we are just calculating the sequence for the whole game).\\
+Terminology?
 
-The input sequence itself will be created using a genetic optimisation. Starting with a set of randomly generated sequences, we will have each one play the opponent and return with a score. 
-These sequences will be ranked and the lowest x\% will be discarded, resulting in a fitter, but smaller, population than before. 
-This smaller population will then create offspring using a |X TBD method X| pairing algorithm before mutating with |X TBD method X|. This new set of offspring will be included in the next scoring round and the process repeats for k number of rounds\\
+\section{Finding Solutions}
+The sequence archetype will use the \(Cycler()\) player for our strategy each time, only editing the input to improve our score.
+To this model we can apply an optimised input of length 200 to the player, this sequence, as per the design of the strategy will then be repeated until the games end (if n = length of game, we are just calculating the sequence for the whole game).
+The input sequence itself will be created using a genetic optimisation, see Section~\ref{ssec:genetic algorthems} for in depth explanations.\\
 
 This sequence of Play-Rank-Create-LOOP will be the basis of creating the optimal strategy for each other opponent.
 
-\section{initial research}
-This will look into how changes in the initial population size for the genetic algorithm effect the number of generations until convergence. 
-We will describe a series of sequences as `converged' if the best score over the set number of generations has reached a stable point. This stable point may not be the optimal point, we may have found a local maxima for the solution sequence rather than the global maximum. \\
+\section{Solution Form}
+Our algorithm will, after its generations are concluded, an arbitrary sequence of the form:
+% TODO: find a good way of representing solutions
+\[X,X,X,\ldots ,X \textrm{ where }  X \in {C,D}\] 
+This sequence will be represent what moves we should play against the opponent to get our largest potential score per turn. In this notation a \(C\) represents a cooperation move and a \(D\) represents a defection move. \\
 
-The opponents we select are interesting, they are all `simple' and can be explained in a very brief sentence or two. We will look into these as we can confirm that the genetic algorithm will select the optimal sequence solution for the selected opponent. \\
+We are looking for sequences that will allow us to maximise our score overall, rather than just beating any given opponent.
+A nice analogy of this concept is a team playing a football tournament, but instead of a knockout competition our team is placed in the standings based off the total goals they have scored across the tournament. 
+More applications of these results are discussed in Chapter~\ref{ch:applications}.
+
+\section{Initial Research}
+% TODO: build the list of opponents and put it in the appendix
+Before conducting the bulk calculations for the set of opponents listed in the appendix we will test the algorithms' parameters to see what the best settings are for finding solution sequences.
+We will describe a series of sequences as `converged' if the best score over the set number of generations has reached a stable point; described as when none of the moves in the sequences has changed over a number of generations.
+This stable point, however, may not be the optimal solution.
+we may have found a local maxima for the solution sequence rather than the global maximum. \\
+
+The opponents we select are in some way interesting. 
+They are all `simple' and can be explained in a very brief sentence or two, but each one has a fundamentally different structure to how they work\footnote{See section \ref{sec:strategies of intrest} for detailed discussion.}. 
+We will look into these as we can confirm that the genetic algorithm will select the optimal sequence solution for the selected opponent. \\
 
 % interesting_opponents = [axl.TitForTat(), axl.Alternator(), axl.Grudger(), axl.Random(), axl.EvolvedFSM16(), axl.CollectiveStrategy()]
+\begin{center}
+    \begin{tabular}{|c|c|} 
+    \hline
+    Player & Optimal Sequence \\
+    \hline
+    axl.TitForTat()&\(CCC...CD\)\\
+    axl.Alternator()&\(DDD...DD\)\\
+    axl.Grudger()&\(CCC...CD\)\\
+    axl.Random()&\(DDD...DD\)\\
+    axl.EvolvedFSM16()&\(??\)\\
+    axl.CollectiveStrategy()&\(??\)\\
+    \hline
+    \end{tabular}
+\end{center}
 
-This bit should be on how we created the data. The data we have produced can be read from the csv, and as long as we provide some names the data is easily accessible.\\
+% How do we make the data?.\\
 
-What we want to look at is how the best score rises as we change certain features of the algorithm. Once the best score hits a maximum such that it wont change no mater how many more generations are run (designated as an optimal solution sequence) or it hits a score which doesn't change over a significant period of generations (solution sequence) we can say that the sequence has converged. The generation number where this plateau occurs is called the solution sequence distance, or solution distance; minimising this is that aim of this investigation.
-We may find solutions that are not optimal, meaning that the algorithm will narrow down a sequence that will do well against an opponent but wont actually find the best sequence that we can possibly get. These are called local maximums and we will look into how to overcome the possibility of our algorithm finding a local, rather than, global maximum later.
-If we make each sequence more likely to mutate generation to generation what will happen? If we have a larger initial population sample to start with, will we reach our maximum best score earlier? What about increasing the generations, what is the optimal number of generations to run the algorithm for such that we always find a solution sequence.
-The selection of opponents for this section is such that we are able to know their optimal solution sequence as to identify local maximum solution sequences.\\ 
+What we want to look at is how the best score rises over generations as we change certain features of the algorithm. 
+Once the best score hits a maximum such that it wont change no mater how many more generations are run we call this the optimal solution sequence\footnote{Proof of a unique solution sequence for an opponent is out of scope}.
+If the algorithm finds a sequence with a score which doesn't change over a significant period of generations we can say that the sequence has converged to a solution sequence, however this solution is not optimal. \\ 
 
-\subsection{Initial Population Size}
-    
-The initial population size defines the range of scores that we can achieve against an opponent in any given generation. Because of this it is assumed the larger a population the larger chance of finding a solution sequence.
-This, however, will have an impact on computation time; each generation must process the full population, this is a linier relationship, \(O(n)\), on computation so we would need to find a higher order of decrease in out solution distance for this to be a viable option.
-    
-The concept of population increase is simple, all we need to look for is the solution distance as we increase our population: \([25,50,100,150,200,250,500]\)
+Once a solution has been found the generation number where this plateau occurs is called the solution sequence distance, or solution distance; minimising this is that aim of this initial investigation.
+During the investigation we may find solutions that are not optimal, meaning that the algorithm will have found a sequence that will do well against an opponent but wont find the best sequence that will return  can possibly get.
+These sub optimal solutions are due to the occurrence of local maximums in the set of scores of neighbouring sequences. 
+Will look in depth into how to overcome the possibility of our algorithm finding a local, rather than, global maximum in Section~\ref{sec:mitigating local maximums}.
+Some of the questions we will hope to be answering include:
+\begin{itemize}
+    \begin{item}
+        If we make each sequence more likely to mutate generation to generation what will happen?        
+    \end{item}
+    \begin{item}
+        If we have a larger initial population sample to start with, will we reach our maximum best score earlier?
+    \end{item}
+    \begin{item}
+        What about increasing the generations, what is the optimal number of generations to run the algorithm for such that we always find a solution sequence.        
+    \end{item}
+\end{itemize}
+
+We have selected our opponents for this section is such that we are able to know their optimal solution sequence as to identify local maximum solution sequences. The next sections are a discussion on how these parameters effect the outcome of our goals. \\ 
+
+\subsection{Changing Initial Population Size}
+The initial population size is the number of starting sequences we use in our algorithms first generation.
+Once this generation concludes the population will go through the series of phases outlined in figure~\ref{fig:genetic algo cycle}; altering the population to keep the best performers against our opponent to continue on to subsequent generations.
+During any given generation the population defines the maximum potential range of scores that we can achieve against our opponent.
+For example, having 2 members with distinct sequences in our population would provide us with 2 distinct\footnote{Would this be `potentialy distinct'? Maybe prove it?} scores after a game.
+Because of this we can reasonably assume the larger our population the larger the number of distinct scores leading to a larger chance of finding the solution sequence with the optimal score; hence we should converge to the solution sequence in less generations.\\
+
+The implementation of analysing a range of populations is simple, all we need to understand how the solution distance is affected as we increase our populations through a set of sizes, say population sizes of: \([25,50,100,150,200,250,500]\).\\
+
+Note: Increasing the size of our population will have an impact on computation time; each generation must process the full population in a linear fashion causing a computation overhead of \(O(n)\). 
+For an increase to be useful a in any time restricted scenario our algorithm would need to show a higher order benefit in our distance to convergence, or in our average score per turn.
+However We are not working in a time restricted scenario, and so we should just select the best overall initial population size independent of computation overhead.
+In a perfect world where everything was time independent we would brute force every possible sequence combination\\
+
+The code in~\ref{code:populationChecker} is an implementation how we go about analysing and storing the tests on generation sizes listed. It leverages the use of the function `runGeneticAlgo' show in appendix figure~\ref{fig:runGeneticAlgo} \\
 
 % TODO: use "minted"
-\begin{lstlisting}    
-    def populationChecker(opponent):
-    # make a nice file name
-    file_name = "data/" + str(opponent).replace(" ", "_").replace(":", "_").lower() + "_pop.csv"
-    # if the file exists dont run, it takes forever, make sure it exists 
-    if not os.path.isfile(file_name):
-        df_main = pd.DataFrame(data=None, columns=col_names)
-        for pop_size in populations:
-            start_time = time.clock()
-            pop_run = runGeneticAlgo(opponent,
-                                 population_size=pop_size,
-                                 number_of_game_turns=200,
-                                 cycle_length=200,
-                                 generations=150,
-                                 mutation_probability=0.1,
-                                 reset_file=True)
-        end_time = time.clock()
-        tmp_df = pd.read_csv(pop_run[0], names=col_names)
-        tmp_df["population"] = pop_size
-        tmp_df["time_taken"] = end_time - start_time
-        df_main = df_main.append(tmp_df, ignore_index=True)
-        df_main.to_csv(file_name)
-        print("List Complete:", file_name)
-        return df_main
-    else:
-        print("file already exists, no calcs to do.")
-        file_df = pd.read_csv(file_name)
-        # remove first column
-        file_df = file_df[list(file_df)[1:]]
-        return file_df
-\end{lstlisting}
-    
-% TODO: \include{img/plot`1.png}
-% also include tables of the raw data summary (learn tables) 
+\begin{figure}
+    \begin{minted}{python}
+        def populationChecker(opponent):
+        # make a nice file name
+        file_name = "data/" + str(opponent).replace(" ", "_")
+                                           .replace(":", "_")
+                                           .lower() 
+                            + "_pop.csv"
+        # if the file exists dont run, it takes forever, make sure it exists 
+        if not os.path.isfile(file_name):
+            df_main = pd.DataFrame(data=None, columns=col_names)
+            for pop_size in populations:
+                start_time = time.clock()
+                pop_run = runGeneticAlgo(opponent,
+                                     population_size=pop_size,
+                                     number_of_game_turns=200,
+                                     cycle_length=200,
+                                     generations=150,
+                                     mutation_probability=0.1,
+                                     reset_file=True)
+                end_time = time.clock()
+                tmp_df = pd.read_csv(pop_run[0], names=col_names)
+                tmp_df["population"] = pop_size
+                tmp_df["time_taken"] = end_time - start_time
+                df_main = df_main.append(tmp_df, ignore_index=True)
+            df_main.to_csv(file_name)
+            print("List Complete:", file_name)
+            return df_main
+        else:
+            print("file already exists, no calcs to do.")
+            file_df = pd.read_csv(file_name)
+            # remove first column
+            file_df = file_df[list(file_df)[1:]]
+            return file_df
+    \end{minted}
+    \label{code:populationChecker}
+    \caption{code to check multiple populations}    
+\end{figure}
+% \label{code:populationChecker}
+This output will provide us with a table with the following form\footnote{Data has been concatinated for this summary table.}:
 
-Its clear that from the graph that the initial population size has a huge effect on finding the Tit For Tat solution sequence. It can also be seen from the table that as we increase the population our best score statistics go up across the board. Looking into alternator we will see the same.\\
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|} 
+        \hline
+        best score & gen. & mean score & population & sequence & std dev. & time taken \\
+        \hline
+        2.425 & 1 & 2.264 & \textbf{25.0} & DD\ldots & 0.067 & 6.646\\
+        2.425 & 2 & 2.343 & \textbf{25.0} & DD\ldots & 0.046 & 6.646\\
+        2.425 & 3 & 2.393 & \textbf{25.0} & DD\ldots & 0.038 & 6.646\\
+        \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots \\
+        2.830 & 102 & 2.782 & \textbf{100.0} & CC\ldots & 0.112 & 28.425\\
+        \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots \\
+        2.980 & 150 & 2.911 & \textbf{500.0} & CC\ldots & 0.158 & 152.684\\
+        \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots \\
+        \hline
+        \end{tabular}
+\end{center}
 
-\subsubsection{Analysis of initial population sizes}
-As the figures above shows there is an obvious trend that the higher the overall average score. What is interesting is that the result is non linier, the best score difference for a population of 50 to a population of 100 is huge in comparison to the same relative increase from 200 to 250.\\
-Another interesting point is that none of these results have found a solution sequence (or at least we cant tell from the graph). There are no large plateaus for the graph, and so perhaps using a medium size population, say 150, and increasing the generations will have better results for a solution sequence. 150 is selected because there it find the same scoring solution as the others, but takes less time\\
-This is interesting, the random results tend to fare better with larger population, this may just be based on the probability that there is a sequence in the population that does better against the specific random sequence. This may also be the genetic algorithm optimising itself to the pseudorandom generator, building the \(Random()\) opponent solution for next generation, this could be a reason as all of the final generation best performers are scoring higher than the original starting population. 
-% TODO: check actual sequences generated. we should find [DDD...D]
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{plots/initial_pop/ini_pop-best-score-vs-gen-all-opponents.png}
+    \caption{Best score per turn vs generation for different initial population sizes}
+    \label{fig:ini_pop-best-score-vs-gen-all-opponents}   
+\end{figure}
+
+By grouping this data by the population we observe how initial populations affect different opponents. 
+Its clear that from figure~\ref{fig:ini_pop-best-score-vs-gen-all-opponents} that the initial population size has a significant effect on finding better sequences.
+It doesn't, however, ensure that we find the solution sequence; as is shown in the lack of long plateaus in the lines.\\
+
+The improvement's from this effect are non-linier from observation.
+The change in overall final best score for a population of 50 compared with a population of 100 is huge in comparison to the same relative increase from 200 to 250.
+This may suggest there are more effective approaches to improving our score after a certain size of initial population than to continuing to increase it further. \\
+
+% TODO:comment on each test opponent below
+% the RANDOM opponent tended to fare better with larger population, this may just be based on the probability that there is a sequence in the population that does better against the specific random sequence. 
+% This may also be the genetic algorithm optimising itself to the pseudorandom generator, building the \(Random()\) opponent solution for next generation, this could be a reason as all of the final generation best performers are scoring higher than the original starting population. 
+% the sequence is kind of converging to DDD...D, but there was no pattern for the algorithm to follow and so didnt converge. \\
+
+
+None of these results have found a solution sequence (or at least we cant tell from the graph). 
+It is clear that larger initial populations do, on a relative scale, much better than small ones.
+There are no large plateaus for the graph, so as we continue our research the initial population size will be increased to 150 to keep computation times manageable.\\
+\\----------------------------------EDIT LINE---------------------------------\\
 
 \subsection{Generation Length Analysis}
 Here we will look into how close to a solution sequence we get when we increase the generations the algorithm runs for. We will be using a population of 150, as this was the best average for score vs computation time\\
@@ -252,7 +350,7 @@ From this there we can see that the mutation frequency of 0.1 and 0.2 produced h
             
 As an additional point, we can also observe that increasing the mutation frequency means that there is less variation in the best scoring sequences. (TODO: Does this have an impact on escaping local maximums?)
 
-\subsection{Using crossover and mutation to remove local maximum solutions}
+\subsection{Using crossover and mutation to remove local maximum solutions}\label{sec:mitigating local maximums}
 The occurrence of local maximums is something that has only occurred for the Grudger opponent so far. The difference between the Grudger and the other opponents were looking at is that the Grudger has a singularity where its behaviour changes. The change in behaviour is not uncommon, Tit For Tat works in the same way, however this algorithm has managed to identify its behaviour and adapt to overcome its negative effects.\\
             
 Grudger and Tit For Tat differ in their responsiveness in two ways: 
