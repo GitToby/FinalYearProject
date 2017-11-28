@@ -94,10 +94,10 @@ For an increase to be useful a in any time restricted scenario our algorithm wou
 However We are not working in a time restricted scenario, and so we should just select the best overall initial population size independent of computation overhead.
 In a perfect world where everything was time independent we would brute force every possible sequence combination\\
 
-The code in~\ref{code:populationChecker} is an implementation how we go about analysing and storing the tests on generation sizes listed. It leverages the use of the function `runGeneticAlgo' show in appendix figure~\ref{fig:runGeneticAlgo} \\
+The code in~\ref{code:populationChecker} is an implementation how we go about analysing and storing the tests on generation sizes listed. It leverages the use of the function `runGeneticAlgo' show in appendix code~\ref{code:runGeneticAlgo} \\
 
 % TODO: use "minted"
-\begin{figure}
+\begin{figure}\label{code:populationChecker}
     \begin{minted}{python}
         def populationChecker(opponent):
         # make a nice file name
@@ -105,7 +105,7 @@ The code in~\ref{code:populationChecker} is an implementation how we go about an
                                            .replace(":", "_")
                                            .lower() 
                             + "_pop.csv"
-        # if the file exists dont run, it takes forever, make sure it exists 
+        # if the file exists don't run, it takes forever, make sure it exists 
         if not os.path.isfile(file_name):
             df_main = pd.DataFrame(data=None, columns=col_names)
             for pop_size in populations:
@@ -132,7 +132,6 @@ The code in~\ref{code:populationChecker} is an implementation how we go about an
             file_df = file_df[list(file_df)[1:]]
             return file_df
     \end{minted}
-    \label{code:populationChecker}
     \caption{code to check multiple populations}    
 \end{figure}
 % \label{code:populationChecker}
@@ -157,84 +156,126 @@ This output will provide us with a table with the following form\footnote{Data h
 
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{plots/initial_pop/ini_pop-best-score-vs-gen-all-opponents.png}
-    \caption{Best score per turn vs generation for different initial population sizes}
-    \label{fig:ini_pop-best-score-vs-gen-all-opponents}   
+    \includegraphics[width=\textwidth]{other/construction.jpg}
+    \caption{Best score per turn vs generation for different initial population sizes}\label{fig:INIT-POP-bs-v-gens-all}
 \end{figure}
 
 By grouping this data by the population we observe how initial populations affect different opponents. 
-Its clear that from figure~\ref{fig:ini_pop-best-score-vs-gen-all-opponents} that the initial population size has a significant effect on finding better sequences.
+Its clear that from figure~\ref{fig:INIT-POP-bs-v-gens-all} that the initial population size has a significant effect on finding better sequences.
+We can see if there is a larger initial population there is typically a higher best score shown once concluding all of the generations.
+This can also be shown in figure~\ref{fig:INIT-POP-max-bs-v-init-pop-all} that\ldots
 It doesn't, however, ensure that we find the solution sequence; as is shown in the lack of long plateaus in the lines.\\
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{other/construction.jpg}
+    \caption{Scatter of max best score vs different initial populations}\label{fig:INIT-POP-max-bs-v-init-pop-all}
+\end{figure}
 
 The improvement's from this effect are non-linier from observation.
 The change in overall final best score for a population of 50 compared with a population of 100 is huge in comparison to the same relative increase from 200 to 250.
 This may suggest there are more effective approaches to improving our score after a certain size of initial population than to continuing to increase it further. \\
 
-% TODO:comment on each test opponent below
+% TODO:comment on each test opponent below?
 % the RANDOM opponent tended to fare better with larger population, this may just be based on the probability that there is a sequence in the population that does better against the specific random sequence. 
 % This may also be the genetic algorithm optimising itself to the pseudorandom generator, building the \(Random()\) opponent solution for next generation, this could be a reason as all of the final generation best performers are scoring higher than the original starting population. 
-% the sequence is kind of converging to DDD...D, but there was no pattern for the algorithm to follow and so didnt converge. \\
+% the sequence is kind of converging to DDD...D, but there was no pattern for the algorithm to follow and so didn't converge. \\
 
 
 None of these results have found a solution sequence (or at least we cant tell from the graph). 
 It is clear that larger initial populations do, on a relative scale, much better than small ones.
 There are no large plateaus for the graph, so as we continue our research the initial population size will be increased to 150 to keep computation times manageable.\\
-\\----------------------------------EDIT LINE---------------------------------\\
+
+% TODO: another way of looking at effectiveness for initial pops?
 
 \subsection{Generation Length Analysis}
-Here we will look into how close to a solution sequence we get when we increase the generations the algorithm runs for. We will be using a population of 150, as this was the best average for score vs computation time\\
+Another major component parameter of a genetic algorithm is the number of generations it will run before concluding on a final sequence.
+The number of generations has an influence on a number of different things within the algorithm: 
+\begin{itemize}
+    \begin{item}
+        The total combinations of features\footnote{Section~\ref{ssec:genetic algorthems} explains what we mean by feature selection} (sequence elements) that the algorithm can test.
+    \end{item}
+    \begin{item}
+        The number of low performers we can remove in our population.
+    \end{item}
+\end{itemize}
+
+For our goal of finding the optimal solution sequence for each opponent it would be useful to extend the generations as far as possible; this would provide the most combinations of features possible.
+Here we will look into how close to a solution sequence we get when we increase the generations the algorithm runs for.
+Like in previous experiments with other variables we will use a range of sizes for our parameter to run our analysis over\footnote{We will be using a population of 150 as this was the best average for score vs computation time for analysis.}; say, generation lengths of: \([50,150,250,350,450,500]\). 
+The code in~\ref{code:generationChecker} shows how we will approach the analysis.\\ 
+
+\begin{figure}\label{code:generationChecker}
+    \begin{minted}{python}
+        def generationSizeChecker(opponent):
+            file_name = "data/" + str(opponent).replace(" ", "_")
+                                                .replace(":","_")
+                                                .lower() 
+                                + "_generation.csv"
+            if not os.path.isfile(file_name):
+                df_main = pd.DataFrame(data=None, columns=col_names)
+                for gens in generation_list:
+                    start_time = time.clock()
+                    pop_run = runGeneticAlgo(opponent,
+                                         population_size=150,
+                                         number_of_game_turns=200,
+                                         cycle_length=200, 
+                                         generations=gens,
+                                         mutation_probability=0.1, 
+                                         reset_file=True)
+                    end_time = time.clock()
+                    tmp_df = pd.read_csv(pop_run[0], names=col_names)
+                    tmp_df["generations"] = gens
+                    tmp_df["time_taken"] = end_time-start_time
+                    tmp_df["opponent"] = str(opponent)
+                    tmp_df["best_score_diff"] = np.append([0],np.diff(tmp_df["best_score"]))
+                    df_main = df_main.append(tmp_df, ignore_index=True)
+                df_main.to_csv(file_name)
+                print("List Complete:",file_name)
+                return df_main
+            else:
+                print("file ",file_name," already exists, no calcs to do.")
+                file_df = pd.read_csv(file_name) 
+                \# remove first column
+                file_df = file_df[list(file_df)[1:]]
+                return file_df \]
+    \end{minted}
+    \caption{code to check multiple generation lengths.}    
+\end{figure}
+    % TODO: add data from files in tables
     
-    \[generation_list = [50,150,250,350,450,500]\]
-
-    \[def generationSizeChecker(opponent):
-    file_name = "data/" + str(opponent).replace(" ", "_").replace(":","_").lower() + "_generation.csv"
-    if not os.path.isfile(file_name):
-        df_main = pd.DataFrame(data=None, columns=col_names)
-        for gens in generation_list:
-            start_time = time.clock()
-            pop_run = runGeneticAlgo(opponent,
-                                 population_size=150,
-                                 number_of_game_turns=200,
-                                 cycle_length=200, 
-                                 generations=gens,
-                                 mutation_probability=0.1, 
-                                 reset_file=True)
-            end_time = time.clock()
-            tmp_df = pd.read_csv(pop_run[0], names=col_names)
-            tmp_df["generations"] = gens
-            tmp_df["time_taken"] = end_time-start_time
-            tmp_df["opponent"] = str(opponent)
-            tmp_df["best_score_diff"] = np.append([0],np.diff(tmp_df["best_score"]))
-            df_main = df_main.append(tmp_df, ignore_index=True)
-        df_main.to_csv(file_name)
-        print("List Complete:",file_name)
-        return df_main
-    else:
-        print("file ",file_name," already exists, no calcs to do.")
-        file_df = pd.read_csv(file_name) 
-        \# remove first column
-        file_df = file_df[list(file_df)[1:]]
-        return file_df \]
-% TODO: add data from files in tables
-
-Generation size analysis is a bit different as we want to see what length of generation will provide us with the largest change in score from first iteration to last, but we don't want a huge calculation time. If we look at the scatter of mean best score difference against the number of generations we can observe how, on average, the number of generations effects the overall change in our best score.\\ 
+Generation size differs from other parameters in the fact this is purely performance based.
+A genetic algorithm with 1 generation is just a series of tests; with the results split into 2 sets --- winners and losers.
+As we extend the generations we would be more focused on what happens to certain averages of results across the whole run, rather than absolute improvement.
+If we look at the scatter of mean best score difference against the number of generations in figure~\ref{fig:GENS-mean-bs-diff-v-gens-all} we can observe how, on average, the number of generations has a declining effect the overall change in our best score per generation.\\ 
 
 % TODO: plots for Average increase of score vs # of generations coloured by time (s)
-\begin{figure}[!hbtp]
-    \includegraphics[width=0.8\textwidth]{plots/gen_len/gen_len-avg-diff-vs-total-gens-all-opponents.png}
-    \caption{This is a picture}
+\begin{figure}
+    \includegraphics[width=0.8\textwidth]{other/construction.jpg}
+    \caption{Mean Best Score diff vs Total Generation Lengths}\label{fig:GENS-mean-bs-diff-v-gens-all}
     % TODO: hyper ref might be useful
-    \label{fig:pic1}
 \end{figure}
 
-This is is showing that for both Alternator and Tit For Tat opponents, the mean increase per generation is declining. On this result we can conclude as we increase generations there is less and less benefit per generation. From these plots it can be concluded that running 150 generations has the best time vs mean best score increase per generation. However in this investigation we will want to find the absolute optimal, so an indefinite generation length would be preferable \ref{fig:pic1}.
-        
-Now we can look at proximity the solution sequence once the analysis has concluded, this will provide details on what the solution looks like as we extend our generation length. Obviously we want to find the absolute solution sequence, if it exists, every time; the reason for looing at length is so that we can observe what the average number of generations is required to find the solution sequence.\\
-    
-%TODO: plots of Max best score vs # of generations coloured by time
-    
-After 250 generations we seem to have reached the solution state for our opponents Tit for tat and alternator but not for grudger. From the combination of the two plots, having more generations means that there is, on average, less of an improvement per generation but the longer analysis is required to find the solution sequence for an opponent. From now on, 250 is the number of generations we will use to find out solution sequence.\\ 
+This mean increase of score per generation trend is to be expected; it get harder to randomly select which element in the sequence needs changing to improve our score when we are close to a maximum.
+On this result we can conclude as we increase generations there is less and less benefit per generation; there is however still a benefit.
+There may be a benefit from increasing the mutation rates when we get close to one of these maximums; the more noisy our algorithm is for sequences could improve our chance of finding the correct solution.\footnote{Due to using a prebuilt algorithm in this code there is no way to dynamically increase mutation rates, or other parameters, at points in our algorithm. This may be a potentialy intresting research topic on how to build an `intelegent' or preprogrammed genetic algorithm.}\\ 
 
+Figure~\ref{fig:GENS-max-bs-v-gens-all} shows the proximity the optimal solution sequence once the analysis has concluded.
+A good score is a score of 3 or more; this can change from player to player, and is never explicitly obvious.
+We can see that after a number of generations that solutions sometimes get `stuck' in a local maximum score.
+
+\begin{figure}
+    \includegraphics[width=0.8\textwidth]{other/construction.jpg}
+    \caption{Max best score vs total number of generations}\label{fig:GENS-max-bs-v-gens-all}
+    % TODO: hyper ref might be useful
+\end{figure}
+
+After 250 generations we \textit{seem} to have reached a solution state for our opponents Tit for tat and alternator but not for grudger. 
+Grudger in this example has only reached a score of $\_\_\_$, which is obviously far from its optimal sequence.
+From the combination of the plots, having more generations means that there is, on average, less of an improvement per generation.
+But it is clear that a higher number of generations is required to find a better solution sequence for an opponent.\footnote{From now on, 250 is the number of generations we will use to find our solution sequence during the analysis.}\\ 
+
+\subsubsection{Observations On Local Maximum}
+----------------------------------EDIT LINE---------------------------------\\
 A quick note on Grudger It appears that the grudger opponent is being optimised into becoming 2 sections of opposing moves. if we look at the start and end of a generation set we can see that the genetic algorithm is trying to remove Cs after the defect point and add Cs before the defect point. This solution is due to the fact a good solution will have found that ending in lots off defections is good, and as it progressed there isn't a chance to observe an ending of cooperation moves. This is a clear sign of the algorithm locating a local maximum, looking into the mutation rate might provide a reason why this is happening.\\
     
 % TODO: move to code
@@ -246,6 +287,11 @@ Grudger best end:\([C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, 
 
 For the some of the most `simple' opponents 250 generations seems reasonable to reach a solution sequence as shown in the Alternator and Tit For Tat. The complexities lie with mitigating local maximums during the generations.\\
     
+In this investigation we will want to find the optimal solution and so we will want to extend the generation length as far as possible.
+An indefinite number of generations would be preferable, but we don't have an eternity so a selection of a large generation length will be adequate when coming to the final series of tests.
+Obviously we want to find the optimal solution sequence, if it exists, every time; the reason for looing at length is so that we can observe what the average number of generations is required to find the solution sequence.\\
+
+
 \subsection{Changeing Our Mutation Rate}
  By changing the rate at which we mutate our genes within a sequence, we might be able to more effectively narrow in on a solution sequence, i.e. One that has converged. The default is set to 0.1, which means, for every 10 members of our population that continue into the next generation one of these has a single gene, or action, that is changed in its sequence. 
     
