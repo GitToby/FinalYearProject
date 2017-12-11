@@ -1,9 +1,24 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{A{\etalchar{+}}87}
+\begin{thebibliography}{Chu17}
 
 \bibitem[A{\etalchar{+}}87]{axelrod1987evolution}
 Robert Axelrod et~al.
 \newblock The evolution of strategies in the iterated prisoner’s dilemma.
 \newblock {\em The dynamics of norms}, pages 1--16, 1987.
+
+\bibitem[CB97]{chu1997genetic}
+Paul~C Chu and John~E Beasley.
+\newblock A genetic algorithm for the generalised assignment problem.
+\newblock {\em Computers \& Operations Research}, 24(1):17--23, 1997.
+
+\bibitem[Chu17]{chui2017artificial}
+Michael Chui.
+\newblock Artificial intelligence the next digital frontier?
+\newblock {\em McKinsey and Company Global Institute}, page~47, 2017.
+
+\bibitem[Tur50]{turing1950computing}
+Alan~M Turing.
+\newblock Computing machinery and intelligence.
+\newblock {\em Mind}, 59(236):433--460, 1950.
 
 \end{thebibliography}

@@ -1,47 +1,48 @@
 % !TEX root = ../main.tex
 
-\chapter{Approach To The Problem}\label{ch:approach}
+\chapter{Task Background}\label{ch:taskBackground}
 % TODO split into 2 chapters: {Task Background & Tuning of Genetic Algorithm}
-\section{In Depth Definition Of Task}\label{sec:inDepthDefinitionOfTask}
-What is the task?
-{\itshape~When playing an Iterated Prisoners Dilemma strategy what is the best ordered series of moves to play such for us to obtain the highest possible average score per move across the game.}//
+In this chapter, consideration will be given to the process of finding the optimal sequence of moves against another player.
+The various approaches used and a detailed analysis of the optimisation procedures and parameters will be described.\\
 
-Section questions:\\
-What is the motivation for the task?\\
-What are we expecting to come from the task?\\
-Terminology?\\
+{\itshape~When playing a given Iterated Prisoners Dilemma strategy, \(O\), what is the best ordered sequence of moves, \(S\), to play such for us to obtain the highest possible average score per move across the game.}\\
 
-In this chapter, consideration will be given to finding the optimal sequence of moves against another player. The various approaches used and a detailed analysis of the optimisation procedures and parameters will be described.\\
+This investigation will only be looking into games against one opponent.
+We will not differentiate the solution form or technique for finding a solution depending on the type of opponents we are focusing on.
+Each opponent will be investigated independently of each other and have their own report generated.
 
-\subsection{Notation}
+
+\section{Notation}\label{sec:notation}
 Let \(S\) be a sequence composed of move elements: \(S = X_1 X_2 \ldots X_L\).
 \begin{itemize}
-\item \(X_i=C\) is a cooperation type move element 
-\item \(X_i=D\) is a defection type move element.
-\item \(X_i\) denotes the \(i\)th move element in a sequence, \(X_i \in \{C,D\}\).
-\item \(L\) denotes the length of a sequence; \(L=200\) is used throughout this report.
+    \item \(X_i=C\) is a cooperation type move element
+    \item \(X_i=D\) is a defection type move element.
+    \item \(X_i\) denotes the \(i\)th move element in a sequence, \(X_i \in \{C,D\}\).
+    \item \(L\) denotes the length of a sequence; \(L=200\) is used throughout this report.
 \end{itemize}
 
 We can split up sequences into blocks of consecutive move elements of the same type.
 We will use \(B_i\) to denote the block after \(i\) changes of move type from the explicitly stated starting move type.
 \begin{itemize}
-\item Every move in a block is of the same type; the type is implicit based on whether \(i\) is even and what the starting move type was.
-\item We can use the notation \(|B_i|\) to denote the length of the \(i\)th block in the sequence. \(|B_i| \in \mathbb{Z}\)
+    \item Every move in a block is of the same type;
+    the type is implicit based on whether \(i\) is even and what the starting move type was.
+    \item We can use the notation \(|B_i|\) to denote the length of the \(i\)th block in the sequence. \(|B_i| \in \mathbb{Z}\)
 \end{itemize}
 
 This means we can write a sequence as a series of blocks:
-\[S= B_1B_2,\ldots,B_n\]
-A Sequence can also be defined shorthand by specifying the starting move and the length of subsequent blocks: 
+\[S= B_1 B_2,\ldots,B_n\]
+A Sequence can also be defined shorthand by specifying the starting move and the length of subsequent blocks:
 \[S = C:\big{[}\ |B_1|,|B_2|,\ldots,|B_n|\ \big{]} \quad \Rightarrow \quad S=\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{(C|D)\ldots (C|D)}^{|B_n|} \]
 We can also construct sequences from repetitions of a sequence of blocks when it makes sense:
 \[C:\big{[}\ \big{(}|B_1|,|B_2|,\ldots,|B_m|\big{)}^{k}\ \big{]} \quad \Rightarrow \quad {\small{\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{D\ldots D}^{|B_m|}}}^{k-times}\]
-The two notations can be combined to add starting and ending blocks to a repeating sequence (shown in the examples).\\ 
+The two notations can be combined to add starting and ending blocks to a repeating sequence (shown in the examples).\\
 
-It is also possible to define sets of sequences by adding variables to parameters of the sequence. Appropriate selection of parameters mean the length of sequences shouldn't grow.
+It is also possible to define sets of sequences by adding variables to parameters of the sequence.
+Appropriate selection of parameters mean the length of sequences shouldn't grow.
 \[ \{C:[i,l-i]\} \quad i\in [a,b] \Rightarrow \{\underbrace{C\ldots C}_{a}\overbrace{D\ldots D}^{l-a},\ \underbrace{C\ldots C}_{a+1}\overbrace{D\ldots D}^{l-(a+1)},\ldots ,\ \underbrace{C\ldots C}_{b}\overbrace{D\ldots D}^{l-b}\} \]
-For long sequences where there is no recognisable pattern the wildcard \(*^{j}\) may be used. 
+For long sequences where there is no recognisable pattern the wildcard \(*^{j}\) may be used.
 This is to signify that \(j\) consecutive move elements have no pattern and are randomly distributed.
-We will mainly use this when referring to sections of a sequence that would otherwise be too lengthy to write out.
+We will mainly use this when referring to sections of a sequence that would otherwise be too lengthy to write out.\\
 
 Examples:
 \[ C:[1,4,3,2] = CDDDDCCCDD \]
@@ -50,26 +51,27 @@ Examples:
 \[ \{D:[i,5-i]\} \quad i\in [2,4] = \{DDCCC,\ DDDCC,\ DDDCC\}\]
 
 \section{Solution Form}\label{sec:solutionForm}
-Our algorithm will, after its generations are concluded, an arbitrary sequence of the form:
-% TODO: find a good way of representing solutions
-\[X_1,X_2,X_3,\ldots ,X_n \textrm{ where }  X_i \in {C,D}\] 
-This sequence will be represent what moves we should play against the opponent to get our largest potential score per turn.
-In this notation a \(C\) represents a cooperation move and a \(D\) represents a defection move.\\
+Our algorithm will, after its set number of generations have concluded, produce an arbitrary sequence of the form:
+\[X_1,X_2,X_3,\ldots ,X_n \textrm{ where }  X_i \in {C,D}\]
+This sequence will be represent what moves we should play against the opponent to get our largest potential score per turn.\\
 
 We are looking for sequences that will allow us to maximise our score overall, rather than just beating any given opponent.
-A nice analogy of this concept is a team playing a football tournament, but instead of a knockout competition our team is placed in the standings based off the total goals they have scored across the tournament. 
-More applications of these results are discussed in Chapter~\ref{ch:applications}.
-\section{Finding Solutions}\label{sec:findingSolutions}
+A nice analogy of this concept is a team playing a football tournament, but instead of a knockout competition our team is placed in the standings based off the total goals they have scored across the tournament.
+More applications of these results are discussed in Chapter~\ref{ch:applications}.\\
+
+\section{Code Techniques}\label{sec:codeTechniques}
 The sequence archetype will use the \(Cycler()\) player for our strategy each time, only editing the input parameter to improve our score against an opponent.
 To this model we can apply an optimised input of length 200 to the player, this sequence, as per the design of the strategy will then be repeated until the games end (if n = length of game, we are just calculating the sequence for the whole game).
-The input sequence itself will be created using a genetic optimisation, see Section~\ref{ssec:genetic algorthems} for in depth explanations.\\
+The input sequence itself will be created using a genetic optimisation, see Section~\ref{subsubsec:geneticAlgorithms} for in depth
+explanations.\\
 
 This sequence of Play-Rank-Create-LOOP will be the basis of creating the optimal strategy for each other opponent.
 
 \section{Initial Research}\label{sec:initialResearch}
 % TODO: build the list of opponents and put it in the appendix
 Before conducting the bulk calculations for the set of opponents listed in the appendix we will test the algorithms' parameters to see what the best settings are for finding solution sequences.
-We will describe a series of sequences as `converged' if the best score over the set number of generations has reached a stable point; described as when none of the moves in the sequences has changed over a number of generations.
+We will describe a series of sequences as `converged' if the best score over the set number of generations has reached a stable point;
+described as when none of the moves in the sequences has changed over a number of generations.
 This stable point, however, may not be the optimal solution.
 we may have found a local maxima for the solution sequence rather than the global maximum. \\
 
@@ -77,32 +79,35 @@ The opponents we select are in some way interesting.
 They are all `simple' and can be explained in a very brief sentence or two, but each one has a fundamentally different structure to how they work.
 We will look into these as we can confirm that the genetic algorithm will select the optimal sequence solution for the selected opponent. \\
 
-% TODO FIX TABLES!
 \begin{center}
-    \begin{tabular}{|c|c|} 
-    \hline
-    Player & Optimal Sequence \\
-    \hline
-    axl.TitForTat()&\(CCC...CD\)\\
-    axl.Alternator()&\(DDD...DD\)\\
-    axl.Grudger()&\(CCC...CD\)\\
-    axl.Random()&\(DDD...DD\)\\
-    axl.EvolvedFSM16()&need to find\\
-    axl.CollectiveStrategy()&need to find\\
-    \hline
+    \begin{tabular}{cc}
+        \toprule
+        Player & Optimal Sequence \\
+        \midrule
+        axl.TitForTat()&\(CCC\ldots CD\)\\
+        axl.Alternator()&\(DDD\ldots DD\)\\
+        axl.Grudger()&\(CCC\ldots CD\)\\
+        axl.Random()&\(DDD\ldots DD\)\\
+        axl.EvolvedFSM16()&TODO need to find\\
+        axl.CollectiveStrategy()&TODO need to find\\
+        \bottomrule
     \end{tabular}
 \end{center}
 
 % How do we make the data?.\\
 
-What we want to look at is how the best score rises over generations as we change certain features of the algorithm. 
-Once the best score per turn hits a maximum such that it wont change no mater how many more generations are run; as described in Section~\ref{sec:findingSolutions} this the optimal solution sequence and it is unique (probably, I will have to prove this first\footnote{Proof of a unique solution sequence for an opponent is out of scope}).\\
+What we want to look at is how the best score rises over generations as we change certain features of the algorithm.
+Once the best score per turn hits a maximum such that it wont change no mater how many more generations are run;
+as described in Section~\ref{sec:solutionForm} this the optimal solution sequence and it is unique (probably, I will have to
+prove this first\footnote{Proof of a unique solution sequence for an opponent is out of scope}).\\
 
-Once a solution has been found the generation number where this plateau occurs is called the solution sequence distance, or solution distance; one of the goals of this initial investigation is to see how  parameters affect the distance.
-During the investigation we may find solutions that are not optimal, meaning that the algorithm will have found a sequence that will do well against an opponent but wont find the best sequence that will return  can possibly get.
-These sub optimal solutions are due to the occurrence of local maxima in the set of scores of neighbouring sequences. 
-Genetic algorithms are designed in way to avoid local maxima's; the property of mutating (i.e jumps of their features) allow members of the population to potentially remove themselves from these local maximas. 
-We will look in depth into how to overcome the possibility of our algorithm finding a local, rather than, global maximum in Section~\ref{sec:mitigating local maximums}.
+Once a solution has been found the generation number where this plateau occurs is called the solution sequence distance, or solution distance;
+one of the goals of this initial investigation is to see how parameters affect the distance.
+During the investigation we may find solutions that are not optimal, meaning that the algorithm will have found a sequence that will do well against an opponent but wont find the best sequence that will return can possibly get.
+These sub optimal solutions are due to the occurrence of local maxima in the set of scores of neighbouring sequences.
+Genetic algorithms are designed in way to avoid local maxima's;
+the property of mutating (i.e jumps of their features) allow members of the population to potentially remove themselves from these local maximas.
+We will look in depth into how to overcome the possibility of our algorithm finding a local, rather than, global maximum in Section~\ref{subsec:mitigatingLocalMaximums}.
 Some of the questions we will hope to be answering include:
 \begin{itemize}
     \begin{item}
@@ -112,29 +117,34 @@ Some of the questions we will hope to be answering include:
         What about increasing the generations, is there an optimal number of generations to run the algorithm for such that we always find a solution sequence.
     \end{item}
     \begin{item}
-        If we make each sequence more likely to mutate generation to generation what will happen? What about increasing how potent our mutations are?    
+        If we make each sequence more likely to mutate generation to generation what will happen?
+        What about increasing how potent our mutations are?
     \end{item}
 \end{itemize}
 
-\subsection{Changing Initial Population Size}\label{ssec:changingInitialPopulationSize}
+\subsection{Changing Initial Population Size}\label{subsec:changinginitialpopulationsize}
 The initial population size is the number of starting sequences we use in our algorithms first generation.
 Once this generation concludes the population will go through the series of phases outlined in figure~\ref{fig:geneticAlgoCycle}; altering the population to keep the best performers against our opponent to continue on to subsequent generations.
 During any given generation the population defines the maximum potential range of scores that we can achieve against our opponent.
 For example, having 2 members with distinct sequences in our population would provide us with 2 distinct
 % TODO \footnote{Would this be `potentialy distinct'? Maybe prove it?} scores after a game.
-Because of this we can reasonably assume the larger our population the larger the number of distinct scores leading to a larger chance of finding the solution sequence with the optimal score; hence we should converge to the solution sequence in less generations.\\
+Because of this we can reasonably assume the larger our population the larger the number of distinct scores leading to a larger chance of finding the solution sequence with the optimal score;
+hence we should converge to the solution sequence in less generations.\\
 
 The implementation of analysing a range of populations requires us to understand how the solution distance is affected as we run our algorithm through a set of population sizes, say \(p \in [25,50,100,150,200,250,500]\).\\
 
-EFFICIENCY NOTE\@: Increasing the size of our population will have an impact on computation time; each generation must process the full population in a linear fashion causing a computation overhead of \(O(n)\). 
+EFFICIENCY NOTE\@: Increasing the size of our population will have an impact on computation time;
+each generation must process the full population in a linear fashion causing a computation overhead of \(O(n)\).
 For an increase to be useful a in any time restricted scenario our algorithm would need to show a higher order benefit in our distance to convergence, or in our average score per turn.
 However We are not working in a time restricted scenario, and so we should just select the best overall initial population size independent of computation overhead.
 In a perfect world where everything was time independent we would brute force every possible sequence combination\\
 
-The code in Snippet~\ref{code:populationChecker} is an implementation how we go about analysing and storing the tests on generation sizes listed. It leverages the use of the function `runGeneticAlgo' show in appendix Snippet~\ref{code:runGeneticAlgo} \\
+The code in Snippet~\ref{code:populationChecker} is an implementation how we go about analysing and storing the tests on generation sizes listed.
+It leverages the use of the function `runGeneticAlgo' show in appendix Snippet~\ref{code:runGeneticAlgo}.
+This code will output data in the form of Table~\ref{table:popCheckerDataTable}
+\\
 
-% TODO: use "minted"
-\begin{figure}\label{code:populationChecker}
+\begin{figure}[ht] 
     \begin{minted}{python}
         def populationChecker(opponent):
         # make a nice file name
@@ -169,15 +179,15 @@ The code in Snippet~\ref{code:populationChecker} is an implementation how we go 
             file_df = file_df[list(file_df)[1:]]
             return file_df
     \end{minted}
-    \caption{code to check multiple populations} \label{code:populationChecker}   
+    \caption{code to check multiple populations}\label{code:populationChecker}
 \end{figure}
-This output will provide us with a table with the following form:
-% TODO: FIX TABLES
-\begin{center}
-    \begin{tabular}{|c|c|c|c|c|c|c|} 
-        \hline
-        best score & gen. & mean score & population & sequence & std dev. & time taken \\
-        \hline
+
+\begin{table*}
+    \centering
+    \begin{tabular}{ccccccc}
+        \toprule
+        best score & gen & mean score & population & sequence & std dev & time taken \\
+        \midrule
         2.425 & 1 & 2.264 & \textbf{25.0} & DD\ldots & 0.067 & 6.646\\
         2.425 & 2 & 2.343 & \textbf{25.0} & DD\ldots & 0.046 & 6.646\\
         2.425 & 3 & 2.393 & \textbf{25.0} & DD\ldots & 0.038 & 6.646\\
@@ -186,24 +196,26 @@ This output will provide us with a table with the following form:
         \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots \\
         2.980 & 150 & 2.911 & \textbf{500.0} & CC\ldots & 0.158 & 152.684\\
         \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots  & \ldots \\
-        \hline
-        \end{tabular}
-\end{center}
+        \bottomrule
+    \end{tabular}
+    \caption{Output data table}\label{table:popCheckerDataTable}
+\end{table*}
 
-\begin{figure}
-    \includegraphics[width=\textwidth]{other/construction.jpg}
+\begin{figure}[ht] 
+    \includegraphics[width=1.5\textwidth, center]{plots/INIT_POP_bs_v_gens_all.pdf}
     \caption{Best score per turn vs generation for different initial population sizes}\label{fig:INIT-POP-bs-v-gens-all}
 \end{figure}
 
-By grouping this data by the population we observe how initial populations affect different opponents. 
+By grouping this data by the population we observe how initial populations affect different opponents.
 Its clear that from figure~\ref{fig:INIT-POP-bs-v-gens-all} that the initial population size has a significant effect on finding better sequences.
 We can see if there is a larger initial population there is typically a higher best score shown once concluding all of the generations.
-This can also be shown in figure~\ref{fig:INIT-POP-max-bs-v-init-pop-all} that\ldots
-It doesn't, however, ensure that we find the solution sequence; as is shown in the lack of long plateaus in the lines.\\
+This can also be shown in figure~\ref{fig:INIT-POP-mean-bs-v-init-pop-all} that\ldots
+It doesn't, however, ensure that we find the solution sequence;
+as is shown in the lack of long plateaus in the lines.\\
 
-\begin{figure}
-    \includegraphics[width=\textwidth]{other/construction.jpg}
-    \caption{Scatter of max best score vs different initial populations}\label{fig:INIT-POP-max-bs-v-init-pop-all}
+\begin{figure}[ht] 
+    \includegraphics[width=1.5\textwidth, center]{plots/INIT_POP_mean_bs_diff_v_init_pop_all.pdf}
+    \caption{Scatter of max best score vs different initial populations}\label{fig:INIT-POP-mean-bs-v-init-pop-all}
 \end{figure}
 
 The improvement's from this effect are non-linier from observation.
@@ -216,30 +228,33 @@ This may suggest there are more effective approaches to improving our score afte
 % the sequence is kind of converging to DDD...D, but there was no pattern for the algorithm to follow and so didn't converge. \\
 
 
-None of these results have found a solution sequence (or at least we cant tell from the graph). 
+None of these results have found a solution sequence (or at least we cant tell from the graph).
 It is clear that larger initial populations do, on a relative scale, much better than small ones.
 There are no large plateaus for the graph, so as we continue our research the initial population size will be increased to 150 to keep computation times manageable.\\
 
 % TODO: another way of looking at effectiveness for initial pops?
 
-\subsection{Generation Length Analysis}
+\subsection{Generation Length Analysis}\label{subsec:generationLengthAnalysis}
 Another major component parameter of a genetic algorithm is the number of generations it will run before outputting a final sequence.
-The number of generations has an influence on a number of different things within the algorithm: 
+The number of generations has an influence on a number of different things within the algorithm:
 \begin{itemize}
     \begin{item}
-        The total combinations of features\footnote{Section~\ref{ssec:genetic algorthems} explains what we mean by feature selection} (sequence elements) that the algorithm can test.
+        The total combinations of features\footnote{Section~\ref{subsubsec:geneticAlgorithms} explains what we mean by feature selection}
+        (sequence elements) that the algorithm can test.
     \end{item}
     \begin{item}
         The number of low performers we can remove in our population.
     \end{item}
 \end{itemize}
 
-For our goal of finding the optimal solution sequence for each opponent it would be useful to extend the generations as far as possible; this would provide the most combinations of features possible.
+For our goal of finding the optimal solution sequence for each opponent it would be useful to extend the generations as far as possible;
+this would provide the most combinations of features possible.
 Here we will look into how close to a solution sequence we get when we increase the generations the algorithm runs for.
-Like in previous experiments with other variables we will use a range of sizes for our parameter to run our analysis over\footnote{We will be using a population of 150 as this was the best average for score vs computation time for analysis.}; say, generation lengths, \(g \in 50,150,250,350,450,500]\). 
-The code in Snippet~\ref{code:generationChecker} shows how we will approach the analysis.\\ 
+Like in previous experiments with other variables we will use a range of sizes for our parameter to run our analysis
+over\footnote{We will be using a population of 150 as this was the best average for score vs computation time for analysis.}; say, generation lengths, \(g \in [50,150,250,350,450,500]\).
+The code in Snippet~\ref{code:generationChecker} shows how we will approach the analysis.\\
 
-\begin{figure}
+\begin{figure}[ht] 
     \begin{minted}{python}
         def generationSizeChecker(opponent):
             file_name = "data/" + str(opponent).replace(" ", "_")
@@ -276,67 +291,70 @@ The code in Snippet~\ref{code:generationChecker} shows how we will approach the 
     \end{minted}
     \caption{code to check multiple generation lengths.}\label{code:generationChecker}
 \end{figure}
-    % TODO: add data from files in tables
-    
-Generation size differs from other parameters in the fact this is purely performance based.
-A genetic algorithm with 1 generation is just a series of tests; with the results split into 2 sets --- winners and losers.
-As we extend the generations we would be more focused on what happens to certain averages of results across the whole run, rather than absolute improvement.
-If we look at figure~\ref{fig:GENS-mean-bs-diff-v-gens-all}, mean best score difference against the number of generations, we can observe how, on average, the number of generations has a declining effect the overall change in our best score per generation.\\ 
+% TODO: add data from files in tables
 
-\begin{figure}
-    \includegraphics[width=0.1\textwidth]{other/construction.jpg}
-    \caption{Mean Best Score diff vs Total Generation Lengths}\label{fig:GENS-mean-bs-diff-v-gens-all}
-    % TODO: hyper ref might be useful
+Generation size differs from other parameters in the fact this is purely performance based.
+A genetic algorithm with 1 generation is just a series of tests;
+with the results split into 2 sets --- winners and losers.
+As we extend the generations we would be more focused on what happens to certain averages of results across the whole run, rather than absolute improvement.
+If we look at figure~\ref{fig:GENS-mean-bs-diff-v-gens-all}, mean best score difference against the number of generations, we can observe how, on average, the number of generations has a declining effect the overall change in our best score per generation.\\
+
+\begin{figure}[ht] [ht]
+\includegraphics[width=1.5\textwidth, center]{plots/GENS_mean_bs_diff_v_gens_all.pdf}
+\caption{Mean Best Score diff vs total generation lengths}\label{fig:GENS-mean-bs-diff-v-gens-all}
+% TODO: hyper ref might be useful
 \end{figure}
 
-This mean increase of score per generation trend is to be expected; when we are close to a maximum it is more difficulty to randomly select which element in the sequence needs changing to improve our score.
+This mean increase of score per generation trend is to be expected;
+when we are close to a maximum it is more difficulty to randomly select which element in the sequence needs changing to improve our score.
 On this result we can conclude as we increase generations there is less and less benefit per generation.
 There is, however, still a benefit to extending the generations but we may have better performance by altering another parameter of the algorithm.
-There may be a benefit from increasing the mutation rates when we get close to one of these maximums; the more noisy our algorithm is for sequences could improve our chance of finding the correct solution.
-The probably of finding a solution as we narrow in on a maximum decreases due to the number of elements that, when changed, will provide a better score. 
-Increasing the mutation frequency at this point means that there will be more members of the population that could potentially mutate the elements needed to improve the sequence.\\ 
+There may be a benefit from increasing the mutation rates when we get close to one of these maximums;
+the more noisy our algorithm is for sequences could improve our chance of finding the correct solution.
+The probably of finding a solution as we narrow in on a maximum decreases due to the number of elements that, when changed, will provide a better score.
+Increasing the mutation frequency at this point means that there will be more members of the population that could potentially mutate the elements needed to improve the sequence.\\
 
 Figure~\ref{fig:GENS-max-bs-v-gens-all} shows the proximity the optimal solution sequence once the analysis has concluded.
-A good score is a score of 3 or more; this can change from player to player, and is never explicitly obvious.
+A good score is a score of 3 or more;
+this can change from player to player, and is never explicitly obvious.
 We can see that after a number of generations that solutions sometimes get `stuck' in a local maximum score.
 
-\begin{figure}
-    \includegraphics[width=0.1\textwidth]{other/construction.jpg}
-    \caption{Max best score vs total number of generations}\label{fig:GENS-max-bs-v-gens-all}
-    % TODO: hyper ref might be useful
-\end{figure}
+% \begin{figure}[ht] 
+% \includegraphics[width=1.5\textwidth, center]{plots/GENS_max_bs_v_gens_all.pdf}
+% \caption{Max best score vs total number of generations}\label{fig:GENS-max-bs-v-gens-all}
+% % TODO: hyper ref might be useful
+% \end{figure}
 
-After 250 generations we \textit{seem} to have reached a solution state for our opponents Tit for tat and alternator but not for grudger. 
+After 250 generations we \textit{seem} to have reached a solution state for our opponents Tit for tat and alternator but not for grudger.
 Against Grudger we see an example, we have only reached an average score per turn of $\_\_\_$, which is obviously far from its optimal sequence.
 From the combination of the plots, having more generations means that there is, on average, less of an improvement per generation.
 It is clear that a higher number of generations is required to find a better solution sequence for an opponent.
-From now on, 250 is the number of generations we will use to find our solution sequence during the analysis.\\ 
+From now on, 250 is the number of generations we will use to find our solution sequence during the analysis.\\
 
 For most of the opponents 250 generations seems reasonable to reach a solution sequence as shown in the Alternator and Tit For Tat.
-However, there are clear signs of local maximums occurring in the Grudger example. Figure~\ref{fig:GENS-max-bs-v-gens-all} has reached a better sequence in 450 generations than 500\footnote{These are indipendent trials and have different sequences.}; meaning that increasing the generation length doesn't necessarily mean a local maximum. 
+However, there are clear signs of local maximums occurring in the Grudger example.
+Figure~\ref{fig:GENS-max-bs-v-gens-all} has reached a better sequence in 450 generations than 500\footnote{These are independent trials and have different sequences.}; meaning that increasing the generation length doesn't necessarily mean a local maximum.
 The complexities with local maximums during the generations lie with mutation rates and crossovers.
-We will cover this in Section~\ref{sec:mitigating local maximums}\\
+We will cover this in Section~\ref{subsec:mitigatingLocalMaximums}\\
 
 In this investigation we will want to find the optimal solution and so, from these results, we will want to extend the generation length as far as possible.
 An infinite number of generations would be preferable, but we don't have an eternity so a selection of a relatively large generation size will be adequate when coming to the final series of tests.\\
 
-\subsection{Changeing Our Mutation Rate}
+\subsection{Changeing Mutation Rate}\label{subsec:changeingMutationRate}
 By changing the way in which we mutate our elements within a sequence, we might be able to more effectively narrow in on an optimal solution sequence.
-The default settings are a frequency of 0.1; meaning for every 10 members of our population that continue into the next generation one of these has some elements in its sequence changed, and a potency of 1; meaning that every sequence that was altered only has 1 element altered.
+The default settings are a frequency of 0.1; meaning for every 10 members of our population that continue into the next generation one of these has some elements in its sequence changed, and a potency of 1;
+meaning that every sequence that was altered only has 1 element altered.
 Here we will look into these 2 different concepts and see how they might improve our distance to an optimal sequence and whether we can escape local maximums.
 \begin{itemize}
-    \begin{item}
-        Is it beneficial for more/less than 1 in 10 members to be mutated generation to generation? (More frequent mutation)
-    \end{item}
-    \begin{item}
-        Is changing one or more actions of a members' sequence the best way of mutating a candidate (More potent mutation)
-    \end{item}
+    \item Is it beneficial for more/less than 1 in 10 members to be mutated generation to generation? (More frequent
+mutation)
+    \item Is changing one or more actions of a members' sequence the best way of mutating a candidate (More potent mutation)
 \end{itemize}
-    
-These are two separate questions, so first we will look at increasing the potency of our mutation. 
+
+These are two separate questions, so first we will look at increasing the potency of our mutation.
 Once we have found some information on how this effects our solution, we can look into the frequency of our mutations with the new potency as a permanent setting.
 As shown further on, there is not much of an improvement on our algorithm to changing either of these.The mutation algorithm is shown in Snippet~\ref{code:mutate}\\
-\begin{figure}
+\begin{figure}[ht] 
     \begin{minted}{python}
         def mutate(self):
         """
@@ -361,15 +379,16 @@ EFFICIENCY NOTE\@: This approach allows for an \(O(1)\) factor of scaling.
 This makes changes in mutation a great candidate for an approach to reduce our solution sequence distance compared with other approaches, for example increasing the population size.\\
 
 \subsubsection{Changing Mutation Potency}
-Changing the potency of the algorithm will mainly generate the noise in our sequence generation to generation, increasing the distance\footnote{Distence concept from coding theory; \(d(s_1,s_2)\) =  the number of differing positions between 2 sequences \(s_1\) and \(s_2\). \(d(111,110) = d(CCC,CCD) = 1 \)} between the mutated sequence from the original.\\ 
+Changing the potency of the algorithm will mainly generate the noise in our sequence generation to generation, increasing the distance\footnote{Distance concept from coding theory; \(d(s_1,s_2)\) = the number of differing positions between 2 sequences \(s_1\) and \(s_2\). \(d(111,110) = d(CCC,CCD) = 1 \)} between the mutated sequence from the original.\\
 
 This potentially could create an algorithm that is too `jumpy' for narrowing in on a solution.
 We can imagine a sequence as a vector in 200 dimension space then a mutation for element \(X_i\) is the same as changing the vector in its \(i^th\) dimension.
 Shortening this example to a vector in 3 dimensions (or a sequence of length 3) then a mutation is much more easily visualised.
-It is clear that a mutation potency should be kept low as to keep consecutively mutated sequences more similar; we will only be looking at mutating our sequences at up to 10 percent of their elements.
+It is clear that a mutation potency should be kept low as to keep consecutively mutated sequences more similar;
+we will only be looking at mutating our sequences at up to 10 percent of their elements.
 We will look into having mutation potencies \(m_p \in [1,2,3,5,10,15,20]\)\\
 
-\begin{figure}
+\begin{figure}[ht] 
     \begin{minted}{python}
         def mutationPotencyChecker(opponent):
     file_name = "data/" + str(opponent).replace(" ", "_").replace(":","_").lower() + "_mutation_potency.csv"
@@ -407,30 +426,31 @@ We will look into having mutation potencies \(m_p \in [1,2,3,5,10,15,20]\)\\
 
 Using the data generated from Snippet~\ref{code:mutationPotencyChecker} of code we are able to look at how our best score and our best score diff is affected as we increase the number of positions.\\
 
-\begin{figure}
-    \includegraphics[width=0.1\textwidth]{other/construction.jpg}
-    \caption{Best score vs generation for different mutation potencies}\label{fig:MUT-POT-bs-v-gen-all}
-    % TODO: hyper ref might be useful
+\begin{figure}[ht] 
+\includegraphics[width=1.5\textwidth, center]{plots/MUT_POT_bs_v_gen_all.pdf}
+\caption{Best score vs generation for different mutation potencies}\label{fig:MUT-POT-bs-v-gen-all}
+% TODO: hyper ref might be useful
 \end{figure}
 
-Figure~\ref{fig:MUT-POT-bs-v-gen-all} shows no clear benefit from increasing the mutation potency. 
-We can see that having changed 15 genes in our sequence each time we are still not improving our score as much as changing only 1. 
-This may be down to chance (and if the test is rerun this may disappear), however looking at more opponents than just grudger we find there is no clear benefit to increasing the mutation potency with respect to the overall best score value against an opponent. 
+Figure~\ref{fig:MUT-POT-bs-v-gen-all} shows no clear benefit from increasing the mutation potency.
+We can see that having changed 15 genes in our sequence each time we are still not improving our score as much as changing only 1.
+This may be down to chance (and if the test is rerun this may disappear), however looking at more opponents than just Grudger we find there is no clear benefit to increasing the mutation potency with respect to the overall best score value against an opponent.
 If we instead look at what our average increase of score per mutation is we may observe a useful result.\\
 
-\begin{figure}
-    \includegraphics[width=0.1\textwidth]{other/construction.jpg}
-    \caption{Average best score diff vs mutation potencies}\label{fig:MUT-POT-bs-diff-v-pot-all}
+\begin{figure}[ht] 
+\includegraphics[width=1.5\textwidth, center]{plots/MUT_POT_bs_diff_v_pot_all.pdf}
+\caption{Average best score diff vs mutation potencies}\label{fig:MUT-POT-bs-diff-v-pot-all}
 \end{figure}
 
-From looking at how our average best score difference changes as we increase the mutation potency there is no sign that there is a significant improvement to our sequence. The increase in mean best score difference is not substantial and could be down to chance
+From looking at how our average best score difference changes as we increase the mutation potency there is no sign that there is a significant improvement to our sequence.
+The increase in mean best score difference is not substantial and could be down to chance.
 
 \subsubsection{Changing Mutation Frequency}
 In contrast to changing the mutation potency, increasing the frequency should allow us to generate more unique sequences generation to generation.
-We will look at what happens when we run the genetic algorithm on a set of mutation frequencies; \(m_f = [0.1,0.2,0.3,0.4,0.5]\)
-The code in Snippet~\ref{code:mutationFrequencyChecker} shows the algorithm that will complete this analysis.
+We will look at what happens when we run the genetic algorithm on a set of mutation frequencies; \(m_f = [0.1,0.2,0.3,0.4,0.5]\).
+The code in Snippet~\ref{code:mutationFrequencyChecker} shows the algorithm that will complete this analysis.\\
 
-\begin{figure}
+\begin{figure}[ht] 
     \begin{minted}{python}
         def mutationFrequencyChecker(opponent):
         file_name = "data/" + str(opponent).replace(" ", "_")
@@ -469,162 +489,325 @@ The code in Snippet~\ref{code:mutationFrequencyChecker} shows the algorithm that
     \caption{Mutation potency code}\label{code:mutationFrequencyChecker}    
 \end{figure}
 
-\begin{figure}
-    \includegraphics[width=0.1\textwidth]{other/construction.jpg}
-    \caption{Best score vs generation for different mutation frequencies}\label{fig:MUT-FREQ-bs-v-gen-all}
-\end{figure}
-----------------------------------EDIT LINE---------------------------------\\
-
-The results on changing the mutation rate don't obviously effect that generations until convergence from this overview. There is an interesting result that can be seen on the grudger plot; the algorithm has found 2 different maximums.   
-
-\begin{figure}
-    \includegraphics[width=0.1\textwidth]{other/construction.jpg}
-    \caption{Average best score diff vs mutation frequencies}\label{fig:MUT-FREQ-bs-diff-v-freq-all}
+\begin{figure}[ht] 
+\includegraphics[width=1.5\textwidth, center]{plots/MUT_FREQ_bs_v_gen_all.pdf}
+\caption{Best score vs generation for different mutation frequencies}\label{fig:MUT-FREQ-bs-v-gen-all}
 \end{figure}
 
-From Figure~\ref{fig:MUT-fig:MUT-FREQ-bs-v-gen-all} we can see that the mutation frequency of 0.1 and 0.2 produced higher scoring solutions than the other mutation frequencies. This shows that we have found 3 different solution sequences (in freqs .15, .2, .25) with the solution for .1 continuing to improve as the generations ended.\\
-            
-As an additional point, we can also observe that increasing the mutation frequency means that there is less variation in the best scoring sequences. (TODO: Does this have an impact on escaping local maximums?)
+The results on changing the mutation rate don't obviously effect that generations until convergence from this overview.
+There is an interesting result that can be seen on the grudger plot; the algorithm has found 2 different maximums.
 
-\subsection{Mitigating local maximum solutions}\label{sec:mitigating local maximums}
-The occurrence of local maximums is something that has only occurred for the Grudger opponent so far. The difference between the Grudger and the other opponents were looking at is that the Grudger has a singularity where its behaviour changes. The change in behaviour is not uncommon, Tit For Tat works in the same way, however this algorithm has managed to identify its behaviour and adapt to overcome its negative effects.\\
-            
-Grudger is an opponent which it is possible to attain a local maximum score and be `trapped' in this solution sequence, as shown in the multiple plateaus in the .
-From the output sequences~\ref{seq:grudger-start} and~\ref{seq:grudger-end} it appears that the sequence of moves is being optimised into becoming 2 sections of opposing moves. 
-If we look at the start and end of a generation set we can see that the genetic algorithm is trying to remove Cs after the defect point and add Cs before the defect point. 
-This solution is due to the fact a good solution will have found that ending in lots off defections is good, and as it progressed there isn't a chance to observe an ending of cooperation moves. 
-This is a clear sign of the algorithm locating a local maximum, we will look into ways to mitigate these effect in Section~\ref{sec:mitigating local maximums}.\\
+\begin{figure}[ht] 
+\includegraphics[width=1.5\textwidth, center]{plots/MUT_FREQ_bs_diff_v_freq_all.pdf}
+\caption{Average best score diff vs mutation frequencies}\label{fig:MUT-FREQ-bs-diff-v-freq-all}
+\end{figure}
 
-% TODO: move to code
-Grudger best start: \(C:[6,8,2,1,2,1,6,1,2,2,4,2,1,1,2,10,1,1,1,3,1,3,1,1,1,1,2,2,1,1,1,2,3,5,2,2,2,1,1,2,1,1,4,1,2,1,1,1,2,3,1,1,2,2,1,7,3,2,1,2,3,1,1,5,(1)^10,4,1,1,1,1,4,2,1,1,3,1,1,2,3,4,1,1,3,2,4,2,1,2,3]\)\label{seq:grudger-start}\\ 
+From Figure~\ref{fig:MUT-FREQ-bs-v-gen-all} we can see that the mutation frequency of 0.1 and 0.2 produced higher scoring solutions than the other mutation frequencies.
+This shows that we have found 3 different solution sequences (in freqs .15, .2, .25) with the solution for .1 continuing to improve as the generations ended.\\
 
+As an additional point, we can also observe that increasing the mutation frequency means that there is less variation in the best scoring sequences.
+%  (TODO: Does this have an impact on escaping local maximums?)
 
-% TODO: add underbracing 
-Grudger best end: \(C:[22,178]\)\label{seq:grudger-end}\\            
+\subsection{Mitigating local maximum solutions}\label{subsec:mitigatingLocalMaximums}
+The occurrence of local maximums is something that has only occurred in sequences against for the Grudger opponent so far.
+Figure~\ref{fig:MUT-FREQ-bs-v-gen-all} shows that there are clearly 2 distinct plateaus that are reached in terms of score, and the overall scores are much lower than the optimal, around \(1.4\). \\
 
-Grudger and Tit For Tat differ in their responsiveness in two ways: 
-            
+The difference between the Grudger and the other opponents have been looking at is that the Grudger has a singularity point where its behaviour changes.
+The change in behaviour is not uncommon, Tit For Tat works in a similar way and in both cases our algorithm has managed to identify this behaviour and adapt to overcome its negative effects.\\
+
+Grudger is an opponent which it is possible to attain a local maximum score and be `trapped' in this solution sequence.
+From the output sequences below it appears that the sequence is being changed into becoming 2 sections of opposing moves.
+If we look at a random start sequence and then the end sequence after 250 generations we can see that the genetic algorithm is learning defect after some point and cooperate before.
+This is due to the fact a good solution will end in lots off defections after it has already defected, but cooperate beforehand to avoid this harsh behaviour.\\
+
+%Grudger best start: \(C:[6,8,2,1,2,1,6,1,2,2,4,2,1,1,2,10,1,1,1,3,1,3,1,1,1,1,2,2,1,1,1,2,3,5,2,2,2,1,1,2,1,1,4,1,2,1,1,1,2,3,1,1,2,2,1,7,3,2,1,2,3,1,1,5,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,4,2,1,1,3,1,1,2,3,4,1,1,3,2,4,2,1,2,3]\)\\
+Grudger best start: CCCCCCDDDD\ldots (No pattern is obvious.)
+
+Grudger best end: \(C:[22,178]\)\\
+
+We may be able to identify a way to mitigate this singularity effect by looking at the difference between 2 similar solutions.
+Grudger and Tit For Tat differ in their strategies in two ways:
+
 \begin{itemize}
     \begin{item}
-        Grudger never changes its mind. There is one change in behaviour for the entire game. Unlike Tit For Tat, this means that the algorithm only has a single opportunity to observe this once every per population per generation meaning the behaviour is much less frequently observed.
+    Grudger never changes its mind.
+    There is one change in behaviour for the entire game, unlike Tit For Tat.
+    The algorithm then only has a single opportunity to observe this per population     per generation meaning the behaviour is much less frequently encountered.
     \end{item}
-    \begin{item}
-        The Grudger also only does this change once no matter the games length. This means that the genetic algorithm picks up the effect of this choice as early in the match as the first defection in its random sequence. A random start of C and Ds puts the likeyhood of at least 1 defection occurring in the first 10 moves at \(99.99\); this means our algorithm will, most likely, always encounter this grudging effect within the first 10 moves and will never score the full 600 points. (see below)
-    \end{item}
+\begin{item}
+    Grudger will not become `smart' again.
+    This means that the move genetic algorithm picks up the effect of a single  defection in its sequence it starts playing a `dumb' opponent.
+    A random start of Cs and Ds puts the likeyhood of at least 1 defection occurring in the first 10 moves at above \(99.99\% \).
+    This swap from `smart' to `dumb' will, most likely, always occur in the first 10 moves;
+    the only way of extending the `smart' player is to add a cooperation to the end of the starting Cs.
+\end{item}
 \end{itemize}
-            
-Below are two totality games, one of all Cs and one of all Ds. These are edge cases and would be incredibly rarely encountered as a starting point in the initial population. Because of this the algorithm has to shuffle towards the potential benefit of using these totalities rather than start with analysing them, and in our case the algorithm will probably first encounter the Grudging effect of out opponent before trying out [CCC..C] or [CCC..D] and so will probably never find the highest scoring solution.
 
-\[players = (axl.Grudger(),axl.Cycler("C"))
-            match = axl.Match(players,200)
-            match.play()
-            print(match.final_score())
-            print(match.final_score_per_turn())
-            (600,600)
-            (3.0,3.0)\]
+Snippet~\ref{code:gudgerTotailites} shows two totality games against grudger, one of all Cs and one of all Ds.
+These are edge cases and would be incredibly rarely encountered as a starting point in the random initial population.
+Because of this, the algorithm has to shuffle towards the potential benefit of using these totalities rather than start with analysing them.
+Our case against grudger requires the algorithm to attempt this shuffle towards a totality after encountering the grudging effect.
+This would then require the algorithm to select (using random selection out of 200) the first defection move and change it (only 1 in 10 members are mutated) to a cooperation move.
+This likelihood is incredibly small, and starting at common or uniform sequences would be more beneficial, as posed in Section~\ref{subsec:alteringinitialpopulation}.\\
 
-            \[players = (axl.Grudger(),axl.Cycler("D"))
-            match = axl.Match(players,200)
-            match.play()
-            print(match.final_score())
-            print(match.final_score_per_turn())
-            (199,204)
-            (0.995,1.02)\]
+\begin{figure}[ht] 
+    \begin{minted}{python}
+    players = (axl.Grudger(),axl.Cycler("C"))
+    match = axl.Match(players,200)
+    match.play()
+    print("final scores:", match.final_score())
+    print("per turn:", match.final_score_per_turn())
 
-Strangely, our solution sequence is set to find where we have the objective of "score" (see objective statement) which actually tries to improve the score per turn $(axelrod_dojo\ utils.py:67)$; it should be converging on a totality of Cs rather than what its doing by finding the totality of Ds. This is probably because the algorithm initially limits its best score per turn once the first generation is complete and a cut-off has been established for each of the initial population. The crossover method between generations then doesn't provide enough of a mix up to allow the algorithm to escape the local minimum by switching a subsection with a sufficiently different potentially better subsection. Then when it comes to mutating, there is little any number of mutations can do to drastically change large sections of the sequence without having a huge effect on the score.\\ 
+        final scores: (600,600)
+        per turn: (3.0,3.0)
 
-This then sheds light on the path the algorithm takes to find a solution. If we are to find the optimal solution, we must take a crossover and mutation path which doesn't cut off better paths as we work our way towards a solution; this is much easier said than put into practice due to the way the algorithm "cuts off paths".
-If we reverse this thinking and try to alter our crossover design and mutation rate such that instead of "cutting off" a path we are able to "build" new ones. We can re-design the crossover to switch up large subsections of the sequence then allow the mutations to optimise these sub-sequences.\\
+    players = (axl.Grudger(),axl.Cycler("D"))
+    match = axl.Match(players,200)
+    match.play()
+    print("final scores:", match.final_score())
+    print("per turn:", match.final_score_per_turn())
+
+        final scores: (199,204)
+        per turn: (0.995,1.02)
+    \end{minted}
+    \caption{Grudger matches against totalities}\label{code:gudgerTotailites}
+\end{figure}
+
+% TODO: need this para? I feel like I'm repeating myself
+As Snippet~\ref{code:gudgerTotailites} shows, we should be converging on a totality of Cs rather than what its doing;
+finding the totality of Ds.
+This is probably because the algorithm initially limits its best score per turn once the first generation is complete and a cut-off has been established for each of the initial population.
+The crossover method between generations then doesn't provide enough of a mix up to allow the algorithm to escape the local minimum by switching a subsection with a sufficiently different potentially better subsection.
+Then when it comes to mutating, there is little any number of mutations can do to drastically change large sections of the sequence without having a huge effect on the score.\\
+
+\subsubsection{Ineffective Approach of Altering Crossover \& Mutation}
+The process of converging to Ds when building a solution against grudger then sheds light on the process the algorithm takes to find a solution.
+If we are to find the optimal solution sequence, we must take a crossover and mutation path which doesn't cut off better paths as we work our way towards good solutions;
+this is much easier said than put into practice due to the way the algorithm `cuts off paths'.
+If we reverse this thinking and try to alter our crossover design and mutation rate such that instead of `cutting off' a path we are able to `build' new ones.
+We can re-design the crossover to switch up large subsections of the sequence then allow the mutations to optimise these sub-sequences.\\
 
 currently we have the following design:
-            
-\[def crossover_old(self, other_cycler):
-            \# boring single point crossover:
-            crossover_point = int(self.get_sequence_length() // 2)
-           \# get half 1 from self
-            seq_p1 = self.get_sequence()[0: crossover_point]
-            \# get half 2 from the other_cycler
-            seq_p2 = other_cycler.get_sequence()[crossover_point: other_cycler.get_sequence_length()]
-            crossed_sequence = seq_p1 + seq_p2
-            return CyclerParams(sequence=crossed_sequence)\]
 
+
+\begin{figure}[ht] 
+    \begin{minted}{python}
+        def crossover_old(self, other_cycler):
+        \# single point crossover:
+        crossover_point = int(self.get_sequence_length() // 2)
+        \# get half 1 from self
+        seq_p1 = self.get_sequence()[0: crossover_point]
+        \# get half 2 from the other_cycler
+        seq_p2 = other_cycler.get_sequence()[crossover_point: other_cycler.get_sequence_length()]
+        
+        crossed_sequence = seq_p1 + seq_p2
+
+        return CyclerParams(sequence=crossed_sequence)
+    \end{minted}
+    \caption{Old Crossover algorithm}\label{fig:oldCrossover}
+\end{figure}
 
 % TODO: look into tikz
-We want to allow the crossover to have more of an impact than just halving the sequence and optimizing each section. i.e. go from:\\ 
-\(|--------------------| and |++++++++++++++++++++| = |----------++++++++++|\) 
-to, say:\\ 
-\(|--------------------| and |++++++++++++++++++++| = |--++--++--++--++--++|\)\\ 
-This will allow the mutation rate to edit the subsections in a more interlaced manner, hopefully overcoming the pitfalls of sparse mutations to escape local maximums. our new crossover method is as follows:\\ 
+We want to allow the crossover to have more of an impact than just halving the sequence and optimizing each section. i.e. go from:\\
+\[|--------------------| and |++++++++++++++++++++|\]
+\[|----------++++++++++|\]
+to, say:\\
+\[|--------------------| and |++++++++++++++++++++|\]
+\[ |--++--++--++--++--++|\]\\
+This will allow the mutation rate to edit the subsections in a more interlaced manner, hopefully overcoming the pitfalls of sparse mutations to escape local maximums.
+Our new crossover method is shown in Figure~\ref{fig:newCrossover}.
+As shown, the algorithm splits the two sequences into 10 section and the new sequence is formed from Alternating sections.
+Figure~\ref{fig:newCrossoverEX} shows an example of the new crossover method.\\
 
-\[def crossover(self, other_cycler):
-            \# 10 crossover points:
-            step_size = int(len(self.get_sequence()) / 10)
-            \# empty starting seq
-            new_seq = []
-            seq1 = self.get_sequence()
-            seq2 = other_cycler.get_sequence()
-            i = 0
-            j = i + step_size
-            while j <= len(seq1) - step_size:
-                new_seq = new_seq + seq1[i:j]
-                new_seq = new_seq + seq2[i + step_size:j + step_size]
-                i += 2 * +step_size
-                j += 2 * +step_size
-            return CyclerParams(sequence=new_seq)\]
+\begin{figure}[ht] 
+    \begin{minted}{python}
+        def crossover(self, other_cycler):
+        \# 10 crossover points:
+        step_size = int(len(self.get_sequence()) / 10)
+        \# empty starting seq
+        new_seq = []
+        seq1 = self.get_sequence()
+        seq2 = other_cycler.get_sequence()
+        i = 0
+        j = i + step_size
+        while j <= len(seq1) - step_size:
+            new_seq = new_seq + seq1[i:j]
+            new_seq = new_seq + seq2[i + step_size:j + step_size]
+            i += 2 * +step_size
+            j += 2 * +step_size
+        return CyclerParams(sequence=new_seq)
+    \end{minted}
+    \caption{New Crossover algorithm}\label{fig:newCrossover}
+\end{figure}
 
-Below is an exapmple of the new crossover sequence:\\ 
+\begin{figure}[ht] 
+    \begin{minted}{python}
+        seq1=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+        seq2=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        step_size =int(len(seq1)/10)
+        i=0
+        j=i+step_size
+        new_seq = []
+        while j<=len(seq1)-step_size:
+            new_seq = new_seq + seq1[i:j]
+            new_seq = new_seq + seq2[i+step_size:j+step_size]
+            i+=2*+step_size
+            j+=2*+step_size
+        print(seq1)
+        print(seq2)
+        print(new_seq)
 
-\[seq1=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-            seq2=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-            step_size =int(len(seq1)/10)
-            i=0
-            j=i+step_size
-            new_seq = []
-            while j<=len(seq1)-step_size:
-                new_seq = new_seq + seq1[i:j]
-                new_seq = new_seq + seq2[i+step_size:j+step_size]
-                i+=2*+step_size
-                j+=2*+step_size
-            print(seq1)
-            print(seq2)
-            print(new_seq)\]
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0]
+    \end{minted}
+    \caption{Example of new crossover algorithm}\label{fig:newCrossoverEX}
+\end{figure}
 
-now we can look at how this new crossover algorithm works with the default mutation (freq=.1 and pot=1) to improve our local maximums with the grudger opponent:\\
+When we look at how this new crossover algorithm works with the default mutation (freq=.1 and pot=1) to improve our local maximums with the selection off opponents.\\
 
-            
-% TODO: show that the there was no improvement from this change    
-\subsection{Altering Initial Population}
-We want to select starting sequences that fit patterns we know will have good results. For example totalities, with heads/tails, are usually very effective against simple opponents; for example Tit For Tat, 'dumb' opponents or Grudger. Alternating and certain known solution optimal sequences are good starting sequences for an initial population, allowing a more intelligently distributed set of starting points for the random mutation process.\footnote{This can be visualised as placing balls on a `lumpy' 2d plane to try and find the minimum, starting with an educated guess means we wont get all the balls stuck in one vally which isnt the deepest.}
-    
-This section discusses the results of working on an initial population that contain common solution sequences. 
+
+\subsection{Altering Initial Population}\label{subsec:alteringinitialpopulation}
+We want to select starting sequences that fit patterns we know will have good results.
+For example totalities, with heads/tails, are usually very effective against simple opponents;
+for example Tit For Tat, `dumb' opponents or Grudger.
+Alternating and certain known solution optimal sequences are good starting sequences for an initial population, allowing a more intelligently distributed set of starting points for the random mutation process.\footnote{This can be visualised as placing balls on a `lumpy' 2d plane to try and find the minimum, starting with an educated guess means we wont get all the balls stuck in one vally which isnt the deepest.}
+
+This section discusses the results of working on an initial population that contain common solution sequences.
 We will start by creating a population of `neat' starting members then allow the entropy of the genetic algorithm to alter these sequences.
-Deciding where to start our algorithm may mitigate potential sub-optimal solutions by reducing the distance between the starting sequences and optimal solutions. the list of `neat' starting points are below:\\
+Deciding where to start our algorithm may mitigate potential sub-optimal solutions by reducing the distance between the starting sequences and optimal solutions.
+The list of `neat' starting points are stated below:\\
 
 Totalities
 \begin{itemize}
-    \item $C:[200]$
+\item \(C:[200]\) | 1 sequence
 \end{itemize}
-     
-Trailing Defectors
-\begin{itemize}
-    \item $\{C:[i,200-i]\} \quad i\in [1,5]$
-    \item $\{C:[200-i,i]\} \quad i\in [2,5]$
-\end{itemize}
-     
-Odd Repetitions
-\begin{itemize}
-    \item $C:[1,198,1] = CD...DC$
-    \item $C:[2,197,1] = CCD...DC$
-    \item $C:[1,197,2] = CD...DCC$
-\end{itemize}
-    
-     
-Even Alternating \& extensions
-\begin{itemize}
-    \item $C:[\overbrace{(1,1)}^{100}] = CDCD....CD$
-    \item $C:[\overbrace{1,(2,2)}^{50}] = CCDD...CCDD$
-    \item $C:[\overbrace{(2,2)}^{50}] = CCDD...CCDD$
-\end{itemize} 
-For each of these sequence sets the inverse?? will also be applied
 
-\section{Conclusion of approach}
+Single Change Sequences
+\begin{itemize}
+\item \(\{C:[i,200-i]\} \quad i\in [1,10],\ i \in \mathbb{Z}\) | 10 sequences
+\item \(\{C:[200-i,i]\} \quad i\in [1,10],\ i \in \mathbb{Z}\) | 10 sequences
+\end{itemize}
+
+Matching Tail Sequences
+\begin{itemize}
+\item \(\{C:[i,200-(i+j),j]\} \quad i,j \in [1,5],\ i,j \in \mathbb{Z}\) | 25 sequences
+\end{itemize}
+
+Alternating 
+\begin{itemize}
+\item \(C:[\ (i,i)^{100/i}] \quad i \in \{1,2,4,5\}, i \in \mathbb{Z}\) | 4 sequences
+\end{itemize}
+
+Handshakes 
+\begin{itemize}
+\item \(C:[\ i,j,k,200-(i+j+k)] \quad i,j,k \in \{0,1,2,3\}, i \in \mathbb{Z}\) | 4 sequences
+\end{itemize}
+
+For each of these sequence sets the inverse, with a defection move start, will also be added to the set of starting sequences.
+This in total gives SOMENUMBER of sequences, we will then make up the difference to the population limit using a set of random sequences.\\
+
+We can now look into how this has effected the previous experiments.
+
+\subsubsection{Population Size}
+
+\begin{figure}[ht] 
+    \includegraphics[width=1.5\textwidth, center]{plots/NEW_INIT_POP_bs_v_gen_all_old.pdf}
+    \caption{Best Score vs generations for preset initial populations on top of random sequences}\label{fig:NEW-INIT-POP-bs-v-gen-all}
+\end{figure}
+
+figure ???? shows the results of using a given initial population of sequences.
+The Collective Strategy run in figure looks as if there are much better results with an initial set population for the algorithm. 
+Of the two that are not showing straight lines we can observe that the algorithm has found the optimal sequence for all but Random \& Collective Strategy. 
+This is probably due to 2 different reasons:
+
+    \textbf{Random}: The `dumb' strategy should being beaten with a totality of D, the algorithm has in fact converged to almost this totality, but still has intermittent Cs. 
+    The reason for this is the scoring grade `score per turn' will reflect on the number of intermittent Cs in the Random players sequence. More Cs in the Random sequence will allow the algorithm to score more. This leads to a solution sequence containing some random Cs not because they score better in some turns, but because the totality of Ds played against a Random sequence would `loose' to a sequence containing some Cs in because its not a fair trial; the two sequences play against different Random opponent sequences.
+    \textbf{Collective Stratergy}: as described in Section~?????? this strategy is, basically, a handshake + Grudger. If we look into the sequence it selected we can see its found the handshake but then arrives on Grudger. After this encounter the same problem as we had before population selection occurs and the algorithms limits the damage by splitting into Cs then Ds. Solving the collective strategy (and handshakes in general) may be simple; we just put in all the possible n move handshakes followed by totalities and then set to work on the 2nd part of the sequence.
+
+It is clear that having a larger population is good from the old analysis, but the initial population still has to be tweaked to improve its scores against certain handshake opponents. 
+The Random opponent is a special case that requires more analysis to find the absolute optimal. 
+The new initial population will include all combinations of C \& D of length 5, followed by finishing on all Cs or Ds as shown in the Totalities \& handshakes section of Snippet~\ref{code:initialPopulationCode}. 
+
+\begin{figure}[ht] 
+    \begin{minted}{python}
+        def getCyclerParamsPrePop2(pop_size=200, mutation_prop=0.1, muation_pot=1):
+        pop = []
+        
+        if pop_size<164:
+            print("population must be 164+,")
+            return
+        
+        # Totalities & Handshakes
+        handshake_leng=5
+        for start in itertools.product("CD",repeat=handshake_leng):
+            pop.append(axl_dojo.CyclerParams(list(start) + [C]*(200-handshake_leng)))
+            pop.append(axl_dojo.CyclerParams(list(start) + [D]*(200-handshake_leng)))
+    
+        # 50-50
+        pop.append(axl_dojo.CyclerParams([C]*100 + [D]*100))
+        pop.append(axl_dojo.CyclerParams([D]*100 + [C]*100))
+        
+        # Single Change
+        for i in range(1, 11):
+            pop.append(axl_dojo.CyclerParams([C]*i + [D]*(200-i)))
+            pop.append(axl_dojo.CyclerParams([D]*i + [C]*(200-i)))
+    
+        for i in range(1, 11):
+            pop.append(axl_dojo.CyclerParams([C]*(200-i) + [D]*i))
+            pop.append(axl_dojo.CyclerParams([D]*(200-i) + [C]*i))
+        
+        # Matching Tails
+        for i in range(1, 6):
+            for j in range(1, 6):
+                pop.append(axl_dojo.CyclerParams([C]*i + [D]*(200-(i+j)) + [C]*j))
+                pop.append(axl_dojo.CyclerParams([D]*i + [C]*(200-(i+j)) + [D]*j))
+                
+        # Alternating
+        pop.append(axl_dojo.CyclerParams([C,D]*100))
+        pop.append(axl_dojo.CyclerParams([D,C]*100)) 
+        pop.append(axl_dojo.CyclerParams([C,C,D,D]*50))
+        pop.append(axl_dojo.CyclerParams([D,D,C,C]*50))
+        pop.append(axl_dojo.CyclerParams([C,C,C,C,D,D,D,D]*25))
+        pop.append(axl_dojo.CyclerParams([D,D,D,D,C,C,C,C]*25))
+        pop.append(axl_dojo.CyclerParams([C,C,C,C,C,D,D,D,D,D]*20))
+        pop.append(axl_dojo.CyclerParams([D,D,D,D,D,C,C,C,C,C]*20))
+        
+        seq_len = 200
+        while len(pop) < pop_size:
+            random_moves = list(map(axl.Action, np.random.randint(0, 1 + 1, (seq_len, 1))))
+            pop.append(axl_dojo.CyclerParams(random_moves))
+        
+        return pop        
+    \end{minted}
+    \caption{Initial Population Code}\label{code:initialPopulationCode}
+\end{figure}
+
+After adding the extra members of the initial population we can see, from Figure~\ref{}, that now the handshake strategy, such as Collective Strategy, are solved much sooner.
+Also shown in Figure~\ref{} is the Random and ZD extort players, these are examples of Stochastic players which are not finding optimal strategy's.
+These will be discussed further in Section~\ref{subsubsec:discussion}.
+\begin{figure}[ht] 
+    \includegraphics[width=1.5\textwidth, center]{plots/NEW_INIT_POP_bs_v_gen_non_performers.pdf}
+    \caption{Non optimal sequence players after changing initial population}\label{fig:NEW-INIT-POP-bs-v-gen-non-performers}
+\end{figure}
+
+\subsubsection{Generation Length}
+\begin{figure}[ht] 
+    \includegraphics[width=1.5\textwidth, center]{plots/NEW_GEN_bs_v_gen_all.pdf}
+    \caption{}\label{fig:NEW-GEN-bs-v-gen-all}
+\end{figure}
+
+\subsubsection{Mutation Potency}
+\begin{figure}[ht] 
+    \includegraphics[width=1.5\textwidth, center]{plots/NEW_MUT_POT_bs_v_gen_all.pdf}
+    \caption{}\label{fig:NEW-MUT-POT-bs-v-gen-all}
+\end{figure}
+
+\subsubsection{Mutation Frequency}
+\begin{figure}[ht] 
+    \includegraphics[width=1.5\textwidth, center]{plots/NEW_MUT_FREQ_bs_v_gen_all.pdf}
+    \caption{}\label{fig:NEW-MUT-FREQ-bs-gen-all}
+\end{figure}
+\subsubsection{Discussion}\label{subsubsec:discussion}
+
+\section{Conclusion of approach}\label{sec:conclusionOfApproach}
