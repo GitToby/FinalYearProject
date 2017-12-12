@@ -6,75 +6,75 @@ General discussion on what game theory is and what the PD is.
 What this topic is and how it fits into the big picture.\\
 
 \section{Iterated Prisoners Dilemma}\label{sec:iteratedPrisonersDilemma}
-The Prisoners Dilemma is a classic game theory topic\ldots
-Its important to game theory because\ldots
-Creating general sequences to strategies is important because\ldots
-Models in the real world that follow certain strategies\ldots
-How we can leverage these to peruse goals.
-
-The Prisoners Dilemma is a well known game theory problem based on the example of a pair of prisoners and their subsequent interrogation.
-The game is as follows:\\
-
-Something about the PD \\
-
-The single game itself is very basic and is modelled in the following way: \\
-
-\[give-a-model-here\]
-
-The Iterated Prisoners Dilemma is the iterated version of the Prisoners Dilemma\footnote{reference this stuff dude, come on..}.
-The iteration of the game is what makes the game an interesting concept, as now \textbf{learn the technical stuff and
-put it here!!!!!} we are able to create strategies\footnote{When referring to ourselves, we will describe our moves as a strategy.
-When referring to an opponent we can use the term opponent and strategy interchangeably.} that look to gain an upper hand based on \textbf{Something here}.
-
-\subsection{Machine Learning \& Computer Intelligence}\label{subsec:machineLearningAndcomputerIntelligence}
+To be written.
+\section{Machine Learning \& Computer Intelligence}\label{sec:machineLearningAndcomputerIntelligence}
 This section will briefly provide a background to machine learning algorithms.
 This is by no means a comprehensive look into these subjects but will provide sufficient background on technical discussion later on.\\
 
 Machine Learning is a field of computer science that has existed since the first computers have been around.
 Most famously the questions posed by Alan Turing in 1950~\cite{turing1950computing} asks `can machines think', a question that has been refined and analysed to this day.
-The field of computer intelligence is rich in its complexities and has recently been making breakthroughs\footnote{Google go} on this question.
-Recently there has also been record levels of funding~\cite{chui2017artificial} put in to companies which operate in this field, producing results in areas that would usually seem `solved'.\\
+The field of computer intelligence is rich in its complexities and has recently been making breakthroughs~\cite{knight2017alphaZeroMIT} on topics which would traditionally be considered `thinking'.
+Along with this, recently there has also been record levels of funding~\cite{chui2017artificial} put in to companies which operate in this field, producing results in areas that would usually seem `solved'.\\
+%TODO: find the doc on washing machine AI or IoT AI
 
+\subsection{Genetic Algorithms}\label{subsec:geneticAlgorithms}
 This report will cover one of the forms of machine learning called genetic algorithms.
 Techniques of machine learning can be combined and used together in many situations, the field of mathematics research is one;
-as used in~\cite{chu1997genetic}.
+for example machine learning is used in~\cite{chu1997genetic}.\\
+%TODO: find another
 
-\subsubsection{Genetic Algorithms}\label{subsubsec:geneticAlgorithms}
 Genetic Algorithms fall under a branch of machine learning called feature selection.
 Techniques of using genetic algorithms for generating solutions to problems typically revolve around heuristically improving members of a population who represent these solutions.
 The concepts of a genetic algorithm come from nature;
 like nature we create a survival of the fittest competition\footnote{need to reference Darwin?} to evaluate a population then kill off the weakest members.
 After this cull we create offspring from the most successful population or introduce new members from a predefined source.
-This process is then repeated until we stop, or forever in the case of nature.
-Figure~\ref{fig:genericGeneticAlgoCycle} is a diagram of this cycle.\\
+This process is then repeated until we stop, or forever in the case of nature.\\
 
-Put a figure of the cycle here.\label{fig:genericGeneticAlgoCycle} \\
+We say a genetic algorithm is structured in the following way.
+Given a population, \(P\), each with unique genes\footnote{Genes and member properties are interchangeable}, and a number of generations, \(G\in \mathbb{N}\), the algorithm will create \(G\) loops of scoring and potentially removing each of the members of the population.
+It does this by using a heuristic function \(f(p_i)\mapsto \mathbb{R},\ p_i \in P\).
+This function, \(f\), is defined beforehand in a way which describes the goal of our investigation (ours being best score per turn).
+Defining a cutoff or bottleneck \(b<|P|\), such that on conclusion of scoring the population, the top \(b\) ranking members by score can be kept and the rest discarded.
+Once we have removed a certain percentage of our population we can rebuild it using a series of crossovers and mutations (and possibly introducing new members into the population).
+\begin{itemize}
+    \item Crossovers take in 2 members of the population and return a new member based on some parameters of the 2 `parents'.
+    For example, our crossover takes the first half of a sequence from one and the second half from the other, merging them to form the third.
+    \item Mutations allow a (possibly targeted\footnote{For example using intuition and targeting specific genes, or allowing another algorithm to improves the targeting of this meta function.}) change in a single member of the population.
+    A mutation has 2 parameters, a potency \(M_p\in \mathbb{R}>0\) and a frequency \(M_f\in [0,1]\).
+    \(M_p\) describes how strong the mutation is, the higher it is the larger change to the member occurs.
+    \(M_f\) explains the percentage of how many members of the population are mutated.
+\end{itemize}
+Figure~\ref{fig:genericGeneticAlgoCycle} shows a flow diagram of this general cycle.\\
+
+Put a figure of generic cycle here.\label{fig:genericGeneticAlgoCycle} \\
 
 Our implementation of a genetic algorithm is more custom and has the following steps:
-\begin{itemize}
-    \item Start with a set of predefined sequences \& randomly generated sequences.
-    \item We will have each one play the given opponent and return with the average score per turn.
-    \item These sequences will be ranked and the lowest pairings \% will be discarded, resulting in a fitter, but smaller, population than before.
-    \item This smaller population will then create offspring using a crossover pairing algorithm before mutating with a selection of.
-    \item This new set of offspring will be included in the next scoring round and the process repeats for k number of rounds.
-\end{itemize}
+\begin{enumerate}
+    \item Start with a predefined population, supplemented with randomly generated member until to size.
+    \item Each member plays the given opponent with their sequence and returns with the average score per turn.
+    \item Members of the population are ranked by this average score per turn and the highest scoring 25\% will be kept for the next round.
+    The remaining 75\% are killed off.
+    \item The remaining population will then be copied and these copies mutated to create unique sequences before being merged back in to the main population.
+    \item The remaining 50\% difference is then made up of mutated results of crossovers from members of the current population or random new members, depending on a random selection algorithm.\footnote{This algorithm had a bug which would change the size of the population in the first generation.
+    This was fixed after Section~\ref{sec:conclusionOfApproach} was written.}
+    \item A generation has now concluded.
+    Repeat from step 2 until the desired number of generations are finished and a final best sequence is returned.
+\end{enumerate}
+Figure~\ref{fig:geneticAlgoCycle} shows a flow diagram of our cycle.
+This is the algorithm we will use in Chapter~\ref{ch:implementation} for analysing parameters\\
 
-Put a figure of the cycle here.\label{fig:geneticAlgoCycle} \\
+Put a figure of our cycle here.\label{fig:geneticAlgoCycle} \\
 
-Initially we create a heuristic function, say our fitness function, which is a measure of how successful a candidate in our population is.
-Then we run our whole population through this function, ranking each one by how successful their score is.
-At this point we can create a cut off\footnote{Can often be referred to as the bottleneck} to decide which of the population not to put through to the next round.\\
-
-\subsubsection{Bayesian Optimization}
-
+\subsection{Bayesian Optimization}\label{subsec:bayesianOptimization}
+%TODO: need this bit?
 \section{Brief Overview}\label{sec:briefOverview}
-In this document I will be be looking at the creation of sequences to beat given players in The Iterated Prisoners Dilemma\footnote{Reference this for some background}.
-My research looked into just the single opponent use case, but the idea of designing a sequence for a given number of opponents is looked at in the further study of the report.
-This task is the
+This document will be be looking at the creation of sequences to beat given players in The Iterated Prisoners Dilemma.
+Analysis will be focused on looking into just the single opponent use case, but the idea of designing a sequence for a tournament for a given number of opponents is a potential follow on to this work.
+This task is as follows:\\
 
+Problem:\\{\itshape~When playing a given Iterated Prisoners Dilemma strategy, \(O\), as an opponent, what is the best ordered solution sequence of moves, \(S\), to play in order for us to obtain the highest possible average score per move across the game.}\\
 
-Problem:\\
-\begin{quotation}
-    Given a certain opponent, \(O\), (with a provided strategy, S) what is the best possible sequence of moves, in a game of n turns, made by my strategy to maximise my players score?
-\end{quotation}
-
+For example an opponent known as Tit For Tat, which cooperates on its first move and the copies your last move on subsequent moves, will have a solution sequence of moves that are all cooperation apart from the last.
+This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into all the strategy as defined in the Axelrod Library.
+These are listed in appendix Section~\ref{appendix}
+%ToDo: cite Axlrod codebases?

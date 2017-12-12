@@ -1,6 +1,9 @@
 % !TEX root = ../main.tex
 \chapter{Implementation Of Sequence Discovery}\label{ch:implementation}
 % TODO: build the list of opponents and put it in the appendix
+In this chapter, consideration will be given to the process of finding the optimal sequence of moves against another player.
+The various approaches used and a detailed analysis of the optimisation procedures and parameters will be described.\\
+
 Before conducting the bulk calculations for the set of opponents listed in the appendix we will test the algorithms' parameters to see what the best settings are for finding solution sequences.
 We will describe a series of sequences as `converged' if the best score over the set number of generations has reached a stable point;
 described as when none of the moves in the sequences has changed over a number of generations.
@@ -11,7 +14,8 @@ The opponents we select are in some way interesting.
 They are all `simple' and can be explained in a very brief sentence or two, but each one has a fundamentally different structure to how they work.
 We will look into these as we can confirm that the genetic algorithm will select the optimal sequence solution for the selected opponent. \\
 
-\begin{center}
+\begin{table*}
+    \centering
     \begin{tabular}{ccc}
         \toprule
         Player & Optimal Sequence & Representation\\
@@ -25,7 +29,7 @@ We will look into these as we can confirm that the genetic algorithm will select
         axl.Champion()&TODO need to find&\\
         \bottomrule
     \end{tabular}
-\end{center}
+\end{table*}
 
 What we want to look at is how the best score rises over generations as we change certain features of the algorithm.
 Once the best score per turn hits a maximum such that it wont change no mater how many more generations are run;
@@ -65,44 +69,10 @@ In a perfect world where everything was time independent we would brute force ev
 
 The code in Snippet~\ref{code:populationChecker} is an implementation how we go about analysing and storing the tests on generation sizes listed.
 It leverages the use of the function `runGeneticAlgo' show in appendix Snippet~\ref{code:runGeneticAlgo}.
-This code will output data in the form of Table~\ref{table:popCheckerDataTable}
-\\
+This code will output data in the form of Table~\ref{table:popCheckerDataTable}.\\
 
 \begin{figure}
-    \begin{minted}{python}
-        def populationChecker(opponent):
-        # make a nice file name
-        file_name = "data/" + str(opponent).replace(" ", "_")
-        .replace(":", "_")
-        .lower()
-        + "_pop.csv"
-        # if the file exists don't run, it takes forever, make sure it exists
-        if not os.path.isfile(file_name):
-        df_main = pd.DataFrame(data=None, columns=col_names)
-        for pop_size in populations:
-        start_time = time.clock()
-        pop_run = runGeneticAlgo(opponent,
-        population_size=pop_size,
-        number_of_game_turns=200,
-        cycle_length=200,
-        generations=150,
-        mutation_probability=0.1,
-        reset_file=True)
-        end_time = time.clock()
-        tmp_df = pd.read_csv(pop_run[0], names=col_names)
-        tmp_df["population"] = pop_size
-        tmp_df["time_taken"] = end_time - start_time
-        df_main = df_main.append(tmp_df, ignore_index=True)
-        df_main.to_csv(file_name)
-        print("List Complete:", file_name)
-        return df_main
-        else:
-        print("file already exists, no calcs to do.")
-        file_df = pd.read_csv(file_name)
-        # remove first column
-        file_df = file_df[list(file_df)[1:]]
-        return file_df
-    \end{minted}
+    \inputminted{python}{code_snippets/populationChecker.py}
     \caption{code to check multiple populations}\label{code:populationChecker}
 \end{figure}
 
@@ -110,7 +80,7 @@ This code will output data in the form of Table~\ref{table:popCheckerDataTable}
     \centering
     \begin{tabular}{ccccccc}
         \toprule
-        best score & gen & mean score & population & sequence & std dev & time taken \\
+        Best Score & Gen & Mean Score & Population & Sequence & Std Dev & Time Taken \\
         \midrule
         2.425 & 1 & 2.264 & \textbf{25.0} & DD\ldots & 0.067 & 6.646\\
         2.425 & 2 & 2.343 & \textbf{25.0} & DD\ldots & 0.046 & 6.646\\
@@ -175,40 +145,7 @@ over\footnote{We will be using a population of 150 as this was the best average 
 The code in Snippet~\ref{code:generationChecker} shows how we will approach the analysis.\\
 
 \begin{figure}
-    \begin{minted}{python}
-        def generationSizeChecker(opponent):
-        file_name = "data/" + str(opponent).replace(" ", "_")
-        .replace(":","_")
-        .lower()
-        + "_generation.csv"
-        if not os.path.isfile(file_name):
-        df_main = pd.DataFrame(data=None, columns=col_names)
-        for gens in generation_list:
-        start_time = time.clock()
-        pop_run = runGeneticAlgo(opponent,
-        population_size=150,
-        number_of_game_turns=200,
-        cycle_length=200,
-        generations=gens,
-        mutation_probability=0.1,
-        reset_file=True)
-        end_time = time.clock()
-        tmp_df = pd.read_csv(pop_run[0], names=col_names)
-        tmp_df["generations"] = gens
-        tmp_df["time_taken"] = end_time-start_time
-        tmp_df["opponent"] = str(opponent)
-        tmp_df["best_score_diff"] = np.append([0],np.diff(tmp_df["best_score"]))
-        df_main = df_main.append(tmp_df, ignore_index=True)
-        df_main.to_csv(file_name)
-        print("List Complete:",file_name)
-        return df_main
-        else:
-        print("file ",file_name," already exists, no calcs to do.")
-        file_df = pd.read_csv(file_name)
-        \# remove first column
-        file_df = file_df[list(file_df)[1:]]
-        return file_df \]
-    \end{minted}
+    \inputminted{python}{code_snippets/generationChecker.py}
     \caption{code to check multiple generation lengths.}\label{code:generationChecker}
 \end{figure}
 
@@ -273,23 +210,7 @@ Once we have found some information on how this effects our solution, we can loo
 As shown further on, there is not much of an improvement on our algorithm to changing either of these.The mutation algorithm is shown in Snippet~\ref{code:mutateFromDojo}\\
 
 \begin{figure}
-    \begin{minted}{python}
-        def mutate(self):
-        """
-        Basic mutation which may change any random gene(s) in the sequence.
-        """
-        # if the mutation occurs
-        if random.rand() <= self.mutation_probability:
-        mutated_sequence = self.get_sequence()
-        for _ in range(self.mutation_potency):
-        index_to_change = random.randint(0, len(mutated_sequence))
-        # Mutation - change a single gene
-        if mutated_sequence[index_to_change] == C:
-        mutated_sequence[index_to_change] = D
-        else:
-        mutated_sequence[index_to_change] = C
-        self.sequence = mutated_sequence
-    \end{minted}
+    \inputminted{python}{code_snippets/mutateFromDojo.py}
     \caption{The mutation code as given in the axelrod-dojo}\label{code:mutateFromDojo}
 \end{figure}
 
@@ -308,38 +229,7 @@ we will only be looking at mutating our sequences at up to 10 percent of their e
 We will look into having mutation potencies \(m_p \in [1,2,3,5,10,15,20]\)\\
 
 \begin{figure}
-    \begin{minted}{python}
-        def mutationPotencyChecker(opponent):
-        file_name = "data/" + str(opponent).replace(" ", "_").replace(":","_").lower() + "_mutation_potency.csv"
-        if not os.path.isfile(file_name):
-        df_main = pd.DataFrame(data=None, columns=col_names)
-        for potency in mutatuon_potency_list:
-        start_time = time.clock()
-        pot_run = runGeneticAlgo(opponent,
-        population_size=150,
-        number_of_game_turns=200,
-        cycle_length=200,
-        generations=250,
-        mutation_probability=0.1,
-        mutation_potency=potency,
-        reset_file=True)
-        end_time = time.clock()
-        tmp_df = pd.read_csv(pot_run[0], names=col_names)
-        tmp_df["mutation_potency"] = potency
-        tmp_df["time_taken"] = end_time-start_time
-        tmp_df["opponent"] = str(opponent)
-        tmp_df["best_score_diff"] = np.append([0],np.diff(tmp_df["best_score"]))
-        df_main = df_main.append(tmp_df, ignore_index=True)
-        df_main.to_csv(file_name)
-        print("List Complete:",file_name)
-        return df_main
-        else:
-        print("file ",file_name," already exists, no calcs to do.")
-        file_df = pd.read_csv(file_name)
-        \# remove first column
-        file_df = file_df[list(file_df)[1:]]
-        return file_df
-    \end{minted}
+    \inputminted{python}{code_snippets/mutationPotencyChecker.py}
     \caption{Mutation potency code}\label{code:mutationPotencyChecker}
 \end{figure}
 
@@ -369,41 +259,7 @@ We will look at what happens when we run the genetic algorithm on a set of mutat
 The code in Snippet~\ref{code:mutationFrequencyChecker} shows the algorithm that will complete this analysis.\\
 
 \begin{figure}
-    \begin{minted}{python}
-        def mutationFrequencyChecker(opponent):
-        file_name = "data/" + str(opponent).replace(" ", "_")
-        .replace(":","_")
-        .lower()
-        + "_mutation_frequency.csv"
-        if not os.path.isfile(file_name):
-        df_main = pd.DataFrame(data=None, columns=col_names)
-        for freq in mutation_frequency_list:
-        start_time = time.clock()
-        pot_run = runGeneticAlgo(opponent,
-        population_size=150,
-        number_of_game_turns=200,
-        cycle_length=200,
-        generations=250,
-        mutation_probability=freq,
-        mutation_potency=1,
-        reset_file=True)
-        end_time = time.clock()
-        tmp_df = pd.read_csv(pot_run[0], names=col_names)
-        tmp_df["mutation_frequency"] = freq
-        tmp_df["time_taken"] = end_time-start_time
-        tmp_df["opponent"] = str(opponent)
-        tmp_df["best_score_diff"] = np.append([0],np.diff(tmp_df["best_score"]))
-        df_main = df_main.append(tmp_df, ignore_index=True)
-        df_main.to_csv(file_name)
-        print("List Complete:",file_name)
-        return df_main
-        else:
-        print("file ",file_name," already exists, no calcs to do.")
-        file_df = pd.read_csv(file_name)
-        \# remove first column
-        file_df = file_df[list(file_df)[1:]]
-        return file_df
-    \end{minted}
+    \inputminted{python}{code_snippets/mutationFrequencyChecker.py}
     \caption{Mutation potency code}\label{code:mutationFrequencyChecker}
 \end{figure}
 
@@ -462,38 +318,20 @@ Grudger and Tit For Tat differ in their strategies in two ways:
     \end{item}
 \end{itemize}
 
-Snippet~\ref{code:gudgerTotailites} shows two totality games against grudger, one of all Cs and one of all Ds.
+Snippet~\ref{code:gudgerTotalities} shows two totality games against grudger, one of all Cs and one of all Ds.
 These are edge cases and would be incredibly rarely encountered as a starting point in the random initial population.
 Because of this, the algorithm has to shuffle towards the potential benefit of using these totalities rather than start with analysing them.
 Our case against grudger requires the algorithm to attempt this shuffle towards a totality after encountering the grudging effect.
 This would then require the algorithm to select (using random selection out of 200) the first defection move and change it (only 1 in 10 members are mutated) to a cooperation move.
-This likelihood is incredibly small, and starting at common or uniform sequences would be more beneficial, as posed in Section~\ref{subsec:alteringinitialpopulation}.\\
+This likelihood is incredibly small, and starting at common or uniform sequences would be more beneficial, as posed in Section~\ref{sec:alteringinitialpopulation}.\\
 
 \begin{figure}
-    \begin{minted}{python}
-        players = (axl.Grudger(),axl.Cycler("C"))
-        match = axl.Match(players,200)
-        match.play()
-        print("final scores:", match.final_score())
-        print("per turn:", match.final_score_per_turn())
-
-        final scores: (600,600)
-        per turn: (3.0,3.0)
-
-        players = (axl.Grudger(),axl.Cycler("D"))
-        match = axl.Match(players,200)
-        match.play()
-        print("final scores:", match.final_score())
-        print("per turn:", match.final_score_per_turn())
-
-        final scores: (199,204)
-        per turn: (0.995,1.02)
-    \end{minted}
-    \caption{Grudger matches against totalities}\label{code:gudgerTotailites}
+    \inputminted{python}{code_snippets/grudgerTotalities.py}
+    \caption{Grudger matches against totalities}\label{code:gudgerTotalities}
 \end{figure}
 
 % TODO: need this para? I feel like I'm repeating myself
-As Snippet~\ref{code:gudgerTotailites} shows, we should be converging on a totality of Cs rather than what its doing;
+As Snippet~\ref{code:gudgerTotalities} shows, we should be converging on a totality of Cs rather than what its doing;
 finding the totality of Ds.
 This is probably because the algorithm initially limits its best score per turn once the first generation is complete and a cut-off has been established for each of the initial population.
 The crossover method between generations then doesn't provide enough of a mix up to allow the algorithm to escape the local minimum by switching a subsection with a sufficiently different potentially better subsection.
@@ -508,19 +346,8 @@ We can re-design the crossover to switch up large subsections of the sequence th
 
 currently we have the following design:
 
-
 \begin{figure}
-    \begin{minted}{python}
-        def crossover_old(self, other_cycler):
-        \# single point crossover:
-        crossover_point = int(self.get_sequence_length() // 2)
-        \# get half 1 from self
-        seq_p1 = self.get_sequence()[0: crossover_point]
-        \# get half 2 from the other_cycler
-        seq_p2 = other_cycler.get_sequence()[crossover_point: other_cycler.get_sequence_length()]
-        crossed_sequence = seq_p1 + seq_p2
-        return CyclerParams(sequence=crossed_sequence)
-    \end{minted}
+    \inputminted{python}{code_snippets/oldCrossover.py}
     \caption{Old Crossover algorithm}\label{fig:oldCrossover}
 \end{figure}
 
@@ -537,54 +364,19 @@ As shown, the algorithm splits the two sequences into 10 section and the new seq
 Figure~\ref{fig:newCrossoverEX} shows an example of the new crossover method.\\
 
 \begin{figure}
-    \begin{minted}{python}
-        def crossover(self, other_cycler):
-        \# 10 crossover points:
-        step_size = int(len(self.get_sequence()) / 10)
-        \# empty starting seq
-        new_seq = []
-        seq1 = self.get_sequence()
-        seq2 = other_cycler.get_sequence()
-        i = 0
-        j = i + step_size
-        while j <= len(seq1) - step_size:
-        new_seq = new_seq + seq1[i:j]
-        new_seq = new_seq + seq2[i + step_size:j + step_size]
-        i += 2 * +step_size
-        j += 2 * +step_size
-        return CyclerParams(sequence=new_seq)
-    \end{minted}
+    \inputminted{python}{code_snippets/newCrossover.py}
     \caption{New Crossover algorithm}\label{fig:newCrossover}
 \end{figure}
 
 \begin{figure}
-    \begin{minted}{python}
-        seq1=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-        seq2=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-        step_size =int(len(seq1)/10)
-        i=0
-        j=i+step_size
-        new_seq = []
-        while j<=len(seq1)-step_size:
-        new_seq = new_seq + seq1[i:j]
-        new_seq = new_seq + seq2[i+step_size:j+step_size]
-        i+=2*+step_size
-        j+=2*+step_size
-        print(seq1)
-        print(seq2)
-        print(new_seq)
-
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        [1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0]
-    \end{minted}
+    \inputminted{python}{code_snippets/newCrossoverEX.py}
     \caption{Example of new crossover algorithm}\label{fig:newCrossoverEX}
 \end{figure}
 
 When we look at how this new crossover algorithm works with the default mutation (freq=.1 and pot=1) to improve our local maximums with the selection off opponents.\\
 
 
-\section{Altering Initial Population}\label{subsec:alteringinitialpopulation}
+\section{Altering Initial Population}\label{sec:alteringinitialpopulation}
 We want to select starting sequences that fit patterns we know will have good results.
 For example totalities, with heads/tails, are usually very effective against simple opponents;
 for example Tit For Tat, `dumb' opponents or Grudger.
@@ -622,11 +414,11 @@ Handshakes
 \end{itemize}
 
 For each of these sequence sets the inverse, with a defection move start, will also be added to the set of starting sequences.
-This in total gives SOMENUMBER of sequences, we will then make up the difference to the population limit using a set of random sequences.\\
+This in total gives 164 (after code~\ref{code:initialPopulationCode}) of sequences, we will then make up the difference to the population limit using a set of random sequences.\\
 
 We can now look into how this has effected the previous experiments.
 
-\subsection{Population Size}
+\subsection{Population Size}\label{subsec:populationSize}
 
 \begin{figure}[h]
     \includegraphics[width=1.2\textwidth, center]{plots/NEW_INIT_POP_bs_v_gen_all_old.pdf}
@@ -639,64 +431,21 @@ Of the two that are not showing straight lines we can observe that the algorithm
 This is probably due to 2 different reasons:
 
 \textbf{Random}: The `dumb' strategy should being beaten with a totality of D, the algorithm has in fact converged to almost this totality, but still has intermittent Cs.
-The reason for this is the scoring grade `score per turn' will reflect on the number of intermittent Cs in the Random players sequence. More Cs in the Random sequence will allow the algorithm to score more. This leads to a solution sequence containing some random Cs not because they score better in some turns, but because the totality of Ds played against a Random sequence would `loose' to a sequence containing some Cs in because its not a fair trial; the two sequences play against different Random opponent sequences.
-\textbf{Collective Stratergy}: as described in Section~?????? this strategy is, basically, a handshake + Grudger. If we look into the sequence it selected we can see its found the handshake but then arrives on Grudger. After this encounter the same problem as we had before population selection occurs and the algorithms limits the damage by splitting into Cs then Ds. Solving the collective strategy (and handshakes in general) may be simple; we just put in all the possible n move handshakes followed by totalities and then set to work on the 2nd part of the sequence.
+The reason for this is the scoring grade `score per turn' will reflect on the number of intermittent Cs in the Random players sequence.
+More Cs in the Random sequence will allow the algorithm to score more.
+This leads to a solution sequence containing some random Cs not because they score better in some turns, but because the totality of Ds played against
+a Random sequence would `loose' to a sequence containing some Cs in because its not a fair trial; the two sequences play against different Random opponent sequences.
+\textbf{Collective Strategy}: as described in chapter~\ref{sec:strategiesOfInterest} this strategy is, basically, a handshake + Grudger.
+If we look into the sequence it selected we can see its found the handshake but then arrives on Grudger.
+After this encounter the same problem as we had before population selection occurs and the algorithms limits the damage by splitting into Cs then Ds. Solving the collective strategy (and handshakes in general) may be simple;
+we just put in all the possible n move handshakes followed by totalities and then set to work on the 2nd part of the sequence.
 
 It is clear that having a larger population is good from the old analysis, but the initial population still has to be tweaked to improve its scores against certain handshake opponents.
 The Random opponent is a special case that requires more analysis to find the absolute optimal.
 The new initial population will include all combinations of C \& D of length 5, followed by finishing on all Cs or Ds as shown in the Totalities \& handshakes section of Snippet~\ref{code:initialPopulationCode}.
 
 \begin{figure}
-    \begin{minted}{python}
-        def getCyclerParamsPrePop2(pop_size=200, mutation_prop=0.1, muation_pot=1):
-        pop = []
-
-        if pop_size<164:
-        print("population must be 164+,")
-        return
-
-        # Totalities & Handshakes
-        handshake_leng=5
-        for start in itertools.product("CD",repeat=handshake_leng):
-        pop.append(axl_dojo.CyclerParams(list(start) + [C]*(200-handshake_leng)))
-        pop.append(axl_dojo.CyclerParams(list(start) + [D]*(200-handshake_leng)))
-
-        # 50-50
-        pop.append(axl_dojo.CyclerParams([C]*100 + [D]*100))
-        pop.append(axl_dojo.CyclerParams([D]*100 + [C]*100))
-
-        # Single Change
-        for i in range(1, 11):
-        pop.append(axl_dojo.CyclerParams([C]*i + [D]*(200-i)))
-        pop.append(axl_dojo.CyclerParams([D]*i + [C]*(200-i)))
-
-        for i in range(1, 11):
-        pop.append(axl_dojo.CyclerParams([C]*(200-i) + [D]*i))
-        pop.append(axl_dojo.CyclerParams([D]*(200-i) + [C]*i))
-
-        # Matching Tails
-        for i in range(1, 6):
-        for j in range(1, 6):
-        pop.append(axl_dojo.CyclerParams([C]*i + [D]*(200-(i+j)) + [C]*j))
-        pop.append(axl_dojo.CyclerParams([D]*i + [C]*(200-(i+j)) + [D]*j))
-
-        # Alternating
-        pop.append(axl_dojo.CyclerParams([C,D]*100))
-        pop.append(axl_dojo.CyclerParams([D,C]*100))
-        pop.append(axl_dojo.CyclerParams([C,C,D,D]*50))
-        pop.append(axl_dojo.CyclerParams([D,D,C,C]*50))
-        pop.append(axl_dojo.CyclerParams([C,C,C,C,D,D,D,D]*25))
-        pop.append(axl_dojo.CyclerParams([D,D,D,D,C,C,C,C]*25))
-        pop.append(axl_dojo.CyclerParams([C,C,C,C,C,D,D,D,D,D]*20))
-        pop.append(axl_dojo.CyclerParams([D,D,D,D,D,C,C,C,C,C]*20))
-
-        seq_len = 200
-        while len(pop) < pop_size:
-        random_moves = list(map(axl.Action, np.random.randint(0, 1 + 1, (seq_len, 1))))
-        pop.append(axl_dojo.CyclerParams(random_moves))
-
-        return pop
-    \end{minted}
+    \inputminted{python}{code_snippets/initialPopulationCode.py}
     \caption{Initial Population Code}\label{code:initialPopulationCode}
 \end{figure}
 
@@ -726,5 +475,7 @@ These will be discussed further in Section~\ref{subsubsec:discussion}.
     \caption{}\label{fig:NEW-MUT-FREQ-bs-gen-all}
 \end{figure}
 \subsubsection{Discussion}\label{subsubsec:discussion}
+
+\section{Stochastic Opponents}\label{sec:stochasticOpponents}
 
 \section{Conclusion of approach}\label{sec:conclusionOfApproach}

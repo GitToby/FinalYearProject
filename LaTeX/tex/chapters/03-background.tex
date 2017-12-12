@@ -1,0 +1,79 @@
+% !TEX root = ../main.tex
+
+\chapter{Task Background}\label{ch:taskBackground}
+This chapter will cover sections on how each part of the project will been carried out and explained.
+Useful notation is given in Section~\ref{sec:notation} however in some areas of discussion sequences are more easily denoted by explicitly describing this sequence.
+Section~\ref{sec:codeTechniques} on code techniques will not cover setting up an environment to conduct similar analysis;
+this walk through will eventually be given on my github page, along with example code.
+
+\section{Notation}\label{sec:notation}
+Let \(S\) be a sequence composed of move elements: \(S = X_1 X_2 \ldots X_L\).
+\begin{itemize}
+    \item \(X_i=C\) is a cooperation type move element
+    \item \(X_i=D\) is a defection type move element.
+    \item \(X_i\) denotes the \(i\)th move element in a sequence, \(X_i \in \{C,D\}\).
+    \item \(L\) denotes the length of a sequence; \(L=200\) is used throughout this report.
+\end{itemize}
+
+We can split up sequences into blocks of consecutive move elements of the same type.
+We will use \(B_i\) to denote the block after \(i\) changes of move type from the explicitly stated starting move type.
+\begin{itemize}
+    \item Every move in a block is of the same type;
+    the type is implicit based on whether \(i\) is even and what the starting move type was.
+    \item We can use the notation \(|B_i|\) to denote the length of the \(i\)th block in the sequence. \(|B_i| \in \mathbb{Z}\)
+\end{itemize}
+
+This means we can write a sequence as a series of blocks:
+\[S= B_1 B_2,\ldots,B_n\]
+A Sequence can also be defined shorthand by specifying the starting move and the length of subsequent blocks:
+\[S = C:\big{[}\ |B_1|,|B_2|,\ldots,|B_n|\ \big{]} \quad \Rightarrow \quad S=\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{(C|D)\ldots (C|D)}^{|B_n|} \]
+We can also construct sequences from repetitions of a sequence of blocks when it makes sense:
+\[C:\big{[}\ \big{(}|B_1|,|B_2|,\ \ldots,\ |B_m|\big{)}^{k}\ \big{]} \quad \Rightarrow \quad {\small{\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{D\ldots D}^{|B_m|}}}^{k-times}\]
+The two notations can be combined to add starting and ending blocks to a repeating sequence (shown in the examples).\\
+
+It is also possible to define sets of sequences by adding variables to parameters of the sequence.
+Appropriate selection of parameters mean the length of sequences shouldn't grow.
+\[ \{C:[i,l-i]\} \quad i\in [a,b] \Rightarrow \{\underbrace{C\ldots C}_{a}\overbrace{D\ldots D}^{l-a},\ \underbrace{C\ldots C}_{a+1}\overbrace{D\ldots D}^{l-(a+1)},\ldots ,\ \underbrace{C\ldots C}_{b}\overbrace{D\ldots D}^{l-b}\} \]
+For long sequences where there is no recognisable pattern it is typically easier to describe the solution.
+We will mainly use this when referring to sections of a sequence that would otherwise be too lengthy to write out.\\
+
+Examples:
+\begin{align}
+    C:[1,4,3,2] &= CDDDDCCCDD\\
+    D:[\ (1,1)^{5}] &= DCDCDCDCDC\\
+    C:[1,(2,1)^{2},2,1] &= CDDCDDCDDC\\
+    \{D:[i,5-i]\} \quad i\in [2,4] &= \{DDCCC,\ DDDCC,\ DDDCC\}\\
+\end{align}
+
+\section{Solution Form}\label{sec:solutionForm}
+Our algorithm will, after its set number of generations have concluded, produce an arbitrary sequence for a opponent, \(S_o\).
+This sequence will be represent what moves we should play against the opponent to get our largest potential score per turn.\\
+
+This investigation focuses on sequences that will allow us to maximise our score overall, rather than just beating any given opponent.
+A nice analogy of this concept is a team playing a football tournament, but instead of a knockout competition our team is placed in the standings based off the total goals they have scored across the tournament.
+More real world applications of these results are discussed in Chapter~\ref{ch:applications}.\\
+
+Each solution sequence is uniquely generated for each opponent.
+If there are two similar opponents, say Grudger and Collective Strategy, these will be independently analysed and solutions generated.
+We will discuss how similar solution sequences relate to how similar strategies are in Chapter~\ref{ch:results}.
+When working with Stochastic players, we will be seeding them in order to determine the best sequence.
+The motive to allow this to happen is explained described in Section~\ref{sec:stochasticOpponents}.
+
+\section{Code Techniques}\label{sec:codeTechniques}
+This section will discuss how we will leverage code to complete aspects of the investigation.
+We will be using Python because of its flexibility and it is the language the required libraries are written in.
+
+\subsection{Building The Algorithm}\label{subsec:buildingTheAlgorthem}
+In order to generate a solution sequence we have to play each Axlrod opponents against another Axelrod opponent.
+We will use the Cycler strategy\footnote{See Section~\ref{subsec:descCycler} for description} in the algorithm by editing the input parameter to improve our score against an opponent.\\
+
+This model means we can create a population of Cycler players and input a sequence of length 200 as a parameter to set off our genetic algorithm.
+The subsequent inputs for the populations Cycler players will be created using the genetic mutation and crossover techniques, see Section~\ref{subsec:geneticAlgorithms} for details.\\
+
+The flow of Play-Rank-Create looping (see Figure~\ref{fig:geneticAlgoCycle}) will be the basis of creating the optimal strategy for each other opponent.
+Each step is defined in the Axelrod-Dojo librarys' Population and CyclerParams classes.
+Rather than store all the functionality in one place we are able split up aspects of the flow to allow for flexibility in what type of population can be used.
+
+%\subsection{Conducting analysis}\label{subsec:conductingAnalysis}
+%For the analysis a mix of Jupyter Notebooks and IDE\footnote{Pycharm} were used.
+%Jupyper notebooks...

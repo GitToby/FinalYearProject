@@ -1,10 +1,4 @@
-\newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{Chu17}
-
-\bibitem[A{\etalchar{+}}87]{axelrod1987evolution}
-Robert Axelrod et~al.
-\newblock The evolution of strategies in the iterated prisoner’s dilemma.
-\newblock {\em The dynamics of norms}, pages 1--16, 1987.
 
 \bibitem[CB97]{chu1997genetic}
 Paul~C Chu and John~E Beasley.
@@ -15,6 +9,12 @@ Paul~C Chu and John~E Beasley.
 Michael Chui.
 \newblock Artificial intelligence the next digital frontier?
 \newblock {\em McKinsey and Company Global Institute}, page~47, 2017.
+
+\bibitem[Kni17]{knight2017alphaZeroMIT}
+Will Knight.
+\newblock Alpha zero’s “alien” chess shows the power, and the
+  peculiarity, of ai.
+\newblock {\em MIT Technology Review}, 2017.
 
 \bibitem[Tur50]{turing1950computing}
 Alan~M Turing.
