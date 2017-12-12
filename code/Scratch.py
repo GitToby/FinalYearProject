@@ -5,6 +5,7 @@ import pprint as pp
 
 import axelrod as axl
 
+C, D = axl.Action
 # build players into a tuple (make sure you're constructing the players correctly)
 players = (axl.APavlov2011(), axl.AntiCycler())
 print("basic players:")
@@ -80,7 +81,7 @@ def printList(L):
         print(x)
 
 
-printList(itertools.product(["x", "y"], "ab"))
+printList(itertools.product(["pairings", "y"], "ab"))
 
 int(2.5)
 
@@ -92,7 +93,7 @@ def isBetween(bottom, top, n):
     loops = 0
     for j in range(bottom, top, n):
         if j >= x:
-            print("found ", j, ">=x     | loops:", loops)
+            print("found ", j, ">=pairings     | loops:", loops)
             return j
         loops = loops + 1
     print("k not found")
@@ -107,4 +108,37 @@ c = isBetween(b - n2, b, n3)
 
 for i in range(1, 200000000000):
     if i == x:
-        print("found ", i, "==x")
+        print("found ", i, "==pairings")
+
+a = [C, C, C, C, C, C, D, D, D, D, D, D, D, D, C, C, D, C, C, D, C, C, C, C, C, C, D, C, C, D, D, C, C, C, C, D, D, C,
+     D, C, C, D, D, D, D, D, D, D, D, D, D, C, D, C, D, D, D, C, D, D, D, C, D, C, D, C, C, D, D, C, D, C, D, D, C, C,
+     C, D, D, D, D, D, C, C, D, D, C, C, D, C, D, D, C, D, C, C, C, C, D, C, C, D, C, D, C, C, D, D, D, C, D, C, C, D,
+     D, C, D, D, D, D, D, D, D, C, C, C, D, D, C, D, D, C, C, C, D, C, D, D, D, D, D, C, D, C, D, C, D, C, D, C, D, C,
+     C, C, C, D, C, D, C, D, D, D, D, C, C, D, C, D, D, D, C, D, C, C, D, D, D, C, C, C, C, D, C, D, D, D, C, C, D, D,
+     D, D, C, C, D, C, C, D, D, D]
+b = [C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D,
+     D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D,
+     D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D,
+     D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D,
+     D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D,
+     D, D, D, D, D, D, D, D, D, D]
+
+
+def getSeqStr(seq):
+    tmp = seq.copy()
+    prev_move = tmp.pop(0)
+    count = 1
+    string = str(prev_move) + ":["
+    while len(tmp) > 0:
+        current_move = tmp.pop(0)
+        if current_move == prev_move:
+            count = count + 1
+        else:
+            string = string + str(count) + ","
+            prev_move = current_move
+            count = 1
+    string = string + str(count) + "]"
+    return string
+
+
+s = 1, 3, 1, 1, 1, 1, 12, 12,
