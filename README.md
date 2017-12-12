@@ -12,6 +12,7 @@ Things I've done so far:
 - Worked through some examples (see scratch code file)
 - Looked into the Dojo and pulled it down as a dev package for editing
 - Learned archetype is spelled like arc-he-type
+- changed some stuff so that commenting is easier
 
 ## Definitions
 * ___Game___ - A sequence of moves between 2 players that has a winner at the end (len(game) describes the length of 
