@@ -38,19 +38,28 @@ Recently there has also been record levels of funding~\cite{chui2017artificial} 
 This report will cover one of the forms of machine learning called genetic algorithms.
 Techniques of machine learning can be combined and used together in many situations, the field of mathematics research is one;
 as used in~\cite{chu1997genetic}.
-We will look at how the technique of genetic evolution can lead us to our goal.
 
 \subsubsection{Genetic Algorithms}\label{subsubsec:geneticAlgorithms}
-Genetic Algorithms are a description of techniques for generating solutions complex problems such as searching and, in our case, optimization\footnote{ learn to reference soon}.
-The basis of a genetic algorithm is focused on a cycle of evolution.
-Like nature, we create a survival of the fittest concept\footnote{need to reference Darwin?} to evaluate a population, kill off the weakest members and create offspring from the most successful population.\\
+Genetic Algorithms fall under a branch of machine learning called feature selection.
+Techniques of using genetic algorithms for generating solutions to problems typically revolve around heuristically improving members of a population who represent these solutions.
+The concepts of a genetic algorithm come from nature;
+like nature we create a survival of the fittest competition\footnote{need to reference Darwin?} to evaluate a population then kill off the weakest members.
+After this cull we create offspring from the most successful population or introduce new members from a predefined source.
+This process is then repeated until we stop, or forever in the case of nature.
+Figure~\ref{fig:genericGeneticAlgoCycle} is a diagram of this cycle.\\
 
-Starting with a set of randomly generated sequences, we will have each one play the opponent and return with a score.
-These sequences will be ranked and the lowest pairings\% will be discarded, resulting in a fitter, but smaller, population than before.
-This smaller population will then create offspring using a crossover pairing algorithm before mutating with a swelection of.
-This new set of offspring will be included in the next scoring round and the process repeats for k number of rounds.\\
+Put a figure of the cycle here.\label{fig:genericGeneticAlgoCycle} \\
 
-Put a figure of the cycle here.\label{fig:genetic algo cycle} \\
+Our implementation of a genetic algorithm is more custom and has the following steps:
+\begin{itemize}
+    \item Start with a set of predefined sequences \& randomly generated sequences.
+    \item We will have each one play the given opponent and return with the average score per turn.
+    \item These sequences will be ranked and the lowest pairings \% will be discarded, resulting in a fitter, but smaller, population than before.
+    \item This smaller population will then create offspring using a crossover pairing algorithm before mutating with a selection of.
+    \item This new set of offspring will be included in the next scoring round and the process repeats for k number of rounds.
+\end{itemize}
+
+Put a figure of the cycle here.\label{fig:geneticAlgoCycle} \\
 
 Initially we create a heuristic function, say our fitness function, which is a measure of how successful a candidate in our population is.
 Then we run our whole population through this function, ranking each one by how successful their score is.
