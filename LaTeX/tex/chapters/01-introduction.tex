@@ -9,7 +9,7 @@ What this topic is and how it fits into the big picture.\\
 To be written.
 \section{Machine Learning \& Computer Intelligence}\label{sec:machineLearningAndcomputerIntelligence}
 This section will briefly provide a background to machine learning algorithms.
-This is by no means a comprehensive look into these subjects but will provide sufficient background on technical discussion later on.\\
+This is by no means a comprehensive look into these subjects but will provide sufficient background to enable a technical discussion in further sections.\\
 
 Machine Learning is a field of computer science that has existed since the first computers have been around.
 Most famously the questions posed by Alan Turing in 1950~\cite{turing1950computing} asks `can machines think', a question that has been refined and analysed to this day.
@@ -24,16 +24,17 @@ for example machine learning is used in~\cite{chu1997genetic}.\\
 %TODO: find another
 
 Genetic Algorithms fall under a branch of machine learning called feature selection.
+More generically, genetic algorithms are put into a class of unsupervised reinforcement learning algorthms
 Techniques of using genetic algorithms for generating solutions to problems typically revolve around heuristically improving members of a population who represent these solutions.
 The concepts of a genetic algorithm come from nature;
-like nature we create a survival of the fittest competition\footnote{need to reference Darwin?} to evaluate a population then kill off the weakest members.
+like nature we create a survival of the fittest selection~\cite{darwin2009origin} competition to evaluate a population then kill off the weakest members.
 After this cull we create offspring from the most successful population or introduce new members from a predefined source.
-This process is then repeated until we stop, or forever in the case of nature.\\
+This process is then repeated until we stop it, or forever in the case of nature.\\
 
 We say a genetic algorithm is structured in the following way.
-Given a population, \(P\), each with unique genes\footnote{Genes and member properties are interchangeable}, and a number of generations, \(G\in \mathbb{N}\), the algorithm will create \(G\) loops of scoring and potentially removing each of the members of the population.
-It does this by using a heuristic function \(f(p_i)\mapsto \mathbb{R},\ p_i \in P\).
-This function, \(f\), is defined beforehand in a way which describes the goal of our investigation (ours being best score per turn).
+Given a population, \(P\), each with unique genes (genes and member properties are interchangeable), and a number of generations, \(G\in \mathbb{N}\), the algorithm will create \(G\) loops of scoring and potentially removing each of the members of the population.
+It does this by using a mapping from a member of the population to an ordered set, for example \(f(p_i)\mapsto \mathbb{R},\ p_i \in P\).
+This function, \(f\), is defined beforehand in a way which describes the goal of our investigation.
 Defining a cutoff or bottleneck \(b<|P|\), such that on conclusion of scoring the population, the top \(b\) ranking members by score can be kept and the rest discarded.
 Once we have removed a certain percentage of our population we can rebuild it using a series of crossovers and mutations (and possibly introducing new members into the population).
 \begin{itemize}
