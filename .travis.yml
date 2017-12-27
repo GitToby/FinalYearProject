@@ -7,6 +7,6 @@ python:
 install:
  - pip install -r requirements.txt
 
-#find and run unit tests
+#find and run_one unit tests
 script:
  - python code/Tests.py

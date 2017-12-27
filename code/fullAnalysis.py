@@ -1,16 +1,73 @@
+import itertools
+
 import axelrod as axl
 import axelrod_dojo as axl_dojo
+import numpy as np
+
+SEQUENCE_LENGTH = 200
+POPULATION_SIZE = 250
+GENERATION_LENGTH = 300
+MUTATION_FREQUENCY = 0.1
+MUTATION_POTENCY = 1
+
+C, D = axl.Action
 
 
-class AnalysisRun:
+def getPreMadePop(pop_size: int):
+    pop = []
+
+    # Totalities & Handshakes
+    handshake_leng = 5
+    for start in itertools.product("CD", repeat=handshake_leng):
+        pop.append(axl_dojo.CyclerParams(list(start) + [C] * (200 - handshake_leng)))
+        pop.append(axl_dojo.CyclerParams(list(start) + [D] * (200 - handshake_leng)))
+
+    # 50-50
+    pop.append(axl_dojo.CyclerParams([C] * 100 + [D] * 100))
+    pop.append(axl_dojo.CyclerParams([D] * 100 + [C] * 100))
+
+    # Single Change
+    for i in range(1, 11):
+        pop.append(axl_dojo.CyclerParams([C] * i + [D] * (200 - i)))
+        pop.append(axl_dojo.CyclerParams([D] * i + [C] * (200 - i)))
+
+    for i in range(1, 11):
+        pop.append(axl_dojo.CyclerParams([C] * (200 - i) + [D] * i))
+        pop.append(axl_dojo.CyclerParams([D] * (200 - i) + [C] * i))
+
+    # Matching Tails
+    for i in range(1, 6):
+        for j in range(1, 6):
+            pop.append(axl_dojo.CyclerParams([C] * i + [D] * (200 - (i + j)) + [C] * j))
+            pop.append(axl_dojo.CyclerParams([D] * i + [C] * (200 - (i + j)) + [D] * j))
+
+    # Alternating
+    pop.append(axl_dojo.CyclerParams([C, D] * 100))
+    pop.append(axl_dojo.CyclerParams([D, C] * 100))
+    pop.append(axl_dojo.CyclerParams([C, C, D, D] * 50))
+    pop.append(axl_dojo.CyclerParams([D, D, C, C] * 50))
+    pop.append(axl_dojo.CyclerParams([C, C, C, C, D, D, D, D] * 25))
+    pop.append(axl_dojo.CyclerParams([D, D, D, D, C, C, C, C] * 25))
+    pop.append(axl_dojo.CyclerParams([C, C, C, C, C, D, D, D, D, D] * 20))
+    pop.append(axl_dojo.CyclerParams([D, D, D, D, D, C, C, C, C, C] * 20))
+
+    while len(pop) < pop_size:
+        random_moves = list(map(axl.Action, np.random.randint(0, 1 + 1, (SEQUENCE_LENGTH, 1))))
+        pop.append(axl_dojo.CyclerParams(random_moves))
+
+    return pop
+
+
+class NewAnalysisRun:
     # options
     opponent_list = []
-    print_level = ""
+    output_files = {}
+    save_directory = "output/"
     save_prefix = ""
     save_suffix = ""
     global_seed = 0
 
-    def get_seeded_player_class(self, player_class):
+    def _get_seeded_player_class(self, player_class):
         class NewClass(player_class):
             def __init__(self, seed=0):
                 axl.seed(seed)
@@ -18,27 +75,91 @@ class AnalysisRun:
 
         return NewClass
 
-    def get_file_name(self, opponent):
-        return self.save_prefix + str(opponent) + self.save_suffix
+    def _get_file_name(self, opponent: axl.Player):
+        return self.save_directory \
+               + self.save_prefix \
+               + str(opponent).replace(" ", "_").replace(":", "@").replace("\\", "(") \
+               + self.save_suffix \
+               + ".csv"
 
-    def run(self):
+    def add_opponent(self, opponent: axl.Player):
+        self.opponent_list.append(opponent)
+
+    def clear_opponent_list(self):
+        self.opponent_list = []
+
+    def set_opponent_list(self, new_list: list):
+        self.opponent_list = []
+        self.opponent_list = new_list
+
+    def set_save_directory(self, new_directory: str):
+        self.save_directory = new_directory.split("/")[0] + "/"
+
+    def set_save_prefix(self, new_prefix: str):
+        self.save_prefix = new_prefix
+
+    def set_save_suffix(self, new_suffix: str):
+        self.save_suffix = new_suffix
+
+    def set_global_seed(self, new_seed: int):
+        self.global_seed = new_seed
+
+    def start(self):
+        print("-------- SETTINGS --------")
+        print("SEQUENCE_LENGTH:", SEQUENCE_LENGTH)
+        print("POPULATION_SIZE:", POPULATION_SIZE)
+        print("GENERATION_LENGTH:", GENERATION_LENGTH)
+        print("MUTATION_FREQUENCY:", MUTATION_FREQUENCY)
+        print("MUTATION_POTENCY:", MUTATION_POTENCY)
+        print()
+        print("Save directory is ", "\'" + self.save_directory + "\'")
+        print("Global see is set to", self.global_seed)
+        if self.save_prefix == "":
+            print("No file prefix was given")
+        if self.save_suffix == "":
+            print("No file suffix was given")
+        print("--------------------------")
+        print()
+        print("There are", len(self.opponent_list), "opponents to analyse")
+
         cycler_objective = axl_dojo.prepare_objective(name="score", turns=20, repetitions=1)
         cycler_kwargs = {
-            "sequence_length": 200,
-            "mutation_probability": 0.1,
-            "mutation_potency": 1
+            "sequence_length": SEQUENCE_LENGTH,
+            "mutation_probability": MUTATION_FREQUENCY,
+            "mutation_potency": MUTATION_POTENCY
         }
+        i = 1
 
+        print("Starting analysis...")
+        print()
         for opponent in self.opponent_list:
-            seeded_opponent = self.get_seeded_player_class(type(opponent))(self.global_seed)
+            seeded_opponent = self._get_seeded_player_class(type(opponent))(self.global_seed)
 
             population = axl_dojo.Population(params_class=axl_dojo.CyclerParams,
                                              params_kwargs=cycler_kwargs,
-                                             size=200,
+                                             size=POPULATION_SIZE,
+                                             population=getPreMadePop(POPULATION_SIZE),
                                              objective=cycler_objective,
-                                             output_filename=self.get_file_name(opponent),
-                                             opponents=[seeded_opponent])
+                                             output_filename=self._get_file_name(opponent),
+                                             opponents=[seeded_opponent],
+                                             print_output=False)
+
+            print(i, "of", len(self.opponent_list), "| Analysing player:", str(opponent), "...")
+            # population.run(GENERATION_LENGTH)
+            print("{:.2f}% Done.\tSaved to:".format((100 * i) / len(self.opponent_list)),
+                  self._get_file_name(opponent))
+            self.output_files[str(opponent)] = self._get_file_name(opponent)
+            i += 1
 
 
 if __name__ == "__main__":
-    run = AnalysisRun()
+    run_one = NewAnalysisRun()
+    run_one.set_save_prefix("FINAL-")
+
+    # run_one.add_opponent(axl.ZDExtort2())
+    # run_one.add_opponent(axl.Random())
+    # run_one.add_opponent(axl.Borufsen())
+
+    run_one.set_opponent_list([x() for x in axl.all_strategies])
+
+    run_one.start()

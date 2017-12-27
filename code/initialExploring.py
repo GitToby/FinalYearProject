@@ -60,7 +60,7 @@ def populationChecker(opponent):
     # make a nice file name
     file_name = "data/" + str(opponent).replace(" ", "_").replace(":", "_").lower() + "_pop.csv"
 
-    # if the file exists dont run, it takes forever, make sure it exists
+    # if the file exists dont run_one, it takes forever, make sure it exists
     if not os.path.isfile(file_name):
         df_main = pd.DataFrame(data=None, columns=col_names)
 
@@ -405,7 +405,7 @@ f.savefig('plots/mutation_freq/mut_freq all opponents.png')
 def populationChecker(opponent):
     # make a nice file name
     file_name = "data/" + str(opponent).replace(" ", "_").replace(":", "_").lower() + "_pop.csv"
-    # if the file exists dont run, it takes forever, make sure it exists
+    # if the file exists dont run_one, it takes forever, make sure it exists
     if not os.path.isfile(file_name):
         df_main = pd.DataFrame(data=None, columns=col_names)
         for pop_size in populations:
