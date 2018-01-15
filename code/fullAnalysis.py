@@ -70,7 +70,8 @@ class NewAnalysisRun:
     def _get_seeded_player_class(self, player_class):
         class NewClass(player_class):
             def __init__(self, seed=0):
-                axl.seed(seed)
+                my_seed = seed  # for picklin
+                axl.seed(my_seed)
                 super().__init__()
 
         return NewClass
@@ -145,7 +146,7 @@ class NewAnalysisRun:
                                              print_output=False)
 
             print(i, "of", len(self.opponent_list), "| Analysing player:", str(opponent), "...")
-            # population.run(GENERATION_LENGTH)
+            population.run(GENERATION_LENGTH)
             print("{:.2f}% Done.\tSaved to:".format((100 * i) / len(self.opponent_list)),
                   self._get_file_name(opponent))
             self.output_files[str(opponent)] = self._get_file_name(opponent)
