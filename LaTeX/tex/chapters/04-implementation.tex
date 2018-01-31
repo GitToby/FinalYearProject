@@ -11,8 +11,8 @@ This stable point, however, may not be the optimal solution.
 we may have found a local maxima for the solution sequence rather than the global maximum. \\
 
 The opponents we select are in some way interesting.
-They are mostly `simple' and can be explained in a very brief sentence or two, but each one has a fundamentally different structure to how they work.
-We will look into these as we can confirm that the genetic algorithm will select the optimal sequence solution for the selected opponent. \\
+They are mostly `simple' and can be explained in a sentence or two, but each one has a fundamentally different structure to how they work.
+We will look into these as we can confirm that the genetic algorithm will select the optimal sequence solution for the selected type of opponent. \\
 
 \begin{table*}
     \centering
@@ -342,8 +342,7 @@ this is much easier said than put into practice due to the way the algorithm `cu
 If we reverse this thinking and try to alter our crossover design and mutation rate such that instead of `cutting off' a path we are able to `build' new ones.
 We can re-design the crossover to switch up large subsections of the sequence then allow the mutations to optimise these sub-sequences.\\
 
-currently we have the following design:
-
+Currently we have the following design:
 \begin{figure}
     \inputminted{python}{code_snippets/oldCrossover.py}
     \caption{Old Crossover algorithm}\label{fig:oldCrossover}
@@ -353,7 +352,7 @@ currently we have the following design:
 We want to allow the crossover to have more of an impact than just halving the sequence and optimizing each section. i.e. go from:\\
 \[|--------------------| and |++++++++++++++++++++|\]
 \[= |----------++++++++++|\]
-to, say:\\
+to the mixture:\\
 \[|--------------------| and |++++++++++++++++++++|\]
 \[= |--++--++--++--++--++|\]\\
 This will allow the mutation rate to edit the subsections in a more interlaced manner, hopefully overcoming the pitfalls of sparse mutations to escape local maximums.
@@ -379,7 +378,7 @@ The problem of mitigating sub optimal solutions may be more efficiently solved u
 Section~\ref{sec:alteringinitialpopulation} discusses this in more detail.
 
 \section{Altering Initial Population}\label{sec:alteringinitialpopulation}
-We want to select starting sequences that fit patterns we know will have good results.
+Altering the initial population allows us to select starting sequences that fit patterns we know will have good results.
 For example totalities, with heads/tails, are usually very effective against simple opponents;
 for example Tit For Tat, `dumb' opponents or Grudger.
 Alternating and certain known solution optimal sequences are good starting sequences for an initial population, allowing a more intelligently distributed set of starting points for the random mutation process.\footnote{This can be visualised as placing balls on a `lumpy' 2d plane to try and find the minimum, starting with an educated guess means we wont get all the balls stuck in one vally which isnt the deepest.}
@@ -507,11 +506,11 @@ The algorithm we're using continues to generate a new opponent sequence for ever
 This, essentially, leads to the algorithm playing a new version of the opponent every time, leaving very little opportunity to identify features which can be exploited.
 
 The concept of a stochastic opponent can be somewhat `overridden' by seeding the psudo random number generator that creates the parameters that define what moves our opponent will take.
-Currently the only way of doing this is by seeing the whole Axelrod library upon initialising the opponent instance, Snippet~\ref{} shows the code for wrapping any given opponent with the seed command.
+Currently the only way of doing this is by seeing the whole Axelrod library upon initialising the opponent instance, Snippet~\ref{code:wrappingFunction} shows the code for wrapping any given opponent with the global seed command.
 
 \begin{figure}
     \inputminted{python}{code_snippets/classWrappingFunction.py}
-    \caption{A function for wrapping a player with a seed function call}\label{code:wrappingFunction}
+    \caption{A function for wrapping a player with a global seed function call}\label{code:wrappingFunction}
 \end{figure}
 
 When calculating the sequence solution for all of the opponents we will do so with seeded versions of the stochastic opponents.

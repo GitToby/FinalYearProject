@@ -5,7 +5,7 @@ def populationChecker(opponent):
         .replace(":", "_") \
         .lower() + "_pop.csv"
 
-    # if the file exists don't run, it takes forever, make sure it exists
+    # if the file exists don't run_one, it takes forever, make sure it exists
     if not os.path.isfile(file_name):
         df_main = pd.DataFrame(data=None, columns=col_names)
         for pop_size in populations:

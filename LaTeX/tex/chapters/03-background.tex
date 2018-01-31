@@ -50,8 +50,13 @@ Each solution sequence is uniquely generated for each opponent.
 If there are two similar opponents, say Grudger and Collective Strategy, these will be independently analysed and solutions generated. %TODO: look into fingerprinting - http://axelrod.readthedocs.io/en/stable/tutorials/further_topics/fingerprinting.html
 We will discuss how similar solution sequences relate to how similar strategies are in Chapter~\ref{ch:results}.
 When working with stochastic players, we will be seeding them in order to determine the best sequence.
-Ech stochastic player will be considered under a variety of seeds.
+Each stochastic player will be considered under a variety of seeds.
 The motive to allow this to happen is explained described in Section~\ref{sec:stochasticOpponents}.
+
+Sequences returned by the algorithm will be classified in the following way:
+\begin{itemize}
+ \item
+\end{itemize}
 
 \section{Code Techniques}\label{sec:codeTechniques}
 This section will discuss how we will leverage code to complete aspects of the investigation.
@@ -59,7 +64,7 @@ We will be using Python because of its flexibility and it is the language the re
 
 \subsection{Building The Algorithm}\label{subsec:buildingTheAlgorthem}
 In order to generate a solution sequence we have to train against each Axlrod opponent against another Axelrod opponent.
-We will use the Cycler strategy\footnote{See Section~\ref{subsec:descCycler} for description} in the algorithm by editing the input parameter to improve our score against an opponent.\\
+We will use the Cycler strategy\footnote{See Section~\ref{subsec:cycler} for description} in the algorithm by editing the input parameter to improve our score against an opponent.\\
 
 This model means we can create a population of Cycler players and input a sequence of length 200 as a parameter to set off our genetic algorithm.
 The subsequent inputs for the populations Cycler players will be created using the genetic mutation and crossover techniques, see Section~\ref{subsec:geneticAlgorithms} for details.\\
@@ -69,8 +74,7 @@ Each step is defined in the Axelrod-Dojo librarys' Population and CyclerParams c
 Rather than store all the functionality in one place we are able split up aspects of the flow to allow for flexibility in what type of population can be used.
 
 \subsection{Conducting analysis}\label{subsec:conductingAnalysis}
-For the analysis a mix of Jupyter Notebooks and IDE\footnote{Pycharm} were used.
-Jupyper notebooks.
+For the analysis a mix of Jupyter Notebooks and IDE\footnote{Pycharm} development were used.
 
 \subsubsection{Libraries And Codebases}
 \paragraph{Main Research Libraries}
