@@ -1,8 +1,10 @@
+import csv
 import itertools
 
 import axelrod as axl
 import axelrod_dojo as axl_dojo
 import numpy as np
+import os
 
 SEQUENCE_LENGTH = 200
 POPULATION_SIZE = 250
@@ -51,6 +53,7 @@ def getPreMadePop(pop_size: int):
     pop.append(axl_dojo.CyclerParams([C, C, C, C, C, D, D, D, D, D] * 20))
     pop.append(axl_dojo.CyclerParams([D, D, D, D, D, C, C, C, C, C] * 20))
 
+    # Random Filler
     while len(pop) < pop_size:
         random_moves = list(map(axl.Action, np.random.randint(0, 1 + 1, (SEQUENCE_LENGTH, 1))))
         pop.append(axl_dojo.CyclerParams(random_moves))
@@ -66,6 +69,7 @@ class NewAnalysisRun:
     save_prefix = ""
     save_suffix = ""
     global_seed = 0
+    overwrite_files = True
 
     def _get_seeded_player_class(self, player_class):
         class NewClass(player_class):
@@ -105,6 +109,12 @@ class NewAnalysisRun:
     def set_global_seed(self, new_seed: int):
         self.global_seed = new_seed
 
+    def set_file_overwrite_true(self):
+        self.overwrite_files = True
+
+    def set_file_overwrite_false(self):
+        self.overwrite_files = False
+
     def start(self):
         print("-------- SETTINGS --------")
         print("SEQUENCE_LENGTH:", SEQUENCE_LENGTH)
@@ -114,7 +124,7 @@ class NewAnalysisRun:
         print("MUTATION_POTENCY:", MUTATION_POTENCY)
         print()
         print("Save directory is ", "\'" + self.save_directory + "\'")
-        print("Global see is set to", self.global_seed)
+        print("Global seed is set to", self.global_seed)
         if self.save_prefix == "":
             print("No file prefix was given")
         if self.save_suffix == "":
@@ -122,6 +132,20 @@ class NewAnalysisRun:
         print("--------------------------")
         print()
         print("There are", len(self.opponent_list), "opponents to analyse")
+
+        if not os.path.exists(self.save_directory):
+            os.makedirs(self.save_directory)
+
+        if self.overwrite_files:
+            print("overwriting files before running calculations.")
+            for opponent in self.opponent_list:
+                opponent_file = self._get_file_name(opponent)
+                try:
+                    os.remove(opponent_file)
+                    print("removed file: " + opponent_file)
+                except FileNotFoundError:
+                    print("could not remove file: " + opponent_file + " no file found.")
+            print("removed all files. \n")
 
         cycler_objective = axl_dojo.prepare_objective(name="score", turns=20, repetitions=1)
         cycler_kwargs = {
@@ -139,6 +163,7 @@ class NewAnalysisRun:
             population = axl_dojo.Population(params_class=axl_dojo.CyclerParams,
                                              params_kwargs=cycler_kwargs,
                                              size=POPULATION_SIZE,
+                                             processes=32,
                                              population=getPreMadePop(POPULATION_SIZE),
                                              objective=cycler_objective,
                                              output_filename=self._get_file_name(opponent),
@@ -156,11 +181,12 @@ class NewAnalysisRun:
 if __name__ == "__main__":
     run_one = NewAnalysisRun()
     run_one.set_save_prefix("FINAL-")
+    run_one.set_file_overwrite_false()
 
-    # run_one.add_opponent(axl.ZDExtort2())
+    run_one.add_opponent(axl.ZDExtort2())
     # run_one.add_opponent(axl.Random())
-    # run_one.add_opponent(axl.Borufsen())
+    run_one.add_opponent(axl.EvolvedANNNoise05())
 
-    run_one.set_opponent_list([x() for x in axl.all_strategies])
+    # run_one.set_opponent_list([x() for x in axl.all_strategies])
 
     run_one.start()
