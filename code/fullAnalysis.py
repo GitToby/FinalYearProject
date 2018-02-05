@@ -71,14 +71,9 @@ class NewAnalysisRun:
     global_seed = 0
     overwrite_files = True
 
-    def _get_seeded_player_class(self, player_class):
-        class NewClass(player_class):
-            def __init__(self, seed=0):
-                my_seed = seed  # for picklin
-                axl.seed(my_seed)
-                super().__init__()
-
-        return NewClass
+    @staticmethod
+    def _get_seeded_player_class(player_class):
+        return axl_dojo.utils.get_seeded_opponent_instance(player_class)
 
     def _get_file_name(self, opponent: axl.Player):
         return self.save_directory \
@@ -183,9 +178,9 @@ if __name__ == "__main__":
     run_one.set_save_prefix("FINAL-")
     run_one.set_file_overwrite_false()
 
-    run_one.add_opponent(axl.ZDExtort2())
+    # run_one.add_opponent(axl.ZDExtort2())
     # run_one.add_opponent(axl.Random())
-    run_one.add_opponent(axl.EvolvedANNNoise05())
+    run_one.add_opponent(axl.Cave())
 
     # run_one.set_opponent_list([x() for x in axl.all_strategies])
 
