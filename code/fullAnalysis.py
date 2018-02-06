@@ -73,7 +73,13 @@ class NewAnalysisRun:
 
     @staticmethod
     def _get_seeded_player_class(player_class):
-        return axl_dojo.utils.get_seeded_opponent_instance(player_class)
+        class NewClass(player_class):
+            def __init__(self, seed=0):
+                my_seed = seed  # for picklin
+                axl.seed(my_seed)
+                super().__init__()
+
+        return NewClass
 
     def _get_file_name(self, opponent: axl.Player):
         return self.save_directory \
