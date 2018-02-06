@@ -14,7 +14,6 @@ MUTATION_POTENCY = 1
 
 C, D = axl.Action
 
-
 def getPreMadePop(pop_size: int):
     pop = []
 
@@ -75,11 +74,12 @@ class NewAnalysisRun:
     def _get_seeded_player_class(player_class):
         class NewClass(player_class):
             def __init__(self, seed=0):
-                my_seed = seed  # for picklin
+                my_seed = seed  # for pickling
                 axl.seed(my_seed)
                 super().__init__()
 
         return NewClass
+
 
     def _get_file_name(self, opponent: axl.Player):
         return self.save_directory \
@@ -154,24 +154,27 @@ class NewAnalysisRun:
             "mutation_probability": MUTATION_FREQUENCY,
             "mutation_potency": MUTATION_POTENCY
         }
-        i = 1
 
+        i = 1
         print("Starting analysis...")
         print()
         for opponent in self.opponent_list:
-            seeded_opponent = self._get_seeded_player_class(type(opponent))(self.global_seed)
+            print(i, "of", len(self.opponent_list), "| Analysing player:", str(opponent), "...")
+
+            # Stochastic players need seeding
+            if opponent.classifier['stochastic']:
+                opponent = self._get_seeded_player_class(type(opponent))(self.global_seed)
 
             population = axl_dojo.Population(params_class=axl_dojo.CyclerParams,
                                              params_kwargs=cycler_kwargs,
                                              size=POPULATION_SIZE,
-                                             processes=32,
+                                             processes=2,
                                              population=getPreMadePop(POPULATION_SIZE),
                                              objective=cycler_objective,
                                              output_filename=self._get_file_name(opponent),
-                                             opponents=[seeded_opponent],
+                                             opponents=[opponent],
                                              print_output=False)
 
-            print(i, "of", len(self.opponent_list), "| Analysing player:", str(opponent), "...")
             population.run(GENERATION_LENGTH)
             print("{:.2f}% Done.\tSaved to:".format((100 * i) / len(self.opponent_list)),
                   self._get_file_name(opponent))
@@ -182,10 +185,10 @@ class NewAnalysisRun:
 if __name__ == "__main__":
     run_one = NewAnalysisRun()
     run_one.set_save_prefix("FINAL-")
-    run_one.set_file_overwrite_false()
+    # run_one.set_file_overwrite_false()
 
     # run_one.add_opponent(axl.ZDExtort2())
-    # run_one.add_opponent(axl.Random())
+    run_one.add_opponent(axl.TitForTat())
     run_one.add_opponent(axl.Cave())
 
     # run_one.set_opponent_list([x() for x in axl.all_strategies])
