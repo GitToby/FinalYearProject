@@ -161,14 +161,18 @@ class NewAnalysisRun:
         for opponent in self.opponent_list:
             print(i, "of", len(self.opponent_list), "| Analysing player:", str(opponent), "...")
 
+            global_processes = 20
+
             # Stochastic players need seeding
             if opponent.classifier['stochastic']:
                 opponent = self._get_seeded_player_class(type(opponent))(self.global_seed)
+                global_processes = 1
+
 
             population = axl_dojo.Population(params_class=axl_dojo.CyclerParams,
                                              params_kwargs=cycler_kwargs,
                                              size=POPULATION_SIZE,
-                                             processes=2,
+                                             processes=global_processes,
                                              population=getPreMadePop(POPULATION_SIZE),
                                              objective=cycler_objective,
                                              output_filename=self._get_file_name(opponent),
@@ -187,13 +191,13 @@ if __name__ == "__main__":
     run_one.set_save_prefix("FINAL-")
     # run_one.set_file_overwrite_false()
 
-    # run_one.add_opponent(axl.ZDExtort2())
+    run_one.add_opponent(axl.ZDExtort2())
     # run_one.add_opponent(axl.TitForTat())
     run_one.add_opponent(axl.Adaptive())
 
     # Stochastic opponents must be run in a separate non pickled instance.
     # run_one.set_opponent_list([x() for x in axl.all_strategies if x.classifier['stochastic']])
-    run_one.set_opponent_list([x() for x in axl.all_strategies])
+    # run_one.set_opponent_list([x() for x in axl.all_strategies])
 
     # run_one.set_opponent_list([x() for x in axl.all_strategies if not x.classifier['stochastic']])
 
