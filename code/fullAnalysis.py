@@ -188,9 +188,12 @@ if __name__ == "__main__":
     # run_one.set_file_overwrite_false()
 
     # run_one.add_opponent(axl.ZDExtort2())
-    run_one.add_opponent(axl.TitForTat())
-    run_one.add_opponent(axl.Cave())
+    # run_one.add_opponent(axl.TitForTat())
+    run_one.add_opponent(axl.Adaptive())
 
-    # run_one.set_opponent_list([x() for x in axl.all_strategies])
+    # Stochastic opponents must be run in a separate non pickled instance.
+    # run_one.set_opponent_list([x() for x in axl.all_strategies if x.classifier['stochastic']])
+
+    # run_one.set_opponent_list([x() for x in axl.all_strategies if not x.classifier['stochastic']])
 
     run_one.start()
