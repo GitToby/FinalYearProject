@@ -145,7 +145,7 @@ class NewAnalysisRun:
                     os.remove(opponent_file)
                     print("removed file: " + opponent_file)
                 except FileNotFoundError:
-                    print("could not remove file: " + opponent_file + " no file found.")
+                    print("could not remove file: " + opponent_file)
             print("removed all files. \n")
 
         cycler_objective = axl_dojo.prepare_objective(name="score", turns=20, repetitions=1)
@@ -188,16 +188,13 @@ class NewAnalysisRun:
 if __name__ == "__main__":
     run_one = NewAnalysisRun()
     run_one.set_save_prefix("FINAL-")
-    run_one.set_file_overwrite_false()
+    # run_one.set_file_overwrite_false()
 
-    run_one.add_opponent(axl.ZDExtort2())
+    # run_one.add_opponent(axl.ZDExtort2())
     # run_one.add_opponent(axl.TitForTat())
-    run_one.add_opponent(axl.Adaptive())
+    # run_one.add_opponent(axl.Adaptive())
 
-    # Stochastic opponents must be run in a separate non pickled instance.
-    # run_one.set_opponent_list([x() for x in axl.all_strategies if x.classifier['stochastic']])
-    # run_one.set_opponent_list([x() for x in axl.all_strategies])
+    run_one.set_opponent_list([x() for x in axl.all_strategies])
 
-    # run_one.set_opponent_list([x() for x in axl.all_strategies if not x.classifier['stochastic']])
 
     run_one.start()
