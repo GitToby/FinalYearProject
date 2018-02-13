@@ -168,7 +168,6 @@ class NewAnalysisRun:
                 opponent = self._get_seeded_player_class(type(opponent))(self.global_seed)
                 global_processes = 1
 
-
             population = axl_dojo.Population(params_class=axl_dojo.CyclerParams,
                                              params_kwargs=cycler_kwargs,
                                              size=POPULATION_SIZE,
@@ -189,7 +188,7 @@ class NewAnalysisRun:
 if __name__ == "__main__":
     run_one = NewAnalysisRun()
     run_one.set_save_prefix("FINAL-")
-    # run_one.set_file_overwrite_false()
+    run_one.set_file_overwrite_false()
 
     run_one.add_opponent(axl.ZDExtort2())
     # run_one.add_opponent(axl.TitForTat())
