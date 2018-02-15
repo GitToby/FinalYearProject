@@ -190,7 +190,7 @@ if __name__ == "__main__":
     import sys
 
     run_one = NewAnalysisRun()
-    run_one.set_save_prefix("FINAL-")
+    run_one.set_save_prefix("600-FINAL-")
     # So that theres no overwite
     # run_one.set_file_overwrite_false()
 
