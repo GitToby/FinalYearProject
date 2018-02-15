@@ -14,6 +14,7 @@ MUTATION_POTENCY = 1
 
 C, D = axl.Action
 
+
 def getPreMadePop(pop_size: int):
     pop = []
 
@@ -69,6 +70,7 @@ class NewAnalysisRun:
     save_suffix = ""
     global_seed = 0
     overwrite_files = True
+    stochastic_seeds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     @staticmethod
     def _get_seeded_player_class(player_class):
@@ -80,7 +82,6 @@ class NewAnalysisRun:
 
         return NewClass
 
-
     def _get_file_name(self, opponent: axl.Player):
         return self.save_directory \
                + self.save_prefix \
@@ -89,7 +90,13 @@ class NewAnalysisRun:
                + ".csv"
 
     def add_opponent(self, opponent: axl.Player):
-        self.opponent_list.append(opponent)
+        # Stochastic players need re-seeding
+        if opponent.classifier['stochastic']:
+            for seed in self.stochastic_seeds:
+                self.opponent_list.append(self._get_seeded_player_class(type(opponent))(seed))
+        # Otherwise its fine to just add them
+        else:
+            self.opponent_list.append(opponent)
 
     def clear_opponent_list(self):
         self.opponent_list = []
@@ -138,15 +145,7 @@ class NewAnalysisRun:
             os.makedirs(self.save_directory)
 
         if self.overwrite_files:
-            print("overwriting files before running calculations.")
-            for opponent in self.opponent_list:
-                opponent_file = self._get_file_name(opponent)
-                try:
-                    os.remove(opponent_file)
-                    print("removed file: " + opponent_file)
-                except FileNotFoundError:
-                    print("could not remove file: " + opponent_file)
-            print("removed all files. \n")
+            print("Overwriting files during run")
 
         cycler_objective = axl_dojo.prepare_objective(name="score", turns=20, repetitions=1)
         cycler_kwargs = {
@@ -160,6 +159,15 @@ class NewAnalysisRun:
         print()
         for opponent in self.opponent_list:
             print(i, "of", len(self.opponent_list), "| Analysing player:", str(opponent), "...")
+
+            if self.overwrite_files:
+                opponent_file = self._get_file_name(opponent)
+                try:
+                    os.remove(opponent_file)
+                    print("\tremoved file: " + opponent_file)
+                except FileNotFoundError:
+                    print("\tcould not remove file: " + opponent_file)
+
 
             population = axl_dojo.Population(params_class=axl_dojo.CyclerParams,
                                              params_kwargs=cycler_kwargs,
@@ -183,11 +191,16 @@ if __name__ == "__main__":
 
     run_one = NewAnalysisRun()
     run_one.set_save_prefix("FINAL-")
+    # So that theres no overwite
+    # run_one.set_file_overwrite_false()
 
     try:
         strategy_index = int(sys.argv[1])
         run_one.add_opponent(axl.strategies[strategy_index]())
     except IndexError:
         run_one.set_opponent_list([x() for x in axl.strategies])
+        # run_one.add_opponent(axl.Random())
+        # run_one.add_opponent(axl.ZDExtort2())
+        # run_one.add_opponent(axl.TitForTat())
 
     run_one.start()
