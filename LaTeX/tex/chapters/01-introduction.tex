@@ -1,81 +1,65 @@
 % !TEX root = ../main.tex  
 
 \chapter{Introduction}\label{ch:intro}
+In this report we will be looking at how strategies of the Iterated Prisoners Dilemma (IPD) can be `countered' or `worked' in order to give a better overall score for a player on the other side of the game.
+We will look into explicit sequences which should be played for single games of length 200 against a single opponent.
+These sequences will then be compared and contrasted to understand how some opponents could be grouped together even though they have no structure in common.\\
 
-General discussion on what game theory is and what the PD is.
-What this topic is and how it fits into the big picture.\\
+The concept of `working' a strategy is more fitting in this research as we will be looking into boosting the score or our player, which in most cases (due to the nature of the IPD) will also boost the score of our opponent.
+`working' also has a better real world interpretation than `countering' as the real goal of increasing the score for our player is to generate as many Cooperation moves to Defect against without consequences as possible.
+The IPD game itself is described in Section~\ref{sec:iteratedPrisonersDilemma} and the real world research is discussed in Chapter~\ref{ch:literature}. 
 
 \section{Iterated Prisoners Dilemma}\label{sec:iteratedPrisonersDilemma}
-To be written.
-\section{Machine Learning \& Computer Intelligence}\label{sec:machineLearningAndcomputerIntelligence}
-This section will briefly provide a background to machine learning algorithms.
-This is by no means a comprehensive look into these subjects but will provide sufficient background to enable a technical discussion in further sections.\\
 
+See https://vknight.org/gt/chapters/09/
+
+\section{Machine Learning \& Computer Intelligence}\label{sec:machineLearningAndcomputerIntelligence}
 Machine Learning is a field of computer science that has existed since the first computers have been around.
 Most famously the questions posed by Alan Turing in 1950~\cite{turing1950computing} asks `can machines think', a question that has been refined and analysed to this day.
 The field of computer intelligence is rich in its complexities and has recently been making breakthroughs~\cite{knight2017alphaZeroMIT} on topics which would traditionally be considered `thinking'.
 Along with this, recently there has also been record levels of funding~\cite{chui2017artificial} put in to companies which operate in this field, producing results in areas that would usually seem `solved'.\\
-%TODO: find the doc on washing machine AI or IoT AI
 
 \subsection{Genetic Algorithms}\label{subsec:geneticAlgorithms}
-This report will cover one of the forms of machine learning called genetic algorithms.
-Techniques of machine learning can be combined and used together in many situations, the field of mathematics research is one;
-for example machine learning is used in~\cite{chu1997genetic}.\\
-%TODO: find another
-
-Genetic Algorithms fall under a branch of machine learning called feature selection.
-More generically, genetic algorithms are put into a class of unsupervised reinforcement learning algorthms
-Techniques of using genetic algorithms for generating solutions to problems typically revolve around heuristically improving members of a population who represent these solutions.
-The concepts of a genetic algorithm come from nature;
+This report will cover one of the forms of machine learning called genetic algorithms (GAs).
+Genetic Algorithms fall under a branch of machine learning called evolutionary feature selection algorithms.
+More generally, genetic algorithms are put into a class of unsupervised reinforcement learning algorithms.
+These are techniques of using genetic algorithms for generating solutions to problems that typically revolve around heuristically improving members of a population who represent these solutions.
+The concept of a genetic algorithm, and more generally an evolutionary algorithm, comes from nature;
 like nature we create a survival of the fittest selection~\cite{darwin2009origin} competition to evaluate a population then kill off the weakest members.
 After this cull we create offspring from the most successful population or introduce new members from a predefined source.
 This process is then repeated until we stop it, or forever in the case of nature.\\
 
 We say a genetic algorithm is structured in the following way.
-Given a population, \(P\), each with unique genes (genes and member properties are interchangeable), and a number of generations, \(G\in \mathbb{N}\), the algorithm will create \(G\) loops of scoring and potentially removing each of the members of the population.
+Given a population, \(P\), each with unique genes (genes and member properties are interchangeable), and a number of generations, \(G\in \mathbb{N}\), the algorithm will create \(G\) cycles of scoring and potentially removing each of the members of the population, \(p_i \in P\).
 It does this by using a mapping from a member of the population to an ordered set, for example \(f(p_i)\mapsto \mathbb{R},\ p_i \in P\).
 This function, \(f\), is defined beforehand in a way which describes the goal of our investigation.
-Defining a cutoff or bottleneck \(b<|P|\), such that on conclusion of scoring the population, the top \(b\) ranking members by score can be kept and the rest discarded.
-Once we have removed a certain percentage of our population we can rebuild it using a series of crossovers and mutations (and possibly introducing new members into the population).
+Defining a cut-off or bottleneck \(b<|P|\), such that on conclusion of completing any cycle, the top \(b\) ranking members by score can be kept and the rest discarded.
+By doing this we are saving the more successful candidates allowing us to rebuild the population using a series of crossovers and mutations (and possibly introducing new members into the population) with the genes which were successful.
+
 \begin{itemize}
     \item Crossovers take in 2 members of the population and return a new member based on some parameters of the 2 `parents'.
     For example, our crossover takes the first half of a sequence from one and the second half from the other, merging them to form the third.
-    \item Mutations allow a (possibly targeted\footnote{For example using intuition and targeting specific genes, or allowing another algorithm to improves the targeting of this meta function.}) change in a single member of the population.
+    \item Mutations allow a (possibly targeted\footnote{For example using intuition and targeting specific genes, or allowing another algorithm to improve the targeting of this meta function.}) change in a single member of the population.
     A mutation has 2 parameters, a potency \(M_p\in \mathbb{R}>0\) and a frequency \(M_f\in [0,1]\).
     \(M_p\) describes how strong the mutation is, the higher it is the larger change to the member occurs.
     \(M_f\) explains the percentage of how many members of the population are mutated.
 \end{itemize}
-Figure~\ref{fig:genericGeneticAlgoCycle} shows a flow diagram of this general cycle.\\
+Figure~\ref{fig:genericGeneticAlgoCycle} shows a flow diagram of a generic genetic algorithm cycle.\\
 
 Put a figure of generic cycle here.\label{fig:genericGeneticAlgoCycle} \\
 
-Our implementation of a genetic algorithm is more custom and has the following steps:
-\begin{enumerate}
-    \item Start with a predefined population, supplemented with randomly generated member until to size.
-    \item Each member plays the given opponent with their sequence and returns with the average score per turn.
-    \item Members of the population are ranked by this average score per turn and the highest scoring 25\% will be kept for the next round.
-    The remaining 75\% are killed off.
-    \item The remaining population will then be copied and these copies mutated to create unique sequences before being merged back in to the main population.
-    \item The remaining 50\% difference is then made up of mutated results of crossovers from members of the current population or random new members, depending on a random selection algorithm.\footnote{This algorithm had a bug which would change the size of the population in the first generation.
-    This was fixed after Section~\ref{sec:conclusionOfApproach} was written.}
-    \item A generation has now concluded.
-    Repeat from step 2 until the desired number of generations are finished and a final best sequence is returned.
-\end{enumerate}
-Figure~\ref{fig:geneticAlgoCycle} shows a flow diagram of our cycle.
-This is the algorithm we will use in Chapter~\ref{ch:implementation} for analysing parameters\\
-
-Put a figure of our cycle here.\label{fig:geneticAlgoCycle} \\
+The specific algorithm we will be using is described in Subsection~\ref{subsec:buildingTheAlgorthem}.
 
 \subsection{Bayesian Optimization}\label{subsec:bayesianOptimization}
 %TODO: need this bit?
-\section{Brief Overview}\label{sec:briefOverview}
-This document will be be looking at the creation of sequences to beat given players in The Iterated Prisoners Dilemma.
+\section{Brief Task Overview}\label{sec:briefOverview}
+This document will be be looking at the creation of sequences to beat given opponents in The Iterated Prisoners Dilemma.
 Analysis will be focused on looking into just the single opponent use case, but the idea of designing a sequence for a tournament for a given number of opponents is a potential follow on to this work.
-This task is as follows:\\
+Our task is as follows:\\
 
 Problem:\\{\itshape~When playing a given Iterated Prisoners Dilemma strategy, \(O\), as an opponent, what is the best ordered solution sequence of moves, \(S\), to play in order for us to obtain the highest possible average score per move across the game.}\\
 
 For example an opponent known as Tit For Tat, which cooperates on its first move and the copies your last move on subsequent moves, will have a solution sequence of moves that are all cooperation apart from the last.
 This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into all the strategy as defined in the Axelrod Library.
-These are listed in appendix Section~\ref{appendix}
-%ToDo: cite Axlrod codebases?
+These are listed in appendix Section\ldots
+%ToDo: cite Axelrod codebases?

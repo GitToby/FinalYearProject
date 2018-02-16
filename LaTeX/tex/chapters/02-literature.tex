@@ -2,21 +2,63 @@
 
 \chapter{Literature Review}\label{ch:literature}
 \section{Background}\label{sec:background}
-see trello board for writings.
-Question to be asked: "what pompous should this section serve?"
-    \begin{itemize}
-        \item book1
-        \item book2
-        
-    \end{itemize}
+The Prisoners Dilemma a large area of repeated games in Game Theory.
+This is due to the game being a good example of strategies that give a cooperative benefit to repeated games.
+It has been used to describe actions of people and governments in situations stretching from warfare~\cite{tooby1988war,aumann1992handbook}, finance~\cite{cable1997finance} and politics~\cite{snidal1985Politics} to sex and relationships~\cite{low2015sex}.
+Because of its applicability to real world scenarios there is a strong desire to understand how strategies are beaten to either exploit flaws or counter opponents in real world scenarios.
 
+\section{Strategy Structures}\label{sec:stratergyStructures}
+Strategies can be defined in multiple ways~\cite{harper2017reinforcement}.
+Each method of representing a strategies has its benefits and drawbacks, though there is no method (or strategy in that case) that is best in all cases.
+There are methods of creating strategies that remove the way opponents play in order to create overall scores that desired.
+Subsection~\ref{subsec:zdExtortion} discusses this in more detail.
+Ways of structuring a strategy are shown below:
+
+\begin{itemize}
+ \item LookerUpper, find examples
+ \item Gambler
+ \item Neural Networks
+ \item Finite State Machines
+ \item Hidden Markov Models
+ \item Explicit Move List
+ \item Mixtures
+\end{itemize}
+
+% ToDo: add figures of the above, where can I find them?
+
+\subsection{Equivalent strategies}\label{subsec:equivalentStrategies}
+When performing analysis of an opponent using a GA it can sometimes be useful to brute force the starting positions of our feature selection to create rare\footnote{For example of a random sequence that is a totality of Cs is incredibly rare, with around \(6.2^{-61}\) chance of occurring} starting points.
+Looking at certain opponents there are occasions some strategies that look indistinguishable from others;
+for example Alternator and Random~(0.5) can very often create the same output.
+One of the ways we are able to identify strategies is the process of fingerprinting~\cite{Ashlock2004,Ashlock2008}.
+
+Another way is to look up their structure definitions in the same model (for example\ldots~)
 
 \section{Strategies Of Interest}\label{sec:strategiesOfInterest}
 \subsection{TitForTat}\label{subsec:titfortat}
+Tit For Tat was the
 \subsection{Alternator}\label{subsec:alternator}
+See Subsection~\ref{subsec:random}.
 \subsection{Grudger}\label{subsec:grudger}
+See Subsection~\ref{subsec:random}.
 \subsection{Random}\label{subsec:random}
+
+For all the strategies () given above we are able to logically deduce that the best counter is a totality of Ds, no matter what their definition structure is.
+This leads us to consider what the common theme is between the stratergies as to be beaten in the same way.
+
+
+
 \subsection{EvolvedFSM16}\label{subsec:evolvedFSM16}
 \subsection{CollectiveStrategy}\label{subsec:collectiveStrategy}
 \subsection{ZDExtortion}\label{subsec:zdExtortion}
+This is the paper~\cite{press2012iterated}
 \subsection{Cycler}\label{subsec:cycler}
+
+\section{Genetic Algorithms}
+This work will focus on Genetic Algorithms (GAs) which are a specific form of Machine Learning (ML).
+Advanced techniques of machine learning can be combined and used together\footnote{Techniques for teaching and versioning static algorithms such as building a `clever' game AIs, where the core concept of the AI is fine tuned using GA in an development environment but isnt implemented into the game~\cite{bakkes2009rapid}.} in many situations, lots of these techniques combine genetic algorithms or some sort of fitness testing within a larger scope.
+The field of mathematics research is one which has plenty of examples of GAs in action;
+for example the same techniques as we will using is used in~\cite{chu1997genetic} to solve the Generalised Assignment Problem.
+Another example, \cite{bhanu1995adaptive}, used neural networks when approaching the state regulation problem. \\
+
+In Game Theory GAs are used in a couple of areas, most prominanly in the study of the interated prisonrs dilema.

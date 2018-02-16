@@ -63,8 +63,27 @@ This section will discuss how we will leverage code to complete aspects of the i
 We will be using Python because of its flexibility and it is the language the required libraries are written in.
 
 \subsection{Building The Algorithm}\label{subsec:buildingTheAlgorthem}
-In order to generate a solution sequence we have to train against each Axlrod opponent against another Axelrod opponent.
+In order to generate a solution sequence we have to train against each Axelrod opponent against another Axelrod opponent.
 We will use the Cycler strategy\footnote{See Section~\ref{subsec:cycler} for description} in the algorithm by editing the input parameter to improve our score against an opponent.\\
+
+
+Our implementation of a genetic algorithm is more custom and has the following steps:
+\begin{enumerate}
+    \item Start with a predefined population, supplemented with randomly generated member until to size.
+    \item Each member plays the given opponent with their sequence and returns with the average score per turn.
+    \item Members of the population are ranked by this average score per turn and the highest scoring 25\% will be kept for the next round.
+    The remaining 75\% are killed off.
+    \item The remaining population will then be copied and these copies mutated to create unique sequences before being merged back in to the main population.
+    \item The remaining 50\% difference is then made up of mutated results of crossovers from members of the current population or random new members, depending on a random selection algorithm.\footnote{This algorithm had a bug which would change the size of the population in the first generation.
+    This was fixed after Section~\ref{sec:conclusionOfApproach} was written.
+    See: https://github.com/Axelrod-Python/axelrod-dojo/issues/43}
+    \item A generation has now concluded.
+    Repeat from step 2 until the desired number of generations are finished and a final best sequence is returned.
+\end{enumerate}
+Figure~\ref{fig:geneticAlgoCycle} shows a flow diagram of our cycle.
+This is the algorithm we will use in Chapter~\ref{ch:implementation} when analysing the algorithms parameters\\
+
+Put a figure of our cycle here.\label{fig:geneticAlgoCycle} \\
 
 This model means we can create a population of Cycler players and input a sequence of length 200 as a parameter to set off our genetic algorithm.
 The subsequent inputs for the populations Cycler players will be created using the genetic mutation and crossover techniques, see Section~\ref{subsec:geneticAlgorithms} for details.\\

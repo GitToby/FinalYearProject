@@ -1,4 +1,34 @@
-\begin{thebibliography}{Chu17}
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{BSVdH09}
+
+\bibitem[AH92]{aumann1992handbook}
+Robert~J Aumann and Sergiu Hart.
+\newblock {\em Handbook of game theory with economic applications}, volume~2.
+\newblock Elsevier, 1992.
+
+\bibitem[AK08]{Ashlock2008}
+Daniel Ashlock and Eon~Youn Kim.
+\newblock Fingerprinting: Visualization and automatic analysis of prisoner's
+  dilemma strategies.
+\newblock {\em IEEE Transactions on Evolutionary Computation}, 12(5):647--659,
+  2008.
+
+\bibitem[AKK04]{Ashlock2004}
+Daniel Ashlock, Eun~Youn Kim, and Warren Kurt.
+\newblock Finite rationality and interpersonal complexity in repeated games.
+\newblock 56(2):397--410, 2004.
+
+\bibitem[BLM95]{bhanu1995adaptive}
+Bir Bhanu, Sungkee Lee, and John Ming.
+\newblock Adaptive image segmentation using a genetic algorithm.
+\newblock {\em IEEE Transactions on systems, man, and cybernetics},
+  25(12):1543--1567, 1995.
+
+\bibitem[BSVdH09]{bakkes2009rapid}
+Sander Bakkes, Pieter Spronck, and Jaap Van~den Herik.
+\newblock Rapid and reliable adaptation of video game ai.
+\newblock {\em IEEE Transactions on Computational Intelligence and AI in
+  Games}, 1(2):93--104, 2009.
 
 \bibitem[CB97]{chu1997genetic}
 Paul~C Chu and John~E Beasley.
@@ -10,17 +40,53 @@ Michael Chui.
 \newblock Artificial intelligence the next digital frontier?
 \newblock {\em McKinsey and Company Global Institute}, page~47, 2017.
 
+\bibitem[CS97]{cable1997finance}
+Daniel~M. Cable and Scott Shane.
+\newblock A prisoner's dilemma approach to entrepreneur-venture capitalist
+  relationships.
+\newblock {\em Academy of Management Review}, 22(1):142 -- 176, 1997.
+
 \bibitem[DB09]{darwin2009origin}
 Charles Darwin and William~F Bynum.
 \newblock {\em The origin of species by means of natural selection: or, the
   preservation of favored races in the struggle for life}.
 \newblock AL Burt, 2009.
 
+\bibitem[HKJ{\etalchar{+}}17]{harper2017reinforcement}
+Marc Harper, Vincent Knight, Martin Jones, Georgios Koutsovoulos, Nikoleta~E
+  Glynatsi, and Owen Campbell.
+\newblock Reinforcement learning produces dominant strategies for the iterated
+  prisoner’s dilemma.
+\newblock {\em PloS one}, 12(12):e0188046, 2017.
+
 \bibitem[Kni17]{knight2017alphaZeroMIT}
 Will Knight.
 \newblock Alpha zero’s “alien” chess shows the power, and the
   peculiarity, of ai.
 \newblock {\em MIT Technology Review}, 2017.
+
+\bibitem[Low15]{low2015sex}
+Bobbi~S Low.
+\newblock {\em Why sex matters: A Darwinian look at human behavior}.
+\newblock Princeton University Press, 2015.
+
+\bibitem[PD12]{press2012iterated}
+William~H Press and Freeman~J Dyson.
+\newblock Iterated prisoner’s dilemma contains strategies that dominate any
+  evolutionary opponent.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  109(26):10409--10413, 2012.
+
+\bibitem[Sni85]{snidal1985Politics}
+Duncan Snidal.
+\newblock The game theory of international politics.
+\newblock {\em World Politics}, 38(1):25--57, 1985.
+
+\bibitem[TC88]{tooby1988war}
+John Tooby and Leda Cosmides.
+\newblock The evolution of war and its cognitive foundations.
+\newblock {\em Institute for evolutionary studies technical report},
+  88(1):1--15, 1988.
 
 \bibitem[Tur50]{turing1950computing}
 Alan~M Turing.
