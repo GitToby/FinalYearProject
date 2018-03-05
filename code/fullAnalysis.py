@@ -1,4 +1,3 @@
-import csv
 import itertools
 
 import axelrod as axl
@@ -147,7 +146,7 @@ class NewAnalysisRun:
         if self.overwrite_files:
             print("Overwriting files during run")
 
-        cycler_objective = axl_dojo.prepare_objective(name="score", turns=20, repetitions=1)
+        cycler_objective = axl_dojo.prepare_objective(name="score", turns=SEQUENCE_LENGTH, repetitions=1)
         cycler_kwargs = {
             "sequence_length": SEQUENCE_LENGTH,
             "mutation_probability": MUTATION_FREQUENCY,
@@ -167,7 +166,6 @@ class NewAnalysisRun:
                     print("\tremoved file: " + opponent_file)
                 except FileNotFoundError:
                     print("\tcould not remove file: " + opponent_file)
-
 
             population = axl_dojo.Population(params_class=axl_dojo.CyclerParams,
                                              params_kwargs=cycler_kwargs,
@@ -190,7 +188,7 @@ if __name__ == "__main__":
     import sys
 
     run_one = NewAnalysisRun()
-    run_one.set_save_prefix("600-FINAL-")
+    run_one.set_save_prefix("600-PS-FINAL-")
     # So that theres no overwite
     # run_one.set_file_overwrite_false()
 
@@ -198,9 +196,10 @@ if __name__ == "__main__":
         strategy_index = int(sys.argv[1])
         run_one.add_opponent(axl.strategies[strategy_index]())
     except IndexError:
-        run_one.set_opponent_list([x() for x in axl.strategies])
+        pass
+        # run_one.set_opponent_list([x() for x in axl.strategies])
         # run_one.add_opponent(axl.Random())
-        # run_one.add_opponent(axl.ZDExtort2())
+        # run_one.add_opponent(axl.HardProber())
         # run_one.add_opponent(axl.TitForTat())
+run_one.start()
 
-    run_one.start()
