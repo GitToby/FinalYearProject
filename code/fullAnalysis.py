@@ -14,7 +14,7 @@ MUTATION_POTENCY = 1
 C, D = axl.Action
 
 
-def getPreMadePop(pop_size: int):
+def get_pre_made_pop(pop_size: int):
     pop = []
 
     # Totalities & Handshakes
@@ -171,7 +171,7 @@ class NewAnalysisRun:
                                              params_kwargs=cycler_kwargs,
                                              size=POPULATION_SIZE,
                                              processes=1,
-                                             population=getPreMadePop(POPULATION_SIZE),
+                                             population=get_pre_made_pop(POPULATION_SIZE),
                                              objective=cycler_objective,
                                              output_filename=self._get_file_name(opponent),
                                              opponents=[opponent],
@@ -196,10 +196,8 @@ if __name__ == "__main__":
         strategy_index = int(sys.argv[1])
         run_one.add_opponent(axl.strategies[strategy_index]())
     except IndexError:
-        pass
-        # run_one.set_opponent_list([x() for x in axl.strategies])
+        run_one.set_opponent_list([x() for x in axl.strategies])
+        # run_one.add_opponent(axl.TitForTat())
         # run_one.add_opponent(axl.Random())
         # run_one.add_opponent(axl.HardProber())
-        # run_one.add_opponent(axl.TitForTat())
-run_one.start()
-
+    run_one.start()
