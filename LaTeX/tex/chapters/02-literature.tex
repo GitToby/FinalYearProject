@@ -5,16 +5,22 @@
 The Prisoners Dilemma a large area of repeated games in Game Theory.
 This is due to the game being a good example of strategies that give a cooperative benefit to repeated games.
 It has been used to describe actions of people and governments in situations stretching from warfare~\cite{tooby1988war,aumann1992handbook}, finance~\cite{cable1997finance} and politics~\cite{snidal1985Politics} to sex and relationships~\cite{low2015sex}.
-Because of its applicability to real world scenarios there is a strong desire to understand how strategies are beaten to either exploit flaws or counter opponents in real world scenarios.
+Because of its applicability to real world scenarios there is a strong desire to understand how strategies are beaten to either exploit flaws or counter opponents in real world scenarios. \\
 
 The Prisoners dilemma became a large research area in the combination of mathematics and computer science after Robert Axelrod published his work named "Effective Choice In The Prisoners Dilemma"~\cite{axelrod1980effective}. 
 In it he makes an introduction to how tournaments are run and the properties of successful results.
 His method of experimenting became the standard for handling the IDP problem.
 After the tournament is complete he describes what successful strategies had in common; 
 It turns out the majority of strategies have properties of niceness and forgiveness.
-This allowed them to thrive in the tournament and have overall scores that rose above strategies without niceness or forgiveness. 
-Since this there have been many research papers on what makes a successful strategy for a specific objective.
-For example~\cite{press2012iterated} looks at how to remove an opponents moves to reach a high score and ~\cite{mittal2009optimal} looks at a veriety of differnt objectives at once.
+This allowed them to thrive in the tournament and have overall scores that rose above strategies without niceness or forgiveness. \\
+
+Since Axelrods original tournament there have been many research papers on what makes a successful strategy for a specific objective.
+For example~\cite{press2012iterated} looks at how to remove an opponents moves to reach a high score and ~\cite{mittal2009optimal} looks at a range of different objectives at once.
+These specific objectives are really the core part of applying Game Theory and The Prisoners Dilemma in the really word. 
+Objectives are the wrapper for which we can work with real world scenarios, for example in a the cold war it was not the goal to get as many missiles as possible to pass an oppositions defence but to not allow any missiles through your own defence; i.e. minimising your opponents score. 
+In a football tournament where winning is the number or goals your team scores it doesn't really matter how many goals you get in so long as you score the most overall.
+There are also some very useful applications such as rent splitting or work asignments~\cite{goldman2015spliddit}, all of which were programmed and deployed to a web server for general use online\footnote{http://www.spliddit.org}
+
 
 \section{Strategy Structures}\label{sec:stratergyStructures}
 Strategies can be defined in multiple ways~\cite{harper2017reinforcement}.
@@ -53,7 +59,7 @@ See Subsection~\ref{subsec:random}.
 \subsection{Random}\label{subsec:random}
 
 For all the strategies () given above we are able to logically deduce that the best counter is a totality of Ds, no matter what their definition structure is.
-This leads us to consider what the common theme is between the stratergies as to be beaten in the same way.
+This leads us to consider what the common theme is between the strategies as to be beaten in the same way.
 
 
 
