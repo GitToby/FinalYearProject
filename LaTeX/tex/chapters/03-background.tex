@@ -3,9 +3,7 @@
 \chapter{Task Background}\label{ch:taskBackground}
 This chapter will cover sections on how each part of the project will been carried out.
 Useful notation is given in Section~\ref{sec:notation} however in some areas of discussion sequences are more easily denoted by explicitly describing this sequence.
-Section~\ref{sec:codeTechniques} on code techniques will not cover setting up an environment to conduct similar analysis;
-this walk through will eventually be given on my github page, along with example code.
-%TODO: nope, add the walkthrough to setting up code in this bit
+Section~\ref{sec:codeTechniques} on code techniques will cover techniques used in the analysis and a walkthrough of setting up an environment to conduct similar analysis is given in Section~\ref{subsec:settingUpAResearchEnvironment}.
 
 \section{Notation}\label{sec:notation}
 Let \(S\in\{C, D\}^L\) where \(C\), \(D\) represents a cooperation, defection respectively. \(L=200\) is used throughout this report.
@@ -13,7 +11,7 @@ We can split up sequences into blocks of consecutive move elements of the same t
 We will use \(B_i\) to denote the block after \(i\) changes of move type from the explicitly stated starting move type.
 \begin{itemize}
     \item Every move in a block is of the same type;
-    the type is implicit based on whether \(i\) is even and what the starting move type was.
+    the type is implicit based on whether \(i\) is even or not and what the starting move type was.
     \item We can use the notation \(|B_i|\) to denote the length of the \(i\)th block in the sequence. \(|B_i| \in \mathbb{Z}\)
 \end{itemize}
 
@@ -39,33 +37,28 @@ Examples:
 \end{align}
 
 \section{Solution Form}\label{sec:solutionForm}
-In this research our goal will be to use the algorithm described in Section~\ref{subsec:geneticAlgorithms} produce an arbitrary sequence for an opponent, \(S_o\).
-This sequence will represent what moves we should play against the opponent to get our largest potential score per turn.\\
+In this research our goal will be to use the algorithm, described in Subsection~\ref{subsec:geneticAlgorithms}, to produce an arbitrary sequence for an opponent, \(S_o\).
+This sequence will represent the moves we should play against the opponent to get our largest potential score per turn for a single game of 200 turns.\\
 
 This investigation focuses on sequences that will allow us to maximise our score overall, rather than just beating any given opponent.
 An analogy of this concept is a team playing a football tournament, but instead of a knockout competition our team is placed in the standings based off the total goals they have scored across the tournament.
 More real world applications of these results are discussed in Chapter~\ref{ch:applications}.\\
 
 Each solution sequence is uniquely generated for each opponent.
-If there are two similar opponents, say Grudger and Collective Strategy, these will be independently analysed and solutions generated. %TODO: look into fingerprinting - http://axelrod.readthedocs.io/en/stable/tutorials/further_topics/fingerprinting.html
-We will discuss how similar solution sequences relate to how similar strategies are in Chapter~\ref{ch:results}.
+If there are two similar opponents, say Grudger and Collective Strategy, these will be independently analysed and individual solutions will be generated.
+The output sequences will be compared on how similar they are to each other, what type of opponents and their corresponding `best scores' are and whether there are patterns to how to group strategies, Chapter~\ref{ch:results} contains further details.\\
+
 When working with stochastic players, we will be seeding them in order to determine the best sequence.
 Each stochastic player will be considered under a variety of seeds.
-The motive to allow this to happen is explained described in Section~\ref{sec:stochasticOpponents}.
+The motive to allow this to happen is explained described in Section~\ref{sec:stochasticOpponents}. Non-stochastic opponents will be seeded in the code, however there is no change in their behaviour because of this.
 
-Sequences returned by the algorithm will be classified in the following way:
-\begin{itemize}
- \item
-\end{itemize}
-
-\section{Code Techniques}\label{sec:codeTechniques}
+\section{Development Practices}\label{sec:codeTechniques}
 This section will discuss how we will leverage code to complete aspects of the investigation.
 We will be using Python because of its flexibility and it is the language the required libraries are written in.
 
 \subsection{Building The Algorithm}\label{subsec:buildingTheAlgorthem}
 In order to generate a solution sequence we have to train against each Axelrod opponent against another Axelrod opponent.
 We will use the Cycler strategy\footnote{See Section~\ref{subsec:cycler} for description} in the algorithm by editing the input parameter to improve our score against an opponent.\\
-
 
 Our implementation of a genetic algorithm is more custom and has the following steps:
 \begin{enumerate}
@@ -93,7 +86,12 @@ Each step is defined in the Axelrod-Dojo librarys' Population and CyclerParams c
 Rather than store all the functionality in one place we are able split up aspects of the flow to allow for flexibility in what type of population can be used.
 
 \subsection{Conducting analysis}\label{subsec:conductingAnalysis}
-For the analysis a mix of Jupyter Notebooks and IDE\footnote{Pycharm} development were used.
+For the analysis a mix of Jupyter Notebooks and IDE\footnote{Pycharm Professional Edition and Microsoft VS Code.} development were used.
+The main analysis was run using a factory class, written by me, called `full\_analysis'. 
+This class was used to wrap a query to the Axelrod-Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.\\
+
+The analysis itself was done using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
+This will be discussed further in Subsection~\ref{subsec:settingUpAResearchEnvironment}.
 
 \subsubsection{Libraries And Codebases}
 \paragraph{Main Research Libraries}
@@ -104,7 +102,7 @@ For the analysis a mix of Jupyter Notebooks and IDE\footnote{Pycharm} developmen
 
 \paragraph{Functional libraries}
 Table~\ref{table:functionalLibrares} shows the functional libraries used.
-These are codebases which are not involved in the core functionality of the IPD.
+These are libraries which are not involved in the core functionality of the IPD\@.
 \begin{table*}[h]
     \centering
     \begin{tabular}{cc}
@@ -122,6 +120,33 @@ These are codebases which are not involved in the core functionality of the IPD.
     \caption{Functional Python libraries for analysis}\label{table:functionalLibrares}
 \end{table*}
 
+\subsection{Setting Up A Research Environment}\label{subsec:settingUpAResearchEnvironment}
+This section will go into detail on the set up and reasoning behind using specific development environments. This tutorial will also assume you're working with a local development station;
+analysis on remote cloud instances of Jupyter Notebooks is possible but the set up is different.
 
-\subsection{Setting Up A Research Environment}
-To be written.
+\paragraph{Installing Basic Libraries}
+Your first step should be to download and install the Anaconda distribution for your OS here: https://www.anaconda.com/download/.
+This will allow you to use the integrated c++ libraries python has to offer without needing to mess about too much. 
+Anaconda also has them majority of Functional Libraries above and Jupyter Notebooks pre installed to make setting up much easier. 
+From here, follow the instructions the install wizard has to add any environment variables to allow CMD/Bash access to binaries. \\ 
+
+Installing the Axelrod and Axelrod-Dojo libraries uses the pip tool that already comes with Anaconda and should be ready to execute after the last step. Running `pip install axelrod' then `pip install axelrod-dojo' will install these.\\
+
+Once this is installed the `full\_analysis.py' file has to be downloaded from github: https://github.com/GitToby/FinalYearProject in the `code' directory. This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
+
+\paragraph{Running a Test}
+Figure~\ref{code:analysisExample} is some sample code that will run an analysis with the following settings
+\begin{itemize}
+    \item Override the default mutation frequency of \(0.1\) to \(0.3\).
+    \item Set the prefix for all the files to be `example-'.
+    \item Analysing 3 opponents. (Random will have multiple instances for different seeds.) 
+\end{itemize}
+\begin{figure}[h]
+    \centering
+    \inputminted{python}{code_snippets/analysisExample.py}
+    \caption{Code to create a sequence result to optimise best score for 3 opponents}\label{code:analysisExample}
+\end{figure}
+
+After it has run the output should be stored in the `./output' directory. 
+If the code fails to run there may be issues with this directory being created.
+There should be multiple output files, each with one opponents evolution stages through the generations.
