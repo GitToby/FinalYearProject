@@ -9,4 +9,4 @@ install:
 
 #find and run_one unit tests
 script:
- - python code/Tests.py
+ - python code/Tests.py -v

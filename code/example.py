@@ -1,9 +1,9 @@
-from full_analysis import NewAnalysisRun
+from code import full_analysis as fa
 
 
 import axelrod as axl
 
-run = NewAnalysisRun(mutation_frequency=0.33)
+run = fa.NewAnalysisRun(mutation_frequency=0.33)
 run.save_file_prefix = "example-"
 
 run.add_opponent(axl.TitForTat())
