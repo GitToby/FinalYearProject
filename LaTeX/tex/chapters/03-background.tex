@@ -6,13 +6,13 @@ Useful notation is given in Section~\ref{sec:notation} however in some areas of 
 Section~\ref{sec:codeTechniques} on code techniques will cover techniques used in the analysis and a walkthrough of setting up an environment to conduct similar analysis is given in Section~\ref{subsec:settingUpAResearchEnvironment}.
 
 \section{Notation}\label{sec:notation}
-Let \(S\in\{C, D\}^L\) where \(C\), \(D\) represents a cooperation, defection respectively. \(L=200\) is used throughout this report.
+Let \(S\in\{C, D\}^L\) where \(C\), \(D\) represents a cooperation, defection respectively.\(L=200\) is used throughout this report.
 We can split up sequences into blocks of consecutive move elements of the same type.
 We will use \(B_i\) to denote the block after \(i\) changes of move type from the explicitly stated starting move type.
 \begin{itemize}
     \item Every move in a block is of the same type;
     the type is implicit based on whether \(i\) is even or not and what the starting move type was.
-    \item We can use the notation \(|B_i|\) to denote the length of the \(i\)th block in the sequence. \(|B_i| \in \mathbb{Z}\)
+    \item We can use the notation \(|B_i|\) to denote the length of the \(i\)th block in the sequence.\(|B_i| \in \mathbb{Z}\)
 \end{itemize}
 
 This means we can write a sequence as a series of blocks:
@@ -50,7 +50,7 @@ The output sequences will be compared on how similar they are to each other, wha
 
 When working with stochastic players, we will be seeding them in order to determine the best sequence.
 Each stochastic player will be considered under a variety of seeds.
-The motive to allow this to happen is explained described in Section~\ref{sec:stochasticOpponents}. Non-stochastic opponents will be seeded in the code, however there is no change in their behaviour because of this.
+The motive to allow this to happen is explained described in Section~\ref{sec:stochasticOpponents}.Non-stochastic opponents will be seeded in the code, however there is no change in their behaviour because of this.
 
 \section{Development Practices}\label{sec:codeTechniques}
 This section will discuss how we will leverage code to complete aspects of the investigation.
@@ -76,7 +76,10 @@ Our implementation of a genetic algorithm is more custom and has the following s
 Figure~\ref{fig:geneticAlgoCycle} shows a flow diagram of our cycle.
 This is the algorithm we will use in Chapter~\ref{ch:implementation} when analysing the algorithms parameters\\
 
-Put a figure of our cycle here.\label{fig:geneticAlgoCycle} \\
+\begin{figure}[h]
+    \includegraphics[width=1.0\textwidth, center]{./img/flows/custom_ga_cycle}
+    \caption{High Level Genetic Algorithm Cycle}\label{fig:geneticAlgoCycle}
+\end{figure}
 
 This model means we can create a population of Cycler players and input a sequence of length 200 as a parameter to set off our genetic algorithm.
 The subsequent inputs for the populations Cycler players will be created using the genetic mutation and crossover techniques, see Section~\ref{subsec:geneticAlgorithms} for details.\\
@@ -87,7 +90,7 @@ Rather than store all the functionality in one place we are able split up aspect
 
 \subsection{Conducting analysis}\label{subsec:conductingAnalysis}
 For the analysis a mix of Jupyter Notebooks and IDE\footnote{Pycharm Professional Edition and Microsoft VS Code.} development were used.
-The main analysis was run using a factory class, written by me, called `full\_analysis'. 
+The main analysis was run using a factory class, written by me, called `full\_analysis'.
 This class was used to wrap a query to the Axelrod-Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.\\
 
 The analysis itself was done using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
@@ -121,25 +124,25 @@ These are libraries which are not involved in the core functionality of the IPD\
 \end{table*}
 
 \subsection{Setting Up A Research Environment}\label{subsec:settingUpAResearchEnvironment}
-This section will go into detail on the set up and reasoning behind using specific development environments. This tutorial will also assume you're working with a local development station;
+This section will go into detail on the set up and reasoning behind using specific development environments.This tutorial will also assume you're working with a local development station;
 analysis on remote cloud instances of Jupyter Notebooks is possible but the set up is different.
 
 \paragraph{Installing Basic Libraries}
 Your first step should be to download and install the Anaconda distribution for your OS here: https://www.anaconda.com/download/.
-This will allow you to use the integrated c++ libraries python has to offer without needing to mess about too much. 
-Anaconda also has them majority of Functional Libraries above and Jupyter Notebooks pre installed to make setting up much easier. 
-From here, follow the instructions the install wizard has to add any environment variables to allow CMD/Bash access to binaries. \\ 
+This will allow you to use the integrated c++ libraries python has to offer without needing to mess about too much.
+Anaconda also has them majority of Functional Libraries above and Jupyter Notebooks pre installed to make setting up much easier.
+From here, follow the instructions the install wizard has to add any environment variables to allow CMD/Bash access to binaries.\\ 
 
-Installing the Axelrod and Axelrod-Dojo libraries uses the pip tool that already comes with Anaconda and should be ready to execute after the last step. Running `pip install axelrod' then `pip install axelrod-dojo' will install these.\\
+Installing the Axelrod and Axelrod-Dojo libraries uses the pip tool that already comes with Anaconda and should be ready to execute after the last step.Running `pip install axelrod' then `pip install axelrod-dojo' will install these.\\
 
-Once this is installed the `full\_analysis.py' file has to be downloaded from github: https://github.com/GitToby/FinalYearProject in the `code' directory. This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
+Once this is installed the `full\_analysis.py' file has to be downloaded from github: https://github.com/GitToby/FinalYearProject in the `code' directory.This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
 
 \paragraph{Running a Test}
 Figure~\ref{code:analysisExample} is some sample code that will run an analysis with the following settings
 \begin{itemize}
     \item Override the default mutation frequency of \(0.1\) to \(0.3\).
     \item Set the prefix for all the files to be `example-'.
-    \item Analysing 3 opponents. (Random will have multiple instances for different seeds.) 
+    \item Analysing 3 opponents.(Random will have multiple instances for different seeds.) 
 \end{itemize}
 \begin{figure}[h]
     \centering
@@ -147,6 +150,18 @@ Figure~\ref{code:analysisExample} is some sample code that will run an analysis 
     \caption{Code to create a sequence result to optimise best score for 3 opponents}\label{code:analysisExample}
 \end{figure}
 
-After it has run the output should be stored in the `./output' directory. 
+After it has run the output should be stored in the `./output' directory.
 If the code fails to run there may be issues with this directory being created.
 There should be multiple output files, each with one opponents evolution stages through the generations.
+
+\paragraph{Cloud Notebook Setup} 
+If you want to use a Cloud service, such as Azure Notebooks or AWS Sagemaker, the set up is similar to the above just executed differently.
+Installing Anaconda is not needed, the environment has the required installs.
+Using pip to install the Axelrod libraries and download the full analysis script can be done in an integrated web terminal or directly in a notebook.
+Figure~\ref{code:jupyterExample} shows and example in azure, copy these in your top few cells of your jupyter notebook and it will work as required.
+
+\begin{figure}[h]
+    \centering
+    \inputminted{python}{code_snippets/jupyterCells.py}
+    \caption{Cells for creating the jupyter instance of a research environment}\label{code:jupyterExample}
+\end{figure}
