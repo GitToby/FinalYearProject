@@ -1,28 +1,13 @@
+from full_analysis import NewAnalysisRun
+
+
 import axelrod as axl
-import axelrod_dojo as axl_dojo
 
-C, D = axl.Action
+run = NewAnalysisRun(mutation_frequency=0.33)
+run.save_file_prefix = "example-"
 
-# Cycler ##############################
-cycler_objective = axl_dojo.prepare_objective(name="score", turns=20, repetitions=1)
+run.add_opponent(axl.TitForTat())
+run.add_opponent(axl.Random())
+run.add_opponent(axl.Grudger())
 
-# Lets use an opponent_list of just one:
-opponent_list = [axl.TitForTat()]
-cycler = axl_dojo.CyclerParams
-
-# params to pass through
-cycler_kwargs = {
-    "sequence_length": 10
-}
-
-population = axl_dojo.Population(params_class=cycler,
-                                 params_kwargs=cycler_kwargs,
-                                 size=20,
-                                 bottleneck=1,
-                                 objective=cycler_objective,
-                                 output_filename="output/cyclerOutput.csv",
-                                 opponents=opponent_list)
-
-cycler_generations = 20
-population.run(cycler_generations)
-
+run.start()
