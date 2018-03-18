@@ -21,13 +21,13 @@ A Sequence can also be defined shorthand by specifying the starting move and the
 \[S = C:\big{[}\ |B_1|,|B_2|,\ldots,|B_n|\ \big{]} \quad \Rightarrow \quad S=\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{(C|D)\ldots (C|D)}^{|B_n|} \]
 We can also construct sequences from repetitions of a sequence of blocks when it makes sense:
 \[C:\big{[}\ \big{(}|B_1|,|B_2|,\ \ldots,\ |B_m|\big{)}^{k}\ \big{]} \quad \Rightarrow \quad {\small{\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{D\ldots D}^{|B_m|}}}^{k-times}\]
-The two notations can be combined to add starting and ending blocks to a repeating sequence (shown in the examples).\\
+The two notations can be combined to add starting and ending blocks to a repeating sequence (shown in the examples).
 
 It is also possible to define sets of sequences by adding variables to parameters of the sequence.
 Appropriate selection of parameters mean the length of sequences shouldn't grow.
 \[ \{C:[i,l-i]\} \quad i\in [a,b] \Rightarrow \{\underbrace{C\ldots C}_{a}\overbrace{D\ldots D}^{l-a},\ \underbrace{C\ldots C}_{a+1}\overbrace{D\ldots D}^{l-(a+1)},\ldots ,\ \underbrace{C\ldots C}_{b}\overbrace{D\ldots D}^{l-b}\} \]
 For long sequences where there is no recognisable pattern it is typically easier to describe the solution.
-Otherwise we use the notation to describe a sequence.\\
+Otherwise we use the notation to describe a sequence.
 Examples:
 \begin{align}
     C:[1,4,3,2] &= CDDDDCCCDD\\
@@ -38,15 +38,15 @@ Examples:
 
 \section{Solution Form}\label{sec:solutionForm}
 In this research our goal will be to use the algorithm, described in Subsection~\ref{subsec:geneticAlgorithms}, to produce an arbitrary sequence for an opponent, \(S_o\).
-This sequence will represent the moves we should play against the opponent to get our largest potential score per turn for a single game of 200 turns.\\
+This sequence will represent the moves we should play against the opponent to get our largest potential score per turn for a single game of 200 turns.
 
 This investigation focuses on sequences that will allow us to maximise our score overall, rather than just beating any given opponent.
 An analogy of this concept is a team playing a football tournament, but instead of a knockout competition our team is placed in the standings based off the total goals they have scored across the tournament.
-More real world applications of these results are discussed in Chapter~\ref{ch:applications}.\\
+More real world applications of these results are discussed in Chapter~\ref{ch:applications}.
 
 Each solution sequence is uniquely generated for each opponent.
 If there are two similar opponents, say Grudger and Collective Strategy, these will be independently analysed and individual solutions will be generated.
-The output sequences will be compared on how similar they are to each other, what type of opponents and their corresponding `best scores' are and whether there are patterns to how to group strategies, Chapter~\ref{ch:results} contains further details.\\
+The output sequences will be compared on how similar they are to each other, what type of opponents and their corresponding `best scores' are and whether there are patterns to how to group strategies, Chapter~\ref{ch:results} contains further details.
 
 When working with stochastic players, we will be seeding them in order to determine the best sequence.
 Each stochastic player will be considered under a variety of seeds.
@@ -58,7 +58,7 @@ We will be using Python because of its flexibility and it is the language the re
 
 \subsection{Building The Algorithm}\label{subsec:buildingTheAlgorthem}
 In order to generate a solution sequence we have to train against each Axelrod opponent against another Axelrod opponent.
-We will use the Cycler strategy\footnote{See Section~\ref{subsec:cycler} for description} in the algorithm by editing the input parameter to improve our score against an opponent.\\
+We will use the Cycler strategy\footnote{See Section~\ref{subsec:cycler} for description} in the algorithm by editing the input parameter to improve our score against an opponent.
 
 Our implementation of a genetic algorithm is more custom and has the following steps:
 \begin{enumerate}
@@ -74,7 +74,7 @@ Our implementation of a genetic algorithm is more custom and has the following s
     Repeat from step 2 until the desired number of generations are finished and a final best sequence is returned.
 \end{enumerate}
 Figure~\ref{fig:geneticAlgoCycle} shows a flow diagram of our cycle.
-This is the algorithm we will use in Chapter~\ref{ch:implementation} when analysing the algorithms parameters\\
+This is the algorithm we will use in Chapter~\ref{ch:implementation} when analysing the algorithms parameters
 
 \begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/flows/custom_ga_cycle}
@@ -82,8 +82,8 @@ This is the algorithm we will use in Chapter~\ref{ch:implementation} when analys
 \end{figure}
 
 This model means we can create a population of Cycler players and input a sequence of length 200 as a parameter to set off our genetic algorithm.
-The subsequent inputs for the populations Cycler players will be created using the genetic mutation and crossover techniques, see Section~\ref{subsec:geneticAlgorithms} for details.\\
+The subsequent inputs for the populations Cycler players will be created using the genetic mutation and crossover techniques, see Section~\ref{subsec:geneticAlgorithms} for details.
 
 The flow of Play-Rank-Create looping (see Figure~\ref{fig:geneticAlgoCycle}) will be the basis of creating the optimal strategy for each other opponent.
-Each step is defined in the Axelrod-Dojo librarys' Population and CyclerParams classes.
+Each step is defined in the Axelrod Dojo \mintinline{python}{Population} and \mintinline{python}{CyclerParams} classes.
 Rather than store all the functionality in one place we are able split up aspects of the flow to allow for flexibility in what type of population can be used.

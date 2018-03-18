@@ -3,7 +3,7 @@
 \chapter{Introduction}\label{ch:intro}
 In this report we will be looking at how strategies of the Iterated Prisoners Dilemma (IPD) can be `countered' or `worked' in order to give a better overall score for a player on the other side of the game.
 We will look into explicit sequences which should be played for single games of length 200 against a single opponent.
-These sequences will then be compared and contrasted to understand how some opponents could be grouped together even though they have no structure in common.\\
+These sequences will then be compared and contrasted to understand how some opponents could be grouped together even though they have no structure in common.
 
 The concept of `working' a strategy is more fitting in this research as we will be looking into boosting the score or our player, which in most cases (due to the nature of the IPD) will also boost the score of our opponent.
 `working' also has a better real world interpretation than `countering' as the real goal of increasing the score for our player is to generate as many Cooperation moves to Defect against without consequences as possible.
@@ -17,7 +17,7 @@ See https://vknight.org/gt/chapters/09/
 Machine Learning is a field of computer science that has existed since the first computers have been around.
 Most famously the questions posed by Alan Turing in 1950~\cite{turing1950computing} asks `can machines think', a question that has been refined and analysed to this day.
 The field of computer intelligence is rich in its complexities and has recently been making breakthroughs~\cite{knight2017alphaZeroMIT} on topics which would traditionally be considered `thinking'.
-Along with this, recently there has also been record levels of funding~\cite{chui2017artificial} put in to companies which operate in this field, producing results in areas that would usually seem `solved'.\\
+Along with this, recently there has also been record levels of funding~\cite{chui2017artificial} put in to companies which operate in this field, producing results in areas that would usually seem `solved'.
 
 \subsection{Genetic Algorithms}\label{subsec:geneticAlgorithms}
 This report will cover one of the forms of machine learning called genetic algorithms (GAs).
@@ -27,7 +27,7 @@ These are techniques of using genetic algorithms for generating solutions to pro
 The concept of a genetic algorithm, and more generally an evolutionary algorithm, comes from nature;
 like nature we create a survival of the fittest selection~\cite{darwin2009origin} competition to evaluate a population then kill off the weakest members.
 After this cull we create offspring from the most successful population or introduce new members from a predefined source.
-This process is then repeated until we stop it, or forever in the case of nature.\\
+This process is then repeated until we stop it, or forever in the case of nature.
 
 We say a genetic algorithm is structured in the following way.
 Given a population, \(P\), each with unique genes (genes and member properties are interchangeable), and a number of generations, \(G\in \mathbb{N}\), the algorithm will create \(G\) cycles of scoring and potentially removing each of the members of the population, \(p_i \in P\).
@@ -44,22 +44,23 @@ By doing this we are saving the more successful candidates allowing us to rebuil
     \(M_p\) describes how strong the mutation is, the higher it is the larger change to the member occurs.
     \(M_f\) explains the percentage of how many members of the population are mutated.
 \end{itemize}
-Figure~\ref{fig:genericGeneticAlgoCycle} shows a flow diagram of a generic genetic algorithm cycle.\\
+Figure~\ref{fig:genericGeneticAlgoCycle} shows a flow diagram of a generic genetic algorithm cycle.
 
-Put a figure of generic cycle here.\label{fig:genericGeneticAlgoCycle} \\
+Put a figure of generic cycle here.\label{fig:genericGeneticAlgoCycle} 
 
+This is a general example of a generic algorithm.
 The specific algorithm we will be using is described in Subsection~\ref{subsec:buildingTheAlgorthem}.
 
-\subsection{Bayesian Optimization}\label{subsec:bayesianOptimization}
-%TODO: need this bit?
 \section{Brief Task Overview}\label{sec:briefOverview}
 This document will be be looking at the creation of sequences to beat given opponents in The Iterated Prisoners Dilemma.
 Analysis will be focused on looking into just the single opponent use case, but the idea of designing a sequence for a tournament for a given number of opponents is a potential follow on to this work.
-Our task is as follows:\\
+Our task is as follows:
 
-Problem:\\{\itshape~When playing a given Iterated Prisoners Dilemma strategy, \(O\), as an opponent, what is the best ordered solution sequence of moves, \(S\), to play in order for us to obtain the highest possible average score per move across the game.}\\
+Problem:
+\begin{center}
+    \itshape~When playing a given Iterated Prisoners Dilemma strategy, \(O\), as an opponent, what is the best ordered solution sequence of moves, \(S\), to play in order for us to obtain the highest possible average score per move across the game.
+\end{center}
 
 For example an opponent known as Tit For Tat, which cooperates on its first move and the copies your last move on subsequent moves, will have a solution sequence of moves that are all cooperation apart from the last.
-This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into all the strategy as defined in the Axelrod Library.
-These are listed in appendix Section\ldots
-%ToDo: cite Axelrod codebases?
+This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into every strategy as defined in the Axelrod Library.
+These are listed in appendix Section~\ref{apndx:opponents} and definitions can be found in the axelrod codebase\cite{axelrodproject}.

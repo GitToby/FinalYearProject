@@ -1,7 +1,7 @@
 \chapter{Developing The Codebase}\label{ch:developingthecodebase}
 For the analysis a mix of Jupyter Notebooks and integrated development environments\footnote{Pycharm Professional Edition and Microsoft VS Code.} were used to write and execute code.
 The main analysis was run using a factory class, written by me, called `full\_analysis'.
-This class was used to wrap a query to the Axelrod-Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.\\
+This class was used to wrap a query to the Axelrod-Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.
 
 The analysis itself was done using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
 This will be discussed further in Subsection~\ref{subsec:settingUpAResearchEnvironment}.
@@ -14,7 +14,7 @@ This will be discussed further in Subsection~\ref{subsec:settingUpAResearchEnvir
 \end{itemize}
 
 \paragraph{Functional libraries}
-Table~\ref{table:functionalLibrares} shows the external functional libraries used, while Table~\ref{table:builtinmodules} shows the internal python builtins that where leveraged during development.
+Table~\ref{table:functionalLibrares} shows the external functional libraries used, while Table~\ref{table:builtinmodules} shows the internal python built in modules that where leveraged during development.
 These are libraries which are not involved in the core functionality of the IPD\@.
 \begin{table*}[ht]
     \centering
@@ -40,7 +40,7 @@ These are libraries which are not involved in the core functionality of the IPD\
         \textbf{itertools} & For easier iterations over data structures.\\
         \bottomrule
     \end{tabular}
-    \caption{internal builitin python modules used}\label{table:builtinmodules}
+    \caption{Internal built in python modules used}\label{table:builtinmodules}
 \end{table*}
 
 \section{Setting Up A Research Environment}\label{subsec:settingUpAResearchEnvironment}
@@ -51,11 +51,11 @@ analysis on remote cloud instances of Jupyter Notebooks is possible but the set 
 Your first step should be to download and install the Anaconda distribution for your OS here: https://www.anaconda.com/download/.
 This will allow you to use the integrated c++ libraries python has to offer without needing to mess about too much.
 Anaconda also has them majority of Functional Libraries above and Jupyter Notebooks pre installed to make setting up much easier.
-From here, follow the instructions the install wizard has to add any environment variables to allow CMD/Bash access to binaries.\\ 
+From here, follow the instructions the install wizard has to add any environment variables to allow CMD/Bash access to binaries.
 
-Installing the Axelrod and Axelrod-Dojo libraries uses the pip tool that already comes with Anaconda and should be ready to execute after the last step.Running `pip install axelrod' then `pip install axelrod-dojo' will install these.\\
+Installing the Axelrod and Axelrod-Dojo libraries uses the pip tool that already comes with Anaconda and should be ready to execute after the last step.Running `pip install axelrod' then `pip install axelrod-dojo' will install these.
 
-Once this is installed the `full\_analysis.py' file has to be downloaded from github: https://github.com/GitToby/FinalYearProject in the `code' directory.This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
+Once this is installed the \mintinline{python}{full\_analysis.py} file has to be downloaded from github\footnote{https://github.com/GitToby/FinalYearProject}, it can be found in the code directory.This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
 
 \paragraph{Running a Test}
 Figure~\ref{code:analysisExample} is some sample code that will run an analysis with the following settings
@@ -81,21 +81,70 @@ Using pip to install the Axelrod libraries and download the full analysis script
 Figure~\ref{code:jupyterExample} shows and example in azure, copy these in your top few cells of your jupyter notebook and it will work as required.
 
 \begin{figure}[ht]
-    \inputminted{python}{code_snippets/jupyterCells.py}
+    \inputminted{python}{code_snippets/dev-examples/jupyterCells.py}
     \caption{Cells for creating the jupyter instance of a research environment}\label{code:jupyterExample}
 \end{figure}
 
 \section{Codebase Contributions}
 Throughout the project I had split time between writing my own code and expanding the Axelrod Dojo codebase. 
-In modern software development there is a commitment in the developer community to track and reuse as much as possible, typically using a version control system such as Git or Subversion.
-The majority of open source community development is conducted on github\cite{GitHub}, the Axelrod libraries along with most other libraries I used are hosted here.
+In modern software development there is a commitment in the developer community to track and reuse as much code as possible, typically using a version control system such as Git or Subversion.
+The majority of open source community development is conducted on github\cite{GitHub} using Git, the Axelrod libraries, along with most other libraries I used, are hosted here.
 
-\subsection{Version Control}
+When writing code in a professional environment there is a predetermined scope that all parties agree upon before the work commences.  This, however, is not the case for research development which is more organic;
+final products that are created when conducting research for papers are highly personalised and typically cannot be used in other areas.
+This leads to more flexible products that operate more as platforms or tools for further research, this is why the Axelrod, Axelrod Dojo and other libraries mentioned in table~\ref{table:functionalLibrares} exist.
+My final code will only be used for researching the IPD in my projects specific direction, this meant extending the platforms to handle what I needed them to do, subsection~\ref{ssec:versioncontrol} looks into how this was completed in my project.
+
+\subsection{Version Control}\label{ssec:versioncontrol}
 During the project I created a `fork' of the axelrod dojo in order to add content to the open source community. 
 This resulted in using Git to create a new `branch' on which to write my code before asking the owners of the repository to pull my work back into the core product using a `pull request'(PR).
 The PR opened for my code\footnote{https://github.com/Axelrod-Python/axelrod-dojo/pull/45} resulted in changes to 457 lines of code and 14 files, adding classes and fixing bug that had been previously flagged.
-Figure~\ref{fig:PR-open} shows the initial scope of the PR.
+Figure~\ref{fig:PR-open} shows the initial scope of the PR and Figure~\ref{fig:commit-log} shows a section of the commits made before merging the branch.
+
 \begin{figure}[ht]
-    \includegraphics[width=1.0\textwidth, center]{./img/vcs/PR-Open.png}
-    \caption{Description and commits for PR on Github}\label{fig:PR-open}
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth, center]{./img/vcs/PR-Open.png}
+        \caption{Description and commits for PR on Github}\label{fig:PR-open}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth, center,keepaspectratio]{./img/vcs/commit-log.png}    
+        \caption{Tail of code commit log as shown on Github}\label{fig:commit-log}
+    \end{minipage}
+\end{figure}
+
+After a request is opened there is a period of reviews by the owners, this is to ensure code quality and scope coverage. 
+As my work progressed I continued to add to the PR which lead to more and more requests being added for features that fell outside the scope of the PR.
+Eventually we decided to create another fork of the PR that contained specialist code for my project that wouldn't benefit the codebase as a whole.
+Figures~\ref{fig:PR-discussion} \$~\ref{fig:PR-scope-discussion} show examples of requests and discussions around features and code quality.
+Because of this review process the overall quality of the codebase can be kept high and the owners can decide on how their platforms are developed.
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth, center,keepaspectratio]{./img/vcs/scope-discussion.png}
+        \caption{Feature discussions in PR on Github}\label{fig:PR-discussion}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth, center,keepaspectratio]{./img/vcs/scope-discussion.png}    
+    \caption{Scope Discussion in PR on Github}\label{fig:PR-scope-discussion}
+    \end{minipage}
+\end{figure}
+
+\subsection{Testing}\label{ssec:testing}
+Code testing and version control go hand in hand. 
+When new releases of code are made it is important to ensure that the new changes dont break previous functionality.
+This is kept in check by the presence of continues integrations (CI) and test environments.
+As of this project the CI for the Axelrod Dojo keeps the libraries tests running on a linux environment and the output fed to the Github page.
+During my development I had to implement tests for any functionality I wrote to ensure the library still worked as intended.
+Following the mixed practice of test driven design (TDD) and behaviour driven design (BDD) the code written to extend the Axelrod Dojo had tests to cover examples of what happens in a production environment.
+Snippet~\ref{code:test-example} shows an example of a test I wrote.
+
+\begin{figure}[ht]
+    \inputminted{python}{code_snippets/dev-examples/example-test.py}
+    \caption{An Example of a test in the Axelrod Dojo}\label{code:test-example}
 \end{figure}
