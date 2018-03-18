@@ -1,0 +1,101 @@
+\chapter{Developing The Codebase}\label{ch:developingthecodebase}
+For the analysis a mix of Jupyter Notebooks and integrated development environments\footnote{Pycharm Professional Edition and Microsoft VS Code.} were used to write and execute code.
+The main analysis was run using a factory class, written by me, called `full\_analysis'.
+This class was used to wrap a query to the Axelrod-Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.\\
+
+The analysis itself was done using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
+This will be discussed further in Subsection~\ref{subsec:settingUpAResearchEnvironment}.
+
+\section{Libraries And External Modules}
+\paragraph{Main Research Libraries}
+\begin{itemize}
+    \item \textbf{Axelrod} --- Used for the core of the prisoners dilemma and iterated prisoners dilemma functionality code.\cite{axelrodproject}
+    \item \textbf{Axelrod-Dojo} --- Applied machine learning techniques that revolve around generating solutions to questions relating to the Axelrod library.
+\end{itemize}
+
+\paragraph{Functional libraries}
+Table~\ref{table:functionalLibrares} shows the external functional libraries used, while Table~\ref{table:builtinmodules} shows the internal python builtins that where leveraged during development.
+These are libraries which are not involved in the core functionality of the IPD\@.
+\begin{table*}[ht]
+    \centering
+    \begin{tabular}{cc}
+        \toprule
+        Library & Reason\\
+        \midrule
+        \textbf{matplotlib pyplot} & For plotting graphs and images with data\\
+        \textbf{pandas} & For data manipulation.\\
+        \textbf{numpy} & For reducing complexity of numerical calculations.\\
+        \bottomrule
+    \end{tabular}
+    \caption{Functional Python libraries for analysis}\label{table:functionalLibrares}
+\end{table*}
+\begin{table*}[ht]
+    \centering
+    \begin{tabular}{cc}
+        \toprule
+        Library & Reason\\
+        \midrule
+        \textbf{os} & For operating system functionality.\\
+        \textbf{time} & For time calculations.\\
+        \textbf{itertools} & For easier iterations over data structures.\\
+        \bottomrule
+    \end{tabular}
+    \caption{internal builitin python modules used}\label{table:builtinmodules}
+\end{table*}
+
+\section{Setting Up A Research Environment}\label{subsec:settingUpAResearchEnvironment}
+This section will go into detail on the set up and reasoning behind using specific development environments.This tutorial will also assume you're working with a local development station;
+analysis on remote cloud instances of Jupyter Notebooks is possible but the set up is different.
+
+\paragraph{Installing Basic Libraries}
+Your first step should be to download and install the Anaconda distribution for your OS here: https://www.anaconda.com/download/.
+This will allow you to use the integrated c++ libraries python has to offer without needing to mess about too much.
+Anaconda also has them majority of Functional Libraries above and Jupyter Notebooks pre installed to make setting up much easier.
+From here, follow the instructions the install wizard has to add any environment variables to allow CMD/Bash access to binaries.\\ 
+
+Installing the Axelrod and Axelrod-Dojo libraries uses the pip tool that already comes with Anaconda and should be ready to execute after the last step.Running `pip install axelrod' then `pip install axelrod-dojo' will install these.\\
+
+Once this is installed the `full\_analysis.py' file has to be downloaded from github: https://github.com/GitToby/FinalYearProject in the `code' directory.This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
+
+\paragraph{Running a Test}
+Figure~\ref{code:analysisExample} is some sample code that will run an analysis with the following settings
+\begin{itemize}
+    \item Override the default mutation frequency of \(0.1\) to \(0.3\).
+    \item Set the prefix for all the files to be `example-'.
+    \item Analysing 3 opponents.(Random will have multiple instances for different seeds.) 
+\end{itemize}
+\begin{figure}[ht]
+    \centering
+    \inputminted{python}{code_snippets/analysisExample.py}
+    \caption{Code to create a sequence result to optimise best score for 3 opponents}\label{code:analysisExample}
+\end{figure}
+
+After it has run the output should be stored in the `./output' directory.
+If the code fails to run there may be issues with this directory being created.
+There should be multiple output files, each with one opponents evolution stages through the generations.
+
+\paragraph{Cloud Notebook Setup} 
+If you want to use a Cloud service, such as Azure Notebooks or AWS Sagemaker, the set up is similar to the above just executed differently.
+Installing Anaconda is not needed, the environment has the required installs.
+Using pip to install the Axelrod libraries and download the full analysis script can be done in an integrated web terminal or directly in a notebook.
+Figure~\ref{code:jupyterExample} shows and example in azure, copy these in your top few cells of your jupyter notebook and it will work as required.
+
+\begin{figure}[ht]
+    \inputminted{python}{code_snippets/jupyterCells.py}
+    \caption{Cells for creating the jupyter instance of a research environment}\label{code:jupyterExample}
+\end{figure}
+
+\section{Codebase Contributions}
+Throughout the project I had split time between writing my own code and expanding the Axelrod Dojo codebase. 
+In modern software development there is a commitment in the developer community to track and reuse as much as possible, typically using a version control system such as Git or Subversion.
+The majority of open source community development is conducted on github\cite{GitHub}, the Axelrod libraries along with most other libraries I used are hosted here.
+
+\subsection{Version Control}
+During the project I created a `fork' of the axelrod dojo in order to add content to the open source community. 
+This resulted in using Git to create a new `branch' on which to write my code before asking the owners of the repository to pull my work back into the core product using a `pull request'(PR).
+The PR opened for my code\footnote{https://github.com/Axelrod-Python/axelrod-dojo/pull/45} resulted in changes to 457 lines of code and 14 files, adding classes and fixing bug that had been previously flagged.
+Figure~\ref{fig:PR-open} shows the initial scope of the PR.
+\begin{figure}[ht]
+    \includegraphics[width=1.0\textwidth, center]{./img/vcs/PR-Open.png}
+    \caption{Description and commits for PR on Github}\label{fig:PR-open}
+\end{figure}

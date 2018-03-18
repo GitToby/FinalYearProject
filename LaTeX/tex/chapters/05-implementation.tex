@@ -95,7 +95,7 @@ This code will output data in the form of Table~\ref{table:popCheckerDataTable}.
     \caption{Output data table}\label{table:popCheckerDataTable}
 \end{table*}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/INIT_POP_bs_v_gens_all.pdf}
     \caption{Best score per turn vs generation for different initial population sizes}\label{fig:INIT-POP-bs-v-gens-all}
 \end{figure}
@@ -107,7 +107,7 @@ This can also be shown in figure~\ref{fig:INIT-POP-mean-bs-v-init-pop-all} that\
 It doesn't, however, ensure that we find the solution sequence;
 as is shown in the lack of long plateaus in the lines.\\
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/INIT_POP_mean_bs_diff_v_init_pop_all.pdf}
     \caption{Scatter of max best score vs different initial populations}\label{fig:INIT-POP-mean-bs-v-init-pop-all}
 \end{figure}
@@ -154,7 +154,7 @@ with the results split into 2 sets --- winners and losers.
 As we extend the generations we would be more focused on what happens to certain averages of results across the whole run, rather than absolute improvement.
 If we look at figure~\ref{fig:GENS-mean-bs-diff-v-gens-all}, mean best score difference against the number of generations, we can observe how, on average, the number of generations has a declining effect the overall change in our best score per generation.\\
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/GENS_mean_bs_diff_v_gens_all.pdf}
     \caption{Mean Best Score diff vs total generation lengths}\label{fig:GENS-mean-bs-diff-v-gens-all}
 \end{figure}
@@ -173,7 +173,7 @@ A good score is a score of 3 or more;
 this can change from player to player, and is never explicitly obvious.
 We can see that after a number of generations that solutions sometimes get `stuck' in a local maximum score.
 
-% \begin{figure}[h] 
+% \begin{figure}[ht] 
 % \includegraphics[width=1.0\textwidth, center]{./img/plots/GENS_max_bs_v_gens_all.pdf}
 % \caption{Max best score vs total number of generations}\label{fig:GENS-max-bs-v-gens-all}
 % \end{figure}
@@ -233,7 +233,7 @@ We will look into having mutation potencies \(M_p \in [1,2,3,5,10,15,20]\)\\
 
 Using the data generated from Snippet~\ref{code:mutationPotencyChecker} of code we are able to look at how our best score and our best score diff is affected as we increase the number of positions.\\
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/MUT_POT_bs_v_gen_all.pdf}
     \caption{Best score vs generation for different mutation potencies}\label{fig:MUT-POT-bs-v-gen-all}
 \end{figure}
@@ -243,7 +243,7 @@ We can see that having changed 15 genes in our sequence each time we are still n
 This may be down to chance (and if the test is rerun this may disappear), however looking at more opponents than just Grudger we find there is no clear benefit to increasing the mutation potency with respect to the overall best score value against an opponent.
 If we instead look at what our average increase of score per mutation is we may observe a useful result.\\
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/MUT_POT_bs_diff_v_pot_all.pdf}
     \caption{Average best score diff vs mutation potencies}\label{fig:MUT-POT-bs-diff-v-pot-all}
 \end{figure}
@@ -261,7 +261,7 @@ The code in Snippet~\ref{code:mutationFrequencyChecker} shows the algorithm that
     \caption{Mutation potency code}\label{code:mutationFrequencyChecker}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/MUT_FREQ_bs_v_gen_all.pdf}
     \caption{Best score vs generation for different mutation frequencies}\label{fig:MUT-FREQ-bs-v-gen-all}
 \end{figure}
@@ -270,7 +270,7 @@ The results on changing the mutation rate don't obviously effect that generation
 There is an interesting result that can be seen on the grudger plot;
 the algorithm has found 2 different maximums.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/MUT_FREQ_bs_diff_v_freq_all.pdf}
     \caption{Average best score diff vs mutation frequencies}\label{fig:MUT-FREQ-bs-diff-v-freq-all}
 \end{figure}
@@ -421,7 +421,7 @@ We can now look into how this has effected the previous experiments.
 
 \subsection{Population Size}\label{subsec:populationSize}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/NEW_INIT_POP_bs_v_gen_all_old.pdf}
     \caption{Best Score vs generations for preset initial populations on top of random sequences}\label{fig:NEW-INIT-POP-bs-v-gen-all}
 \end{figure}
@@ -456,7 +456,7 @@ This run will also supplement with random members for running test for \(|P| \in
 After adding the extra members of the initial population we can see, from Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-non-performers}, that now the handshake strategy (such as Collective Strategy) are solved much sooner.
 Also shown in Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-non-performers} is the Random and ZD extort players, these are examples of Stochastic players which are not finding optimal strategy's.
 These will be discussed further in Sections~\ref{subsubsec:discussion}\&~\ref{}.
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/NEW_INIT_POP_bs_v_gen_non_performers.pdf}
     \caption{Non optimal sequence players after changing initial population}\label{fig:NEW-INIT-POP-bs-v-gen-non-performers}
 \end{figure}
@@ -464,7 +464,7 @@ These will be discussed further in Sections~\ref{subsubsec:discussion}\&~\ref{}.
 \subsection{Generation Length}\label{subsec:generationLength}
 Figure~\ref{fig:NEW-GEN-bs-v-gen-all} shows the results from changing the number of generations the algorithm will run to \(G \in [50,150,250,350,450,500] \) whilst also running with a population size of \(|P|=200\).
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/NEW_GEN_bs_v_gen_all.pdf}
     \caption{}\label{fig:NEW-GEN-bs-v-gen-all}
 \end{figure}
@@ -474,7 +474,7 @@ The Figure~\ref{fig:NEW-GEN-bs-v-gen-all} shows no real improvement from increas
 \subsection{Mutation Potency}\label{subsec:mutationPotency}
 Figure~\ref{fig:NEW-MUT-POT-bs-v-gen-all} shows the results from changing mutation potency the algorithm will use to be \(M_p \in [1,2,3,5,10,15,20] \) whilst also running with a population size of \(|P|=200\).
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/NEW_MUT_POT_bs_v_gen_all.pdf}
     \caption{}\label{fig:NEW-MUT-POT-bs-v-gen-all}
 \end{figure}
@@ -484,7 +484,7 @@ The Figure~\ref{fig:NEW-MUT-POT-bs-v-gen-all} shows no real improvement from inc
 \subsection{Mutation Frequency}\label{subsec:mutationFrequency}
 Figure~\ref{fig:NEW-MUT-FREQ-bs-gen-all} shows the results from changing mutation potency the algorithm will use to be \(M_f \in [0.1,0.15,0.2,0.25] \) whilst also running with a population size of \(|P|=200\).
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/plots/NEW_MUT_FREQ_bs_v_gen_all.pdf}
     \caption{}\label{fig:NEW-MUT-FREQ-bs-gen-all}
 \end{figure}
