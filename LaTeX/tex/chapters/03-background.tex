@@ -73,17 +73,17 @@ Our implementation of a genetic algorithm is more custom and has the following s
     \item A generation has now concluded.
     Repeat from step 2 until the desired number of generations are finished and a final best sequence is returned.
 \end{enumerate}
-Figure~\ref{fig:geneticAlgoCycle} shows a flow diagram of our cycle.
-This is the algorithm we will use in Chapter~\ref{ch:implementation} when analysing the algorithms parameters
 
 \begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/flows/custom_ga_cycle}
     \caption{High Level Genetic Algorithm Cycle}\label{fig:geneticAlgoCycle}
 \end{figure}
 
-This model means we can create a population of Cycler players and input a sequence of length 200 as a parameter to set off our genetic algorithm.
+Figure~\ref{fig:geneticAlgoCycle} shows a flow diagram of our cycle.
+This is the algorithm we will use in Chapter~\ref{ch:implementation} when analysing the algorithms parameters
+The model means we can create a population of Cycler players and input a sequence of length 200 as a parameter to set off our genetic algorithm.
 The subsequent inputs for the populations Cycler players will be created using the genetic mutation and crossover techniques, see Section~\ref{subsec:geneticAlgorithms} for details.
 
-The flow of Play-Rank-Create looping (see Figure~\ref{fig:geneticAlgoCycle}) will be the basis of creating the optimal strategy for each other opponent.
+The looping will be the basis of creating the optimal strategy for each other opponent.
 Each step is defined in the Axelrod Dojo \mintinline{python}{Population} and \mintinline{python}{CyclerParams} classes.
 Rather than store all the functionality in one place we are able split up aspects of the flow to allow for flexibility in what type of population can be used.

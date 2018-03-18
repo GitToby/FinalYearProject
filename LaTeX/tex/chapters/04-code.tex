@@ -1,49 +1,14 @@
 \chapter{Developing The Codebase}\label{ch:developingthecodebase}
-For the analysis a mix of Jupyter Notebooks and integrated development environments\footnote{Pycharm Professional Edition and Microsoft VS Code.} were used to write and execute code.
-The main analysis was run using a factory class, written by me, called `full\_analysis'.
+
+
+\section{Research Environments}\label{subsec:settingUpAResearchEnvironment}
+A mix of Jupyter Notebooks and integrated development environments\footnote{Pycharm Professional Edition and Microsoft VS Code.} were used to write and execute code.
+The main analysis was run using a factory class pattern, called \mintinline{python}{AnalysisRun} in the \mintinline{python}{full_analysis} module.
 This class was used to wrap a query to the Axelrod-Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.
 
 The analysis itself was done using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
 This will be discussed further in Subsection~\ref{subsec:settingUpAResearchEnvironment}.
 
-\section{Libraries And External Modules}
-\paragraph{Main Research Libraries}
-\begin{itemize}
-    \item \textbf{Axelrod} --- Used for the core of the prisoners dilemma and iterated prisoners dilemma functionality code.\cite{axelrodproject}
-    \item \textbf{Axelrod-Dojo} --- Applied machine learning techniques that revolve around generating solutions to questions relating to the Axelrod library.
-\end{itemize}
-
-\paragraph{Functional libraries}
-Table~\ref{table:functionalLibrares} shows the external functional libraries used, while Table~\ref{table:builtinmodules} shows the internal python built in modules that where leveraged during development.
-These are libraries which are not involved in the core functionality of the IPD\@.
-\begin{table*}[ht]
-    \centering
-    \begin{tabular}{cc}
-        \toprule
-        Library & Reason\\
-        \midrule
-        \textbf{matplotlib pyplot} & For plotting graphs and images with data\\
-        \textbf{pandas} & For data manipulation.\\
-        \textbf{numpy} & For reducing complexity of numerical calculations.\\
-        \bottomrule
-    \end{tabular}
-    \caption{Functional Python libraries for analysis}\label{table:functionalLibrares}
-\end{table*}
-\begin{table*}[ht]
-    \centering
-    \begin{tabular}{cc}
-        \toprule
-        Library & Reason\\
-        \midrule
-        \textbf{os} & For operating system functionality.\\
-        \textbf{time} & For time calculations.\\
-        \textbf{itertools} & For easier iterations over data structures.\\
-        \bottomrule
-    \end{tabular}
-    \caption{Internal built in python modules used}\label{table:builtinmodules}
-\end{table*}
-
-\section{Setting Up A Research Environment}\label{subsec:settingUpAResearchEnvironment}
 This section will go into detail on the set up and reasoning behind using specific development environments.This tutorial will also assume you're working with a local development station;
 analysis on remote cloud instances of Jupyter Notebooks is possible but the set up is different.
 
@@ -58,7 +23,7 @@ Installing the Axelrod and Axelrod-Dojo libraries uses the pip tool that already
 Once this is installed the \mintinline{python}{full\_analysis.py} file has to be downloaded from github\footnote{https://github.com/GitToby/FinalYearProject}, it can be found in the code directory.This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
 
 \paragraph{Running a Test}
-Figure~\ref{code:analysisExample} is some sample code that will run an analysis with the following settings
+Figure~\ref{code:analysisExample} is some sample code that will run an analysis with the following settings:
 \begin{itemize}
     \item Override the default mutation frequency of \(0.1\) to \(0.3\).
     \item Set the prefix for all the files to be `example-'.
@@ -70,7 +35,7 @@ Figure~\ref{code:analysisExample} is some sample code that will run an analysis 
     \caption{Code to create a sequence result to optimise best score for 3 opponents}\label{code:analysisExample}
 \end{figure}
 
-After it has run the output should be stored in the `./output' directory.
+After it has run the generated data output should be stored in the `./output' directory.
 If the code fails to run there may be issues with this directory being created.
 There should be multiple output files, each with one opponents evolution stages through the generations.
 
@@ -142,9 +107,46 @@ This is kept in check by the presence of continues integrations (CI) and test en
 As of this project the CI for the Axelrod Dojo keeps the libraries tests running on a linux environment and the output fed to the Github page.
 During my development I had to implement tests for any functionality I wrote to ensure the library still worked as intended.
 Following the mixed practice of test driven design (TDD) and behaviour driven design (BDD) the code written to extend the Axelrod Dojo had tests to cover examples of what happens in a production environment.
-Snippet~\ref{code:test-example} shows an example of a test I wrote.
+Snippet~\ref{code:test-example} shows an example of a test.
 
 \begin{figure}[ht]
     \inputminted{python}{code_snippets/dev-examples/example-test.py}
     \caption{An Example of a test in the Axelrod Dojo}\label{code:test-example}
 \end{figure}
+
+\section{Libraries And External Modules}
+\paragraph{Main Research Libraries}
+\begin{itemize}
+    \item \textbf{Axelrod} --- Used for the core of the prisoners dilemma and iterated prisoners dilemma functionality code.\cite{axelrodproject}
+    \item \textbf{Axelrod-Dojo} --- Applied machine learning techniques that revolve around generating solutions to questions relating to the Axelrod library.
+\end{itemize}
+
+\paragraph{Functional libraries}
+Table~\ref{table:functionalLibrares} shows the external functional libraries used, while Table~\ref{table:builtinmodules} shows the internal python built in modules that where leveraged during development.
+These are libraries which are not involved in the core functionality of the IPD\@.
+\begin{table*}[ht]
+    \centering
+    \begin{tabular}{cc}
+        \toprule
+        Library & Reason\\
+        \midrule
+        \textbf{matplotlib pyplot} & For plotting graphs and images with data\\
+        \textbf{pandas} & For data manipulation.\\
+        \textbf{numpy} & For reducing complexity of numerical calculations.\\
+        \bottomrule
+    \end{tabular}
+    \caption{Functional Python libraries for analysis}\label{table:functionalLibrares}
+\end{table*}
+\begin{table*}[ht]
+    \centering
+    \begin{tabular}{cc}
+        \toprule
+        Library & Reason\\
+        \midrule
+        \textbf{os} & For operating system functionality.\\
+        \textbf{time} & For time calculations.\\
+        \textbf{itertools} & For easier iterations over data structures.\\
+        \bottomrule
+    \end{tabular}
+    \caption{Internal built in python modules used}\label{table:builtinmodules}
+\end{table*}
