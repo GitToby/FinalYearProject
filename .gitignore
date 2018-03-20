@@ -1,0 +1,10 @@
+
+\.idea/
+code/__pycache__/
+code/output/**
+LaTeX/tex/\.vscode/
+LaTeX/tex/_minted-main/
+LaTeX/tex/__latexindent_temp.tex
+LaTeX/tex/chapters/__latexindent_temp.tex
+*.aux
+*.gz
