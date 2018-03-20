@@ -3,7 +3,7 @@
 
 \section{Research Environments}\label{subsec:settingUpAResearchEnvironment}
 A mix of Jupyter Notebooks and integrated development environments\footnote{Pycharm Professional Edition and Microsoft VS Code.} were used to write and execute code.
-The main analysis was run using a factory class pattern, called \mintinline{python}{AnalysisRun} in the \mintinline{python}{full_analysis} module.
+The main analysis was run using a factory class pattern, called \mintinline{python}{AnalysisRun} in the \mintinline{python}{full_analysis} module, show in Figure~\ref{code:AnalysisRun.py} in Appendix Chapter~\ref{apndx:code}.
 This class was used to wrap a query to the Axelrod-Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.
 
 The analysis itself was done using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
