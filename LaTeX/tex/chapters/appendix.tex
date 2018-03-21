@@ -2,10 +2,2808 @@
     \chapter{Code Appendix}\label{apndx:code}
     \begin{figure}[ht]
         \inputminted[fontsize=\small]{python}{./code_snippets/appendix/AnalysisRun.py}
-        \caption{AnalysisRun Class for creating structured compute cycles}\label{code:AnalysisRun.py}
+        \caption{AnalysisRun Class for creating structured compute cycles}\label{apcode:AnalysisRun.py}
     \end{figure}
 
+    \begin{figure}[ht]
+        \inputminted[fontsize=\small]{python}{./code_snippets/appendix/dist_matrix.py}
+        \caption{Distance Matrix generation code using SciKitLearn}\label{apcode:dist_matrix.py}
+    \end{figure}
 
-    
     \chapter{List of Axelrod Opponents}\label{apndx:opponents}
+    * means Stochastic Opponent, (LRT) means Long Run Time.
+    \begin{multicols}{4}
+        \begin{itemize}
+            \item $\phi$
+            \item $\pi$
+            \item $e$
+            \item ALLCorALLD*
+            \item Adaptive
+            \item Adaptive Pavlov 2006
+            \item Adaptive Pavlov 2011
+            \item Adaptive Tit For Tat
+            \item Aggravater
+            \item Alexei
+            \item Alternator
+            \item Alternator Hunter
+            \item Anti Tit For Tat
+            \item AntiCycler
+            \item Appeaser
+            \item Arrogant QLearner*
+            \item Average Copier*
+            \item BackStabber
+            \item Better and Better*
+            \item Black*
+            \item Borufsen
+            \item Bully
+            \item Bush Mosteller*
+            \item Calculator*
+            \item Cautious QLearner*
+            \item Cave*
+            \item Champion*
+            \item Colbert
+            \item CollectiveStrategy
+            \item Contrite Tit For Tat
+            \item Cooperator
+            \item Cooperator Hunter
+            \item Cycle Hunter
+            \item Cycler CCCCCD
+            \item Cycler CCCD
+            \item Cycler CCCDCD
+            \item Cycler CCD
+            \item Cycler DC
+            \item Cycler DDC
+            \item DBS (LRT)
+            \item Davis
+            \item Defector
+            \item Defector Hunter
+            \item Desperate*
+            \item DoubleCrosser
+            \item DoubleResurrection
+            \item Doubler
+            \item Dynamic Two Tits For Tat*
+            \item EasyGo
+            \item Eatherley*
+            \item EugineNier
+            \item Eventual Cycle Hunter
+            \item Evolved ANN
+            \item Evolved ANN 5
+            \item Evolved ANN 5 Noise 05
+            \item Evolved FSM 16
+            \item Evolved FSM 16 Noise 05
+            \item Evolved FSM 4
+            \item Evolved HMM 5*
+            \item EvolvedLookerUp1\_1\_1
+            \item EvolvedLookerUp2\_2\_2
+            \item Feld*
+            \item Firm But Fair*
+            \item Fool Me Forever
+            \item Fool Me Once
+            \item Forgetful Fool Me Once*
+            \item Forgetful Grudger
+            \item Forgiver
+            \item Forgiving Tit For Tat
+            \item Fortress3
+            \item Fortress4
+            \item GTFT*
+            \item General Soft Grudger
+            \item Getzler*
+            \item Gladstein
+            \item Go By Majority
+            \item Go By Majority 10
+            \item Go By Majority 20
+            \item Go By Majority 40
+            \item Go By Majority 5
+            \item GraaskampKatzen
+            \item Gradual
+            \item Gradual Killer
+            \item Grofman*
+            \item Grudger
+            \item GrudgerAlternator
+            \item Grumpy
+            \item Handshake
+            \item Hard Go By Majority
+            \item Hard Go By Majority 10
+            \item Hard Go By Majority 20
+            \item Hard Go By Majority 40
+            \item Hard Go By Majority 5
+            \item Hard Prober
+            \item Hard Tit For 2 Tats
+            \item Hard Tit For Tat
+            \item Harrington*
+            \item Hesitant QLearner*
+            \item Hopeless*
+            \item Inverse*
+            \item Inverse Punisher
+            \item Joss*
+            \item Kluepfel*
+            \item Knowledgeable Worse and Worse*
+            \item Level Punisher
+            \item Leyvraz*
+            \item Limited Retaliate
+            \item Limited Retaliate 2
+            \item Limited Retaliate 3
+            \item MEM2
+            \item Math Constant Hunter
+            \item Meta Hunter
+            \item Meta Hunter Aggressive
+            \item Meta Majority* (LRT)
+            \item Meta Majority Finite Memory* (LRT)
+            \item Meta Majority Long Memory* (LRT)
+            \item Meta Majority Memory One* (LRT)
+            \item Meta Minority* (LRT)
+            \item Meta Mixer* (LRT)
+            \item Meta Winner* (LRT)
+            \item Meta Winner Deterministic* (LRT)
+            \item Meta Winner Ensemble* (LRT)
+            \item Meta Winner Finite Memory* (LRT)
+            \item Meta Winner Long Memory* (LRT)
+            \item Meta Winner Memory One* (LRT)
+            \item Meta Winner Stochastic* (LRT)
+            \item Michaelos*
+            \item More Tideman and Chieruzzi
+            \item MoreGrofman
+            \item N Tit(s) For M Tat(s)
+            \item NMWE Deterministic* (LRT)
+            \item NMWE Finite Memory* (LRT)
+            \item NMWE Long Memory* (LRT)
+            \item NMWE Memory One* (LRT)
+            \item NMWE Stochastic* (LRT)
+            \item Naive Prober*
+            \item Negation*
+            \item Nice Average Copier*
+            \item Nice Meta Winner* (LRT)
+            \item Nice Meta Winner Ensemble* (LRT)
+            \item Nydegger
+            \item Omega TFT
+            \item Once Bitten
+            \item Opposite Grudger
+            \item PSO Gambler 1\_1\_1*
+            \item PSO Gambler 2\_2\_2*
+            \item PSO Gambler 2\_2\_2 Noise 05*
+            \item PSO Gambler Mem1*
+            \item Predator
+            \item Prober
+            \item Prober 2
+            \item Prober 3
+            \item Prober 4
+            \item Pun1
+            \item Punisher
+            \item Raider
+            \item Random*
+            \item Random Hunter
+            \item Random Tit for Tat*
+            \item Remorseful Prober*
+            \item Resurrection
+            \item Retaliate
+            \item Retaliate 2
+            \item Retaliate 3
+            \item Revised Downing
+            \item RichardHufford
+            \item Ripoff
+            \item Risky QLearner*
+            \item SelfSteem*
+            \item ShortMem
+            \item Shubik
+            \item Slow Tit For Two Tats 2
+            \item Sneaky Tit For Tat
+            \item Soft Grudger
+            \item Soft Joss*
+            \item SolutionB1
+            \item SolutionB5
+            \item Spiteful Tit For Tat
+            \item Stalker*
+            \item Stein and Rapoport
+            \item Stochastic Cooperator*
+            \item Stochastic WSLS*
+            \item Suspicious Tit For Tat
+            \item TF1
+            \item TF2
+            \item TF3
+            \item Tester
+            \item ThueMorse
+            \item ThueMorseInverse
+            \item Thumper
+            \item Tideman and Chieruzzi
+            \item Tit For 2 Tats
+            \item Tit For Tat
+            \item Tranquilizer*
+            \item Tricky Cooperator
+            \item Tricky Defector
+            \item Tullock*
+            \item Two Tits For Tat
+            \item VeryBad
+            \item Weiner
+            \item White
+            \item Willing*
+            \item Win-Shift Lose-Stay
+            \item Win-Stay Lose-Shift
+            \item Winner12
+            \item Winner21
+            \item WmAdams*
+            \item Worse and Worse*
+            \item Worse and Worse 2*
+            \item Worse and Worse 3*
+            \item Yamachi
+            \item ZD-Extort-2*
+            \item ZD-Extort-2 v2*
+            \item ZD-Extort-4*
+            \item ZD-Extort3*
+            \item ZD-Extortion*
+            \item ZD-GEN-2*
+            \item ZD-GTFT-2*
+            \item ZD-Mem2*
+            \item ZD-Mischief*
+            \item ZD-SET-2*
+        \end{itemize}
+    \end{multicols}
+
+    \chapter{List of Best Solution Sequences}\label{apndx:solutionGroups}
+    \begin{itemize}
+        \item C199,1 for 96 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Aggravater (score:2.965)
+                \item Borufsen (score:3.01)
+                \item Cave@\_5 (score:3.01)
+                \item Contrite\_Tit\_For\_Tat (score:3.01)
+                \item Davis@\_10 (score:3.01)
+                \item EvolvedLookerUp1\_1\_1 (score:3.01)
+                \item Feld@\_3 (score:2.29)
+                \item Firm\_But\_Fair@\_0 (score:3.01)
+                \item Firm\_But\_Fair@\_1 (score:3.01)
+                \item Firm\_But\_Fair@\_2 (score:3.01)
+                \item Firm\_But\_Fair@\_3 (score:3.01)
+                \item Firm\_But\_Fair@\_4 (score:3.01)
+                \item Firm\_But\_Fair@\_5 (score:3.01)
+                \item Firm\_But\_Fair@\_6 (score:3.01)
+                \item Firm\_But\_Fair@\_7 (score:3.01)
+                \item Firm\_But\_Fair@\_8 (score:3.01)
+                \item Firm\_But\_Fair@\_9 (score:3.01)
+                \item Forgetful\_Grudger (score:3.01)
+                \item General\_Soft\_Grudger@\_n=1,d=4,c=2 (score:3.01)
+                \item Getzler@\_2 (score:3.01)
+                \item GraaskampKatzen (score:3.01)
+                \item Grudger (score:3.01)
+                \item Hard\_Tit\_For\_Tat (score:3.01)
+                \item Inverse@\_0 (score:3.01)
+                \item Inverse@\_1 (score:3.01)
+                \item Inverse@\_2 (score:3.01)
+                \item Inverse@\_3 (score:3.01)
+                \item Inverse@\_4 (score:3.01)
+                \item Inverse@\_5 (score:3.01)
+                \item Inverse@\_6 (score:3.01)
+                \item Inverse@\_7 (score:3.01)
+                \item Inverse@\_8 (score:3.01)
+                \item Inverse@\_9 (score:3.01)
+                \item Inverse\_Punisher (score:3.01)
+                \item Joss@\_0 (score:2.665)
+                \item Joss@\_1 (score:2.8)
+                \item Joss@\_2 (score:2.65)
+                \item Joss@\_3 (score:2.695)
+                \item Joss@\_4 (score:2.635)
+                \item Joss@\_5 (score:2.59)
+                \item Joss@\_7 (score:2.77)
+                \item Joss@\_8 (score:2.65)
+                \item Joss@\_9 (score:2.755)
+                \item Kluepfel@\_1 (score:3.01)
+                \item Kluepfel@\_4 (score:3.01)
+                \item Leyvraz@\_0 (score:3.01)
+                \item Limited\_Retaliate@\_0.1,\_20 (score:3.01)
+                \item Limited\_Retaliate\_2@\_0.08,\_15 (score:3.01)
+                \item Limited\_Retaliate\_3@\_0.05,\_20 (score:3.01)
+                \item MEM2 (score:3.01)
+                \item Meta\_Hunter@\_6\_players (score:3.01)
+                \item Naive\_Prober@\_0 (score:2.665)
+                \item Naive\_Prober@\_1 (score:2.8)
+                \item Naive\_Prober@\_2 (score:2.65)
+                \item Naive\_Prober@\_3 (score:2.695)
+                \item Naive\_Prober@\_4 (score:2.635)
+                \item Naive\_Prober@\_5 (score:2.59)
+                \item Naive\_Prober@\_7 (score:2.77)
+                \item Naive\_Prober@\_8 (score:2.65)
+                \item Naive\_Prober@\_9 (score:2.755)
+                \item PSO\_Gambler\_1\_1\_1@\_0 (score:3.01)
+                \item PSO\_Gambler\_1\_1\_1@\_2 (score:3.01)
+                \item PSO\_Gambler\_1\_1\_1@\_5 (score:3.01)
+                \item PSO\_Gambler\_1\_1\_1@\_6 (score:3.01)
+                \item PSO\_Gambler\_Mem1@\_0 (score:3.01)
+                \item PSO\_Gambler\_Mem1@\_2 (score:3.01)
+                \item PSO\_Gambler\_Mem1@\_5 (score:3.01)
+                \item PSO\_Gambler\_Mem1@\_6 (score:3.01)
+                \item Punisher (score:3.01)
+                \item Remorseful\_Prober@\_1 (score:2.8)
+                \item Remorseful\_Prober@\_9 (score:2.755)
+                \item Resurrection (score:3.01)
+                \item Retaliate@\_0.1 (score:3.01)
+                \item Retaliate\_2@\_0.08 (score:3.01)
+                \item Retaliate\_3@\_0.05 (score:3.01)
+                \item Shubik (score:3.01)
+                \item Soft\_Grudger (score:3.01)
+                \item Soft\_Joss@\_0.9 (score:3.01)
+                \item SolutionB5 (score:2.995)
+                \item Spiteful\_Tit\_For\_Tat (score:3.01)
+                \item Suspicious\_Tit\_For\_Tat (score:2.995)
+                \item Thumper (score:3.01)
+                \item Tideman\_and\_Chieruzzi (score:3.01)
+                \item Tit\_For\_Tat (score:3.01)
+                \item Two\_Tits\_For\_Tat (score:3.01)
+                \item ZD-Extort-4@\_2 (score:1.825)
+                \item ZD-Extort-4@\_9 (score:1.945)
+                \item ZD-GEN-2@\_2 (score:3.01)
+                \item ZD-GEN-2@\_5 (score:3.01)
+                \item ZD-GTFT-2@\_0 (score:3.01)
+                \item ZD-GTFT-2@\_1 (score:3.01)
+                \item ZD-GTFT-2@\_3 (score:3.01)
+                \item ZD-GTFT-2@\_5 (score:3.01)
+                \item ZD-GTFT-2@\_6 (score:3.01)
+                \item ZD-GTFT-2@\_8 (score:3.01)
+                \item ZD-GTFT-2@\_9 (score:3.01)
+            \end{itemize}
+        \end{multicols}
+
+        \item C198,2 for 21 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Alexei@\_(D,) (score:3.0)
+                \item EugineNier@\_(D,) (score:3.0)
+                \item Fool\_Me\_Once (score:3.02)
+                \item Kluepfel@\_0 (score:3.02)
+                \item Kluepfel@\_5 (score:3.02)
+                \item Michaelos@\_0@\_(D,) (score:3.0)
+                \item Michaelos@\_1@\_(D,) (score:3.0)
+                \item Michaelos@\_2@\_(D,) (score:3.0)
+                \item Michaelos@\_3@\_(D,) (score:3.0)
+                \item Michaelos@\_4@\_(D,) (score:3.0)
+                \item Michaelos@\_5@\_(D,) (score:3.0)
+                \item Michaelos@\_6@\_(D,) (score:3.0)
+                \item Michaelos@\_7@\_(D,) (score:3.0)
+                \item Michaelos@\_8@\_(D,) (score:3.0)
+                \item Michaelos@\_9@\_(D,) (score:3.0)
+                \item PSO\_Gambler\_2\_2\_2@\_2 (score:3.02)
+                \item PSO\_Gambler\_2\_2\_2@\_6 (score:3.02)
+                \item PSO\_Gambler\_Mem1@\_1 (score:3.02)
+                \item PSO\_Gambler\_Mem1@\_3 (score:3.02)
+                \item PSO\_Gambler\_Mem1@\_8 (score:3.02)
+                \item TF3 (score:3.02)
+            \end{itemize}
+        \end{multicols}
+
+        \item C196,4 for 3 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Gradual (score:3.02)
+                \item More\_Tideman\_and\_Chieruzzi (score:3.02)
+                \item ZD-GEN-2@\_3 (score:3.04)
+            \end{itemize}
+        \end{multicols}
+
+        \item C194,6 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item BackStabber@\_(D,\_D) (score:3.02)
+            \end{itemize}
+        \end{multicols}
+
+        \item C193,7 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_Mem1@\_4 (score:3.07)
+                \item PSO\_Gambler\_Mem1@\_9 (score:3.05)
+            \end{itemize}
+        \end{multicols}
+
+        \item C151,1,47,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_2 (score:2.315)
+            \end{itemize}
+        \end{multicols}
+
+        \item C100,26,1,9,1,63 for 3 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_9 (score:3.545)
+                \item Nice\_Average\_Copier@\_9 (score:3.545)
+                \item Worse\_and\_Worse\_3@\_9 (score:3.545)
+            \end{itemize}
+        \end{multicols}
+
+        \item C100,36,1,63 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_9 (score:3.535)
+            \end{itemize}
+        \end{multicols}
+
+        \item C100,100 for 8 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_5 (score:3.365)
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_3 (score:3.3)
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_5 (score:3.38)
+                \item Hard\_Go\_By\_Majority (score:3.985)
+                \item Nice\_Average\_Copier@\_5 (score:3.38)
+                \item Soft\_Go\_By\_Majority (score:4.0)
+                \item VeryBad (score:4.0)
+                \item Worse\_and\_Worse\_3@\_5 (score:3.38)
+            \end{itemize}
+        \end{multicols}
+
+        \item C99,1,3,1,1,1,2,2,3,1,2,1,1,2,10,2,1,1,1,1,2,1,3,1,1,1,3,1,3,1,1,1,3,1,3,5,1,2,1,1,2,1,3,1,1,1,1,3,1,1,1,1,4,1,2,1,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Level\_Punisher (score:3.4)
+            \end{itemize}
+        \end{multicols}
+
+        \item C98,2,1,4,1,9,2,1,3,2,2,2,1,1,1,1,1,1,2,4,1,1,1,2,1,1,2,4,1,5,1,1,2,4,4,5,2,1,6,4,2,1,1,1,1,1,3,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_2 (score:3.29)
+            \end{itemize}
+        \end{multicols}
+
+        \item C95,3,1,1,1,3,1,3,1,2,1,1,3,1,5,1,1,1,7,3,6,1,1,3,3,2,2,6,1,2,1,1,1,1,1,4,6,5,1,3,4,1,1,1,2,1,1,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_0 (score:3.27)
+            \end{itemize}
+        \end{multicols}
+
+        \item C92,3,3,1,2,1,2,1,2,1,11,1,1,4,7,1,5,1,1,3,4,1,1,2,4,1,1,1,1,1,1,1,1,2,2,1,2,2,3,2,4,1,4,1,5,6,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item White (score:3.4)
+            \end{itemize}
+        \end{multicols}
+
+        \item C87,1,1,3,1,1,2,2,1,1,1,3,1,3,2,1,2,2,4,1,1,1,3,3,2,1,4,1,1,3,2,2,2,2,2,4,5,1,2,1,2,4,1,3,3,1,1,2,1,2,1,2,3,1,5,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_8 (score:2.24)
+            \end{itemize}
+        \end{multicols}
+
+        \item C87,3,2,2,6,12,1,87 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Nice\_Average\_Copier@\_6 (score:3.52)
+                \item Worse\_and\_Worse\_3@\_6 (score:3.52)
+            \end{itemize}
+        \end{multicols}
+
+        \item C87,3,2,2,6,100 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_6 (score:3.495)
+            \end{itemize}
+        \end{multicols}
+
+        \item C86,1,93,1,18,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Remorseful\_Prober@\_4 (score:2.645)
+            \end{itemize}
+        \end{multicols}
+
+        \item C85,1,12,1,1,74,1,25 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_8 (score:3.495)
+            \end{itemize}
+        \end{multicols}
+
+        \item C84,1,5,1,1,1,1,3,1,3,1,1,1,3,3,2,1,1,1,2,2,1,1,1,1,7,1,6,1,2,1,4,1,1,4,2,2,4,5,6,1,2,3,1,3,1,1,4,6,5,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_5@\_(D,) (score:3.65)
+            \end{itemize}
+        \end{multicols}
+
+        \item C79,1,54,1,63,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+
+                \item Adaptive\_Tit\_For\_Tat@\_0.5 (score:3.04)
+            \end{itemize}
+        \end{multicols}
+
+        \item C78,1,1,1,1,3,1,2,4,1,6,2,3,1,1,1,1,3,1,1,2,2,1,1,2,1,4,1,1,1,2,3,3,1,5,1,1,2,5,1,1,2,1,2,2,7,2,2,2,4,3,1,3,5,2,1,2,1,1,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_5 (score:2.115)
+            \end{itemize}
+        \end{multicols}
+
+        \item C71,1,28,26,1,73 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Nice\_Average\_Copier@\_4 (score:3.585)
+                \item Worse\_and\_Worse\_3@\_4 (score:3.585)
+            \end{itemize}
+        \end{multicols}
+
+        \item C71,1,17,9,1,6,6,1,1,1,2,2,9,2,4,1,1,1,3,1,2,1,2,1,2,10,3,3,2,3,6,1,2,3,3,2,1,10,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_1 (score:3.38)
+            \end{itemize}
+        \end{multicols}
+
+        \item C71,3,1,2,7,3,2,3,5,1,3,6,6,4,1,1,3,1,1,1,1,1,3,4,1,4,2,6,1,1,4,1,2,1,2,1,2,2,1,1,2,4,2,2,1,1,2,1,1,1,1,2,3,5,1,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_7@\_(D,) (score:3.66)
+            \end{itemize}
+        \end{multicols}
+
+        \item C67,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,3,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_5 (score:3.445)
+            \end{itemize}
+        \end{multicols}
+
+        \item C66,1,1,2,2,1,7,1,5,2,2,1,2,1,1,1,1,2,1,1,1,2,1,5,2,1,4,7,2,3,2,1,3,2,2,1,1,1,2,3,2,1,2,2,1,4,1,1,1,4,2,1,3,2,2,3,3,2,6,3,1,3,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_6@\_(D,) (score:3.65)
+            \end{itemize}
+        \end{multicols}
+
+        \item C65,3,1,2,3,2,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_6 (score:3.2)
+            \end{itemize}
+        \end{multicols}
+
+        \item C64,2,34,100 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_8 (score:3.53)
+            \end{itemize}
+        \end{multicols}
+
+        \item C64,3,33,100 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_4 (score:3.61)
+            \end{itemize}
+        \end{multicols}
+
+        \item C62,1,2,2,2,1,3,1,7,1,9,1,1,2,3,4,5,5,5,2,1,3,4,1,2,1,6,3,2,1,1,2,2,1,3,1,1,2,3,2,1,1,1,1,4,6,3,1,1,3,3,1,6,2,1,2,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_9 (score:3.37)
+            \end{itemize}
+        \end{multicols}
+
+        \item C59,1,116,1,21,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_6 (score:2.18)
+            \end{itemize}
+        \end{multicols}
+
+        \item C58,1,1,1,1,1,1,2,1,2,2,2,2,2,5,5,1,1,1,3,1,2,2,3,2,2,3,1,1,2,1,3,1,2,5,1,2,3,2,2,2,1,2,1,2,2,1,1,6,1,4,3,5,1,3,1,3,2,1,1,2,1,1,3,5,1,2,3,1,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_2@\_(D,) (score:3.65)
+            \end{itemize}
+        \end{multicols}
+
+        \item C57,1,42,8,1,44,1,46 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_1 (score:3.52)
+            \end{itemize}
+        \end{multicols}
+
+        \item C56,5,4,1,3,2,5,1,2,1,1,1,1,1,1,2,3,1,2,7,2,1,2,1,2,8,2,1,1,1,1,1,1,1,5,2,1,1,2,1,5,1,1,2,1,3,4,2,2,3,5,3,2,1,2,1,5,2,2,2,2,1,1,3,2,1,1,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_1@\_(D,) (score:3.66)
+            \end{itemize}
+        \end{multicols}
+
+        \item C55,1,2,1,1,1,1,1,1,4,1,1,1,3,2,1,5,1,3,1,2,2,7,1,1,1,1,4,1,1,2,2,2,4,1,1,1,2,2,3,2,1,4,1,1,3,2,2,1,1,1,1,1,1,2,3,7,1,1,2,1,3,2,1,3,3,2,1,2,1,2,1,2,2,3,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_4@\_(D,) (score:3.65)
+            \end{itemize}
+        \end{multicols}
+
+        \item C55,2,2,1,2,1,1,1,1,1,10,1,22,14,1,85 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_6 (score:3.52)
+            \end{itemize}
+        \end{multicols}
+
+        \item C53,1,3,1,1,2,2,1,1,3,1,5,2,3,3,3,2,1,1,2,1,2,5,1,1,3,1,2,2,1,4,1,4,1,1,5,1,1,1,1,4,2,11,2,4,1,1,1,4,3,1,2,1,2,1,3,2,1,1,1,2,1,1,1,2,1,2,2,4,1,1,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_3@\_(D,) (score:3.66)
+            \end{itemize}
+        \end{multicols}
+
+        \item C52,1,32,1,113,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Remorseful\_Prober@\_3 (score:2.705)
+            \end{itemize}
+        \end{multicols}
+
+        \item C52,1,2,1,5,1,2,2,1,2,3,1,1,1,3,1,2,1,2,3,1,2,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_9 (score:3.58)
+            \end{itemize}
+        \end{multicols}
+
+        \item C50,1,49,33,1,7,1,58 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Nice\_Average\_Copier@\_1 (score:3.525)
+                \item Worse\_and\_Worse\_3@\_1 (score:3.525)
+            \end{itemize}
+        \end{multicols}
+
+        \item C50,1,14,2,1,1,4,3,3,1,6,2,2,1,2,1,1,2,3,4,1,1,1,3,1,1,1,2,1,1,1,1,1,2,3,1,1,1,1,1,4,7,1,2,2,4,1,2,1,3,1,1,1,1,1,4,3,2,2,3,1,2,3,2,1,1,1,1,2,1,1,1,4,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_6 (score:3.5)
+            \end{itemize}
+        \end{multicols}
+
+        \item C50,1,1,1,7,2,4,1,1,1,1,2,1,1,2,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_1 (score:3.49)
+            \end{itemize}
+        \end{multicols}
+
+        \item C50,1,1,1,1,1,1,1,1,1,1,2,30,1,4,3,1,2,2,1,3,2,4,3,1,1,4,1,2,7,5,1,1,2,1,2,1,1,1,1,2,2,1,1,2,1,1,2,1,1,1,1,2,2,1,3,7,1,1,1,2,1,2,2,6,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_4 (score:3.345)
+            \end{itemize}
+        \end{multicols}
+
+        \item C48,1,15,1,4,1,1,1,11,1,10,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-4@\_5 (score:1.625)
+            \end{itemize}
+        \end{multicols}
+
+        \item C47,2,1,3,2,2,2,1,27,3,1,3,2,4,1,1,2,1,1,3,6,1,1,3,1,1,3,3,1,3,3,1,1,1,4,2,2,1,1,1,4,1,1,7,1,1,2,1,1,4,2,1,3,2,3,1,1,2,1,1,2,1,1,3,2,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Doubler (score:3.67)
+            \end{itemize}
+        \end{multicols}
+
+        \item C46,1,51,1,1,100 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Nice\_Average\_Copier@\_8 (score:3.49)
+                \item Worse\_and\_Worse\_3@\_8 (score:3.49)
+            \end{itemize}
+        \end{multicols}
+
+        \item C44,1,55,100 for 3 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_7 (score:3.55)
+                \item Nice\_Average\_Copier@\_7 (score:3.55)
+                \item Worse\_and\_Worse\_3@\_7 (score:3.55)
+            \end{itemize}
+        \end{multicols}
+
+        \item C44,1,2,1,2,3,1,1,1,2,1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_3 (score:3.8)
+            \end{itemize}
+        \end{multicols}
+
+        \item C42,4,22,1,5,1,5,2,2,1,5,1,1,1,1,2,3,1,2,3,3,1,3,4,3,1,1,1,6,3,1,1,2,1,1,1,4,1,1,1,2,1,1,1,2,1,5,2,4,1,1,2,2,2,3,1,2,1,1,1,2,1,1,1,6,1,1,1,2,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_1 (score:3.455)
+            \end{itemize}
+        \end{multicols}
+
+        \item C37,4,24,5,1,4,2,2,1,2,2,7,2,3,1,1,6,2,3,1,1,1,1,1,3,1,2,1,2,1,1,2,1,1,1,2,1,1,2,1,1,1,1,4,3,4,2,1,3,6,2,2,2,1,1,1,3,2,1,1,2,7,3,9 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_9 (score:3.82)
+            \end{itemize}
+        \end{multicols}
+
+        \item C35,1,1,1,1,2,3,3,19,1,1,1,2,2,3,1,3,1,1,2,1,2,3,1,1,4,2,1,2,1,1,1,1,1,1,1,1,1,1,2,1,1,1,2,1,1,6,1,3,1,4,2,4,1,1,7,2,4,1,1,2,3,1,1,1,1,2,1,1,3,1,1,3,2,1,2,1,4,1,2,1,3,2,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_0 (score:3.42)
+            \end{itemize}
+        \end{multicols}
+
+        \item C31,1,1,3,1,2,2,1,2,1,1,2,3,1,1,2,2,2,2,1,1,3,3,2,2,2,1,1,2,3,1,2,1,1,4,1,2,1,1,1,6,1,2,1,4,1,4,5,3,2,1,1,1,1,2,4,5,5,4,1,1,2,4,1,4,3,1,1,1,2,1,1,2,4,1,1,2,2,3,3,3,4,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_5 (score:3.8)
+            \end{itemize}
+        \end{multicols}
+
+        \item C31,2,40,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,5,3,1,4,3,2,1,2,1,5,1,3,1,1,1,2,2,5,1,1,1,4,1,6,2,2,1,1,1,1,6,1,3,5,1,1,1,3,1,1,1,1,1,3,2,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_5 (score:3.31)
+            \end{itemize}
+        \end{multicols}
+
+        \item C29,1,147,1,21,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Remorseful\_Prober@\_0 (score:2.675)
+            \end{itemize}
+        \end{multicols}
+
+        \item C25,1,23,1,2,1,2,2,1,1,4,1,2,6,1,1,1,1,3,1,1,1,1,1,1,3,2,1,2,1,1,1,1,2,1,1,1,2,1,5,2,1,4,7,2,3,2,1,3,2,2,1,1,1,2,3,2,1,2,2,1,4,1,1,1,4,2,1,3,2,2,3,3,2,6,3,1,3,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_6 (score:3.81)
+            \end{itemize}
+        \end{multicols}
+
+        \item C22,1,24,4,4,4,1,1,2,1,1,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_2 (score:3.4)
+            \end{itemize}
+        \end{multicols}
+
+        \item C21,1,28,1,2,1,4,1,15,1,10,1,29,1,5,1,6,1,52,1,8,10 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgiving\_Tit\_For\_Tat (score:3.2)
+            \end{itemize}
+        \end{multicols}
+
+        \item C16,1,41,1,2,1,1,1,3,1,1,2,1,2,5,1,1,5,1,2,1,1,4,2,1,2,1,1,2,1,2,1,2,2,3,1,2,1,2,1,9,2,2,2,1,1,3,1,1,2,1,2,1,1,1,1,1,1,1,1,2,3,1,1,7,2,2,2,1,2,1,1,2,4,1,1,1,2,1,1,1,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_0@\_(D,) (score:3.65)
+            \end{itemize}
+        \end{multicols}
+
+        \item C14,1,85,100 for 3 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_3 (score:3.53)
+                \item Nice\_Average\_Copier@\_3 (score:3.53)
+                \item Worse\_and\_Worse\_3@\_3 (score:3.53)
+            \end{itemize}
+        \end{multicols}
+
+        \item C13,1,1,1,1,1,1,181 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_8 (score:2.255)
+            \end{itemize}
+        \end{multicols}
+
+        \item C12,3,2,2,4,2,4,1,2,1,4,1,1,1,1,1,154,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_4 (score:3.1)
+            \end{itemize}
+        \end{multicols}
+
+        \item C11,1,2,1,1,2,1,181 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_4 (score:2.125)
+            \end{itemize}
+        \end{multicols}
+
+        \item C11,3,2,1,1,2,2,3,3,3,2,2,11,2,1,1,1,5,2,1,1,2,1,1,1,8,1,40,1,14,1,31,2,37 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_Cooperator@\_6 (score:2.655)
+            \end{itemize}
+        \end{multicols}
+
+        \item C10,1,21,1,25,1,20,1,2,1,33,1,4,1,7,1,56,2,2,10 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgiver (score:3.2)
+            \end{itemize}
+        \end{multicols}
+
+        \item C10,1,2,1,2,1,2,181 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_3 (score:1.935)
+            \end{itemize}
+        \end{multicols}
+
+        \item C10,3,4,1,1,2,1,178 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_6 (score:2.05)
+            \end{itemize}
+        \end{multicols}
+
+        \item C9,1,90,26,1,73 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Nice\_Average\_Copier@\_2 (score:3.485)
+                \item Worse\_and\_Worse\_3@\_2 (score:3.485)
+            \end{itemize}
+        \end{multicols}
+
+        \item C9,1,90,57,1,42 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Nice\_Average\_Copier@\_0 (score:3.55)
+                \item Worse\_and\_Worse\_3@\_0 (score:3.55)
+            \end{itemize}
+        \end{multicols}
+
+        \item C9,1,2,1,2,1,2,182 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_7 (score:2.285)
+            \end{itemize}
+        \end{multicols}
+
+        \item C8,1,5,2,1,183 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_5 (score:2.11)
+            \end{itemize}
+        \end{multicols}
+
+        \item C7,1,1,1,1,1,1,1,1,1,2,1,2,1,1,1,2,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,2,1,1,1,2,1,1,1,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,21 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item DoubleCrosser@\_(D,\_D) (score:3.59)
+            \end{itemize}
+        \end{multicols}
+
+        \item C6,1,18,1,39,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_7 (score:3.49)
+            \end{itemize}
+        \end{multicols}
+
+        \item C6,1,6,1,2,1,2,181 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_0 (score:2.015)
+            \end{itemize}
+        \end{multicols}
+
+        \item C6,1,4,1,4,1,2,181 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_1 (score:2.135)
+            \end{itemize}
+        \end{multicols}
+
+        \item C5,1,35,1,1,1,9,1,3,1,1,1,2,2,1,4,1,2,2,1,2,1,1,2,1,3,5,3,2,1,4,1,2,1,1,2,1,2,1,1,2,4,2,1,1,1,4,1,1,2,4,1,4,1,2,1,3,2,9,2,1,1,3,1,1,1,1,1,1,2,1,2,2,2,1,1,3,2,1,1,1,2,3,1,1,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_9@\_(D,) (score:3.66)
+            \end{itemize}
+        \end{multicols}
+
+        \item C5,1,5,1,55,1,20,2,4,2,1,5,2,1,2,1,2,2,1,1,2,6,1,2,3,1,2,2,1,1,4,4,7,1,3,1,2,4,3,1,1,2,1,1,1,1,2,1,2,1,2,3,1,1,3,1,1,2,3,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Evolved\_ANN\_5\_Noise\_05 (score:3.58)
+            \end{itemize}
+        \end{multicols}
+
+        \item C5,1,3,2,1,1,1,1,3,1,1,1,5,1,1,1,1,1,3,3,2,1,1,3,4,1,2,1,3,2,1,4,1,5,7,3,5,1,2,1,2,2,6,2,1,2,2,2,2,1,2,1,3,2,1,2,4,1,1,1,1,1,1,1,5,2,1,1,1,1,1,1,2,1,1,1,2,2,1,1,1,2,2,2,1,5,1,1,1,3,1,2,1,2,5,1,1,2,3,1,1,6 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Yamachi (score:3.9)
+            \end{itemize}
+        \end{multicols}
+
+        \item C5,1,1,1,2,1,4,1,4,2,5,1,1,1,3,1,2,2,1,3,1,1,1,2,1,1,2,1,2,1,1,2,2,1,1,1,1,1,3,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_8 (score:3.535)
+            \end{itemize}
+        \end{multicols}
+
+        \item C5,4,2,3,4,1,2,3,1,1,3,1,1,2,86,1,11,1,61,7 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extortion@\_3 (score:1.415)
+            \end{itemize}
+        \end{multicols}
+
+        \item C5,11,2,8,3,1,1,69,19,1,28,1,50,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_Cooperator@\_3 (score:2.48)
+            \end{itemize}
+        \end{multicols}
+
+        \item C5,195 for 3 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Appeaser (score:3.01)
+                \item GrudgerAlternator (score:3.01)
+                \item Win-Stay\_Lose-Shift@\_C (score:3.01)
+            \end{itemize}
+        \end{multicols}
+
+        \item C4,1,72,1,2,1,33,1,14,1,31,1,34,1,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_6 (score:2.685)
+            \end{itemize}
+        \end{multicols}
+
+        \item C4,1,56,1,26,1,1,1,9,55,1,44 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_0 (score:3.51)
+            \end{itemize}
+        \end{multicols}
+
+        \item C4,1,39,1,55,100 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_7 (score:3.44)
+            \end{itemize}
+        \end{multicols}
+
+        \item C4,1,5,1,188,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Remorseful\_Prober@\_5 (score:2.6)
+            \end{itemize}
+        \end{multicols}
+
+        \item C4,1,5,1,5,1,5,1,5,1,3,1,5,1,5,1,4,1,1,1,5,1,4,1,5,1,5,1,5,1,5,1,1,1,4,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,3,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item DoubleResurrection (score:2.835)
+            \end{itemize}
+        \end{multicols}
+
+        \item C4,1,4,2,2,2,2,1,1,1,1,1,7,1,3,1,1,1,2,1,1,4,1,2,2,2,1,2,7,2,2,1,1,1,2,1,1,1,124,3 for 1 opponents:
+
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-GEN-2@\_1 (score:3.14)
+            \end{itemize}
+        \end{multicols}
+
+        \item C4,1,2,1,1,3,4,2,1,1,2,1,1,1,1,2,1,1,1,1,2,1,2,1,3,1,4,2,1,1,1,2,1,1,2,1,1,1,1,1,2,1,1,4,1,3,3,3,1,2,1,1,1,2,3,2,1,1,1,2,1,1,1,2,1,6,1,1,2,2,1,3,1,4,1,4,2,3,1,2,2,4,1,1,1,2,2,2,5,1,1,3,2,5,1,1,2,6,1,2,1,1,2,1,1,1,2,3,2,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_9 (score:2.725)
+            \end{itemize}
+        \end{multicols}
+
+        \item C4,89,1,106 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_WSLS@\_7 (score:3.01)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,1,44,1,4,1,15,1,12,2,10,1,16,1,12,1,71,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2@\_5 (score:2.2)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,1,10,1,37,1,32,1,33,1,11,1,16,1,49,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_3 (score:3.09)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,1,6,1,38,1,2,2,1,1,1,1,4,1,2,3,1,3,1,2,2,1,1,1,1,1,3,1,1,1,1,3,2,1,2,1,3,1,2,4,1,1,2,1,1,1,4,2,5,1,7,2,1,1,7,2,2,1,4,1,1,1,3,1,2,1,1,1,1,3,4,3,3,2,1,1,1,3,1,1,1,1,2,5,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stalker@\_8@\_(D,) (score:3.655)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,1,2,1,1,1,2,1,63,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_3 (score:3.4)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,1,2,2,1,2,3,3,2,5,3,2,169,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_7 (score:3.105)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,1,2,2,1,4,4,1,1,2,29,1,148,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_6 (score:3.035)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,1,1,1,3,1,3,1,1,1,2,1,3,1,1,1,2,1,3,1,1,1,2,1,3,1,1,1,1,1,1,1,2,1,3,1,1,1,1,1,1,1,3,1,3,1,2,1,4,1,4,1,3,1,3,1,3,1,1,1,2,1,3,1,1,1,1,1,2,1,4,1,3,1,1,1,1,1,1,1,1,1,2,1,3,1,1,1,1,1,2,1,4,1,3,1,2,1,4,1,3,1,1,1,2,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,3,1,1,1,2,1,3,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Evolved\_FSM\_16\_Noise\_05 (score:3.66)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,2,45,1,29,1,24,1,6,1,1,1,14,1,63,7 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_6 (score:2.16)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,2,26,1,6,1,30,1,13,1,10,1,102,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_5 (score:2.24)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,2,4,2,1,2,2,2,3,1,4,2,2,1,1,1,3,3,2,1,1,1,3,1,1,1,1,1,4,2,2,2,1,2,2,1,2,1,1,1,3,2,3,2,2,1,1,2,4,2,3,2,1,1,2,1,2,1,3,1,2,1,2,5,2,1,2,1,4,1,2,1,1,3,2,1,1,1,4,2,3,1,3,2,2,3,3,1,4,1,1,1,1,2,1,1,4,1,4,1,1,3,1,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Hard\_Go\_By\_Majority@\_20 (score:3.815)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,2,3,3,1,1,1,2,1,2,3,3,5,4,1,5,2,1,1,1,1,1,2,1,1,1,7,1,1,1,2,1,3,1,2,2,5,1,1,5,3,1,1,3,2,1,2,1,3,4,1,1,3,4,1,2,2,2,1,4,3,2,4,1,1,1,1,1,4,3,1,2,2,2,2,1,1,2,1,4,1,4,3,1,8,4,1,2,3,1,2,2,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort3@\_5 (score:1.925)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,2,2,1,3,1,3,1,1,2,3,1,3,1,3,3,4,1,2,3,6,3,3,1,3,1,1,1,2,2,3,1,1,1,2,1,4,1,1,2,1,1,5,2,4,1,2,2,1,1,4,1,3,1,1,1,2,1,2,1,3,1,2,2,2,1,3,1,3,2,4,2,4,1,1,1,3,1,2,1,1,1,1,1,2,1,3,2,4,2,3,1,1,1,2,1,1,1,6,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Hard\_Go\_By\_Majority@\_10 (score:3.695)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,2,1,4,2,2,4,3,4,3,3,4,1,2,2,1,5,1,3,1,3,5,1,2,1,3,2,2,1,2,3,5,1,1,1,1,2,3,2,1,1,1,2,1,1,3,1,4,2,1,1,1,1,5,1,2,2,5,2,2,3,1,1,2,2,1,3,2,1,1,1,2,3,1,2,6,2,3,1,6,1,3,1,2,1,1,4,1,2,1,1,3,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mischief@\_5 (score:1.215)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,6,24,1,25,1,8,1,11,1,9,1,14,1,23,1,4,1,21,1,28,1,4,10 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Evolved\_ANN (score:3.26)
+            \end{itemize}
+        \end{multicols}
+
+        \item C3,97,24,1,34,1,40 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_Cooperator@\_5 (score:2.345)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,196,1 for 3 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Remorseful\_Prober@\_8 (score:2.655)
+                \item TF1 (score:3.0)
+                \item Tester (score:3.005)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,97,26,1,73 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Average\_Copier@\_2 (score:3.495)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,61,1,132,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_2 (score:3.02)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,53,1,22,1,9,1,27,1,8,1,14,1,49,1,6,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_4 (score:3.1)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,4,1,125,1,63,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_1 (score:3.045)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,4,1,18,1,73,1,97,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_7 (score:3.06)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,4,1,4,2,2,184 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_9 (score:2.235)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,2,1,2,1,1,3,2,1,1,2,2,1,2,2,1,1,1,1,1,2,3,1,1,1,1,1,3,2,3,3,3,2,2,1,1,2,2,2,3,2,2,1,2,1,4,2,1,1,1,3,3,2,1,1,3,1,1,4,1,1,3,1,4,1,1,1,1,1,3,1,1,2,1,2,2,3,1,1,3,2,1,2,2,2,6,1,1,2,1,1,2,1,1,1,1,1,2,2,1,1,1,1,1,2,3,1,5,1,3,7 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Hard\_Go\_By\_Majority@\_40 (score:3.895)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,2,1,1,1,2,1,1,1,3,2,5,2,4,1,2,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,3,1,3,1,3,1,1,1,2,1,1,1,2,1,1,1,2,1,3,2,3,1,2,1,1,1,2,1,1,1,2,1,1,1,3,2,5,2,3,1,3,1,1,1,4,2,3,2,6,2,3,1,1,1,3,1,2,1,3,1,2,1,2,1,3,1,3,1,3,1,3,1,2,1,2,1,2,1,3,1,3,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Hard\_Go\_By\_Majority@\_5 (score:3.655)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,1,1,194,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Calculator@\_7 (score:3.0)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,1,1,192,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-GTFT-2@\_2 (score:3.02)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,1,1,72,1,121,1 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Joss@\_6 (score:2.665)
+                \item Naive\_Prober@\_6 (score:2.665)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,1,3,192,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Omega\_TFT@\_3,\_8 (score:3.015)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,1,1,196 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item EvolvedLookerUp2\_2\_2 (score:4.955)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,2,80,5,11,100 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Dynamic\_Two\_Tits\_For\_Tat@\_4 (score:3.51)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,2,45,1,5,1,48,1,50,1,35,9 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort3@\_0 (score:1.93)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,2,18,1,26,1,5,1,48,1,50,1,41,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2@\_0 (score:2.21)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,2,18,1,26,1,5,1,48,1,50,1,21,1,13,9 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_0 (score:2.16)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,2,2,2,1,3,2,2,2,2,2,2,2,2,2,2,2,2,14,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,1,2,2,2,2,2,2,2,2,2,3,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Leyvraz@\_8 (score:3.22)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,3,82,3,2,3,2,1,2,3,2,2,3,2,2,1,4,2,1,1,1,1,2,1,4,6,1,1,1,1,1,5,7,1,1,2,11,2,2,4,2,2,4,1,1,4,2,1,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+
+                \item ZD-Extortion@\_9 (score:1.74)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,3,54,1,36,1,29,1,23,1,31,1,15,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_9 (score:3.1)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,3,22,1,27,2,1,1,1,2,2,2,2,1,2,3,3,2,1,2,1,1,2,1,2,1,1,1,2,5,3,2,1,1,1,1,3,5,1,6,1,4,1,1,2,2,1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,3,1,1,2,1,7,6,1,1,1,3,1,2,2,4,3,4,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2@\_6 (score:2.325)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,3,22,1,22,1,4,2,1,2,3,1,2,6,1,1,3,2,1,1,3,1,2,1,1,1,3,1,3,3,1,1,1,3,3,4,1,1,1,1,2,1,1,2,2,1,1,1,1,4,2,1,1,3,1,1,2,2,1,1,1,3,1,4,4,3,1,1,1,2,1,1,3,2,4,1,1,4,6,1,1,1,3,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort3@\_6 (score:2.07)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,3,3,2,2,1,1,2,1,1,3,2,175,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-GTFT-2@\_7 (score:3.03)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,3,1,2,2,1,5,2,1,2,3,1,2,1,3,1,3,1,1,1,2,1,1,1,2,6,1,1,2,1,3,1,1,4,2,1,1,2,1,1,1,1,1,1,3,2,2,1,2,4,2,1,2,1,1,2,2,1,1,1,3,1,3,1,2,2,1,3,3,4,1,1,1,4,5,7,5,3,1,1,2,5,1,6,2,1,2,2,1,1,1,1,2,1,1,8,1,2,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-SET-2@\_9 (score:2.745)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,6,2,6,1,4,8,1,16,4,1,1,11,9,20,100,8 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_Cooperator@\_0 (score:2.66)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,6,1,3,1,1,1,1,1,1,1,1,1,3,1,7,1,7,3,2,3,1,3,1,4,3,1,1,1,1,1,1,2,6,4,1,1,1,1,3,1,2,1,2,1,1,1,2,1,1,1,1,1,3,1,1,3,2,4,2,3,1,2,5,1,2,4,2,1,1,1,1,1,1,2,5,1,1,2,2,1,1,1,3,4,1,2,2,1,3,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-SET-2@\_5 (score:2.29)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,13,1,21,1,47,1,1,4,3,1,1,4,3,3,1,4,3,2,4,2,6,1,1,1,3,2,1,1,1,2,2,1,1,3,1,2,1,1,2,3,2,6,3,1,6,3,4,1,1,1,1,1,3,1,1,1,2,1,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Bush\_Mosteller@\_3 (score:3.42)
+            \end{itemize}
+        \end{multicols}
+
+        \item C2,198 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Adaptive (score:4.88)
+                \item Nydegger (score:4.98)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,197,1 for 3 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item CollectiveStrategy (score:3.0)
+                \item Gladstein (score:3.005)
+                \item Ripoff (score:3.005)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,196,2 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_2\_2\_2@\_5 (score:3.03)
+                \item PSO\_Gambler\_2\_2\_2@\_9 (score:3.03)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,5,1,3,2,5,1,2,1,1,4,1,5,2,3,2,1,1,3,3,2,2,1,1,3,1,1,1,1,1,2,2,2,2,2,2,2,2,3,1,1,1,4,2,1,1,2,6,1,2,2,1,1,2,3,1,1,4,1,1,3,1,1,1,1,2,1,1,1,3,1,1,1,3,7,1,3,1,6,1,2,3,1,1,3,1,2,1,1,1,2,1,5,2,2,1,1,4,2,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extortion@\_5 (score:1.415)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,3,1,18,2,2,1,2,1,1,1,1,1,3,3,6,4,4,1,2,1,1,2,1,1,7,1,2,1,2,2,2,1,2,3,1,1,2,1,1,2,2,1,1,3,3,3,2,1,2,1,1,1,1,1,1,1,1,2,1,1,3,1,4,1,6,1,1,1,1,1,2,5,3,1,3,3,1,1,4,1,1,3,3,1,3,2,2,8,1,3,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_4 (score:3.82)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,194,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Calculator@\_1 (score:3.0)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,162,1,30,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_2\_2\_2@\_3 (score:3.05)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,121,1,23,1,47,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Kluepfel@\_9 (score:3.045)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,9,1,22,1,11,2,1,1,2,1,4,2,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,11,3,2,2,3,2,2,1,9,5,1,4,1,3,1,1,1,2,1,1,3,1,2,2,6,1,2,1,1,1,1,2,2,1,3,1,1,1,2,1,1,1,1,1,1,1,2,1,6,1,2,1,2,1,3,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_3 (score:3.25)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,6,1,187,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_0 (score:2.335)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,4,1,12,1,6,1,21,1,9,1,42,1,93,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_2\_2\_2@\_0 (score:3.1)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,4,1,7,1,1,1,2,3,2,1,53,1,4,1,2,2,1,2,1,1,1,2,5,2,5,3,2,1,4,1,2,3,6,1,1,1,3,2,4,7,6,1,1,1,5,2,1,1,2,2,3,1,1,1,3,1,2,1,2,1,1,1,1,3,2,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_8 (score:3.32)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,2,1,17,1,16,1,50,1,104,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_2\_2\_2@\_7 (score:3.08)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,1,1,3,1,1,1,2,1,1,1,2,1,3,2,3,1,2,1,1,1,3,2,4,2,3,1,1,1,3,1,3,2,3,2,3,1,3,2,3,1,1,1,2,1,2,1,1,1,2,1,2,1,1,1,3,1,2,1,2,1,1,1,3,1,1,1,2,1,2,1,3,2,4,1,2,1,2,1,2,1,2,1,1,1,3,1,1,1,3,1,3,1,2,1,2,1,3,1,1,1,2,1,1,1,4,1,1,1,3,1,3,1,2,1,3,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Soft\_Go\_By\_Majority@\_5 (score:3.69)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,1,1,3,2,3,6,1,2,1,1,2,1,3,1,3,3,2,2,4,2,3,5,2,2,1,2,3,2,2,2,2,2,1,1,12,1,34,1,42,1,26,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-GEN-2@\_9 (score:3.15)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,2,1,1,2,1,1,2,1,1,1,1,2,1,1,2,1,1,4,6,4,4,1,1,1,1,1,1,1,2,2,1,1,1,4,1,1,2,1,1,2,3,2,1,1,1,2,1,1,2,1,1,1,1,2,1,1,1,3,2,2,3,4,1,7,1,1,3,1,2,4,2,3,4,4,2,1,1,1,1,1,2,1,1,2,1,2,1,1,1,3,1,2,1,4,2,3,1,1,1,1,2,1,1,1,5,4,3,1,1,2,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_8 (score:2.76)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,1,195,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Kluepfel@\_7 (score:3.015)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,1,115,1,79,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Remorseful\_Prober@\_2 (score:2.665)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,1,28,1,1,1,87,1,1,1,57,1,1,1,14,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Weiner (score:3.03)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,1,10,1,152,1,30,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_3 (score:3.045)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,1,2,1,1,4,1,1,1,1,2,1,1,1,1,1,1,2,1,1,4,1,1,3,3,1,1,3,2,5,1,2,1,2,1,2,3,1,1,2,3,2,1,1,3,3,1,1,1,2,1,1,3,1,1,1,3,1,1,2,2,1,1,4,1,3,1,3,1,2,1,2,4,3,2,5,3,1,1,3,1,1,1,1,5,2,3,3,2,2,2,1,1,3,1,1,1,1,2,2,2,1,2,2,2,1,1,2,1,2,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-SET-2@\_7 (score:2.555)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,1,1,1,1,1,2,1,115,1,68,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_9 (score:2.31)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 17 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Adaptive\_Pavlov\_2011 (score:3.97)
+                \item GTFT@\_0.33 (score:3.085)
+                \item Harrington@\_5 (score:3.205)
+                \item Harrington@\_7 (score:3.205)
+                \item Random\_Tit\_for\_Tat@\_0 (score:3.055)
+                \item Random\_Tit\_for\_Tat@\_1 (score:3.205)
+                \item Random\_Tit\_for\_Tat@\_2 (score:3.13)
+                \item Random\_Tit\_for\_Tat@\_3 (score:3.16)
+                \item Random\_Tit\_for\_Tat@\_4 (score:3.31)
+                \item Random\_Tit\_for\_Tat@\_5 (score:3.25)
+                \item Random\_Tit\_for\_Tat@\_6 (score:3.235)
+                \item Random\_Tit\_for\_Tat@\_7 (score:3.31)
+                \item Random\_Tit\_for\_Tat@\_8 (score:3.37)
+                \item Random\_Tit\_for\_Tat@\_9 (score:3.355)
+                \item Soft\_Go\_By\_Majority@\_10 (score:4.0)
+                \item Soft\_Go\_By\_Majority@\_20 (score:4.0)
+                \item Soft\_Go\_By\_Majority@\_40 (score:4.0)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,2,54,1,2,1,17,1,31,1,49,1,33,1,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_6 (score:3.1)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,2,26,1,16,1,15,7,3,1,4,1,2,8,1,89,1,9,10 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_Cooperator@\_4 (score:2.815)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,4,1,18,7,2,31,21,4,103,6 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_Cooperator@\_7 (score:2.855)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,1,1,197 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Evolved\_FSM\_16 (score:3.665)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,196,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item TF2 (score:2.99)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,2,1,2,1,1,2,58,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,11,87,1,3,1,8 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Eatherley@\_4 (score:3.535)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,2,1,2,1,1,2,1,3,3,3,161,1,14,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-GEN-2@\_4 (score:3.095)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,2,81,1,30,1,82 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_WSLS@\_4 (score:3.05)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,1,86,1,34,1,2,1,67,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_9 (score:2.475)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,1,4,1,1,2,1,1,1,2,1,1,1,3,2,2,1,1,1,4,1,2,1,1,1,2,1,4,1,1,1,2,1,1,2,3,1,3,2,2,1,1,2,1,3,2,1,1,1,2,1,1,2,3,1,6,2,1,2,2,2,2,4,1,1,1,1,3,5,1,1,1,2,1,4,1,1,2,2,5,1,1,2,4,1,1,1,3,2,4,1,4,1,2,2,3,2,4,3,1,1,1,3,2,1,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_6 (score:2.65)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,1,1,1,1,3,1,4,2,3,1,1,1,4,6,3,4,4,3,2,3,3,4,3,8,1,11,3,1,7,4,1,1,1,1,4,1,1,2,2,2,4,1,1,1,2,2,3,2,1,4,1,1,3,2,2,1,1,1,1,1,1,2,3,7,1,1,2,1,3,2,1,3,3,2,1,2,1,1,2,2,2,3,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extortion@\_4 (score:1.68)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,1,1,2,3,2,3,1,2,4,1,1,1,2,3,1,4,2,1,1,1,1,2,1,1,2,3,2,3,2,1,1,1,2,1,1,1,2,1,4,1,1,1,1,2,1,1,1,4,2,1,1,2,1,1,4,1,1,1,2,3,1,2,1,1,2,1,1,2,1,3,2,4,1,2,1,3,3,1,1,2,1,5,1,3,2,1,3,2,1,4,1,1,2,1,1,1,1,2,1,1,1,1,4,1,2,5,5,4,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_1 (score:2.81)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,1,1,2,3,2,1,1,1,2,3,2,1,1,1,2,1,1,1,2,1,1,2,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,1,2,1,2,1,1,1,1,1,2,1,1,1,1,2,1,1,2,4,1,3,2,1,4,1,3,1,1,2,2,1,1,3,1,2,1,2,3,2,1,1,6,1,1,2,2,1,4,1,1,1,3,1,3,2,1,2,2,1,2,1,1,1,2,3,1,3,2,4,2,2,5,2,1,1,1,2,2,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_5 (score:2.64)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,1,1,2,3,2,1,1,1,2,1,1,1,2,2,3,1,1,1,2,1,1,2,3,1,2,1,1,1,1,4,1,2,1,4,1,1,5,1,1,3,1,1,2,2,2,2,2,1,1,2,1,1,1,4,1,1,1,1,3,3,6,1,1,4,2,1,1,1,2,1,1,1,4,1,2,1,4,3,2,1,1,2,1,3,2,2,1,5,3,1,2,1,1,2,1,4,3,2,5,1,3,1,1,2,2,3,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_2 (score:2.615)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,1,1,2,1,4,1,1,2,1,1,1,2,1,1,1,1,1,2,1,1,1,2,1,1,2,1,1,1,2,3,1,4,2,1,1,1,2,4,1,4,1,1,1,1,1,2,4,1,1,1,2,4,3,1,2,1,1,1,2,1,2,3,1,1,3,1,4,1,1,1,1,1,1,1,1,4,1,1,2,1,2,1,5,2,3,1,1,3,1,1,2,1,1,1,1,4,2,1,1,1,8,2,1,5,3,1,2,3,2,1,1,3,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_3 (score:2.66)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,1,1,4,1,2,1,2,1,1,1,2,1,1,1,1,2,1,1,1,1,2,1,1,1,4,1,1,2,1,1,2,1,1,1,2,3,2,1,4,1,2,1,1,1,1,1,1,2,1,1,1,2,1,4,1,1,2,1,2,1,1,1,1,3,1,2,2,1,1,1,2,4,3,1,1,2,1,1,2,1,2,3,1,2,1,1,1,1,1,2,2,1,1,3,5,6,7,1,2,5,1,1,1,1,2,1,1,2,1,1,2,3,1,1,1,4,1,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_0 (score:2.615)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,4,1,1,4,1,1,4,1,3,3,4,1,4,1,2,1,3,1,7,1,1,4,2,3,1,1,2,1,1,2,1,1,5,2,1,2,1,2,2,4,2,1,4,1,1,3,4,1,1,1,1,1,3,3,1,3,3,3,11,3,2,3,1,1,3,4,3,1,1,1,1,2,1,1,2,1,3,1,1,3,2,1,1,1,1,1,2,1,2,2,3,1,2,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mischief@\_6 (score:1.28)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,4,1,1,2,1,1,1,1,4,2,2,2,1,3,1,1,1,165,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-GEN-2@\_8 (score:3.1)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,4,1,1,1,3,2,4,1,4,1,2,4,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,1,1,1,2,1,2,1,2,3,1,1,2,1,1,1,2,1,1,1,1,2,1,1,1,2,2,1,1,3,1,2,3,4,1,4,3,2,1,4,2,1,2,1,1,3,1,1,1,1,2,3,1,3,1,1,1,2,1,1,2,2,1,2,1,2,2,3,4,4,1,1,2,3,1,1,7,1,2,1,1,1,3,3,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_7 (score:2.715)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,62,1,2,1,2,1,2,4,1,1,3,2,1,1,2,2,4,1,1,3,2,2,1,1,1,2,1,1,3,2,1,1,1,1,1,1,4,1,1,1,2,1,1,2,1,2,1,1,3,2,1,3,1,1,9,2,9,1,2,2,1,2,1,1,3,1,3,2,1,2,4,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Bush\_Mosteller@\_4 (score:3.5)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,2,1,196 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_WSLS@\_8 (score:3.02)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,3,2,2,18,1,168,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_7 (score:3.095)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,3,1,1,42,1,1,1,5,1,43,100 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_0 (score:3.87)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,3,1,3,1,2,1,5,4,2,5,2,167,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Leyvraz@\_7 (score:3.105)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,3,1,3,1,5,1,5,1,7,1,21,1,6,1,3,3,1,1,8,1,1,1,9,2,1,1,1,1,5,2,4,1,2,1,4,1,1,1,3,2,1,1,1,1,6,4,3,1,1,3,1,1,1,1,1,1,2,3,1,1,4,1,2,1,3,3,4,2,1,2,4,1,1,1,3,2,11 for 4 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Arrogant\_QLearner@\_7 (score:4.225)
+                \item Cautious\_QLearner@\_7 (score:4.225)
+                \item Hesitant\_QLearner@\_7 (score:4.225)
+                \item Risky\_QLearner@\_7 (score:4.225)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,4,3,1,3,1,46,1,33,1,103,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extortion@\_7 (score:1.695)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,7,1,1,2,1,1,1,1,2,1,1,2,3,2,1,1,1,2,1,2,1,3,3,1,1,1,2,2,3,2,2,1,4,3,1,1,1,1,1,2,2,1,1,2,1,1,1,5,1,2,1,1,1,1,1,102,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extortion@\_8 (score:1.63)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,45,1,35,1,6,2,1,1,1,1,5,1,4,1,1,2,7,5,1,2,4,2,2,1,4,1,1,1,5,2,5,2,1,4,1,4,2,1,6,1,2,1,1,2,1,1,2,1,2,5,5,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Bush\_Mosteller@\_8 (score:3.52)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,140,1,58 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_WSLS@\_1 (score:3.06)
+            \end{itemize}
+        \end{multicols}
+
+        \item C1,199 for 11 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Defector\_Hunter (score:4.99)
+                \item Evolved\_FSM\_4 (score:3.67)
+                \item Handshake (score:4.97)
+                \item Opposite\_Grudger (score:4.975)
+                \item SolutionB1 (score:4.955)
+                \item Tricky\_Defector (score:4.915)
+                \item Willing@\_0 (score:4.975)
+                \item Willing@\_2 (score:4.975)
+                \item Willing@\_5 (score:4.975)
+                \item Willing@\_6 (score:4.975)
+                \item Win-Shift\_Lose-Stay@\_D (score:4.975)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,198,1 for 21 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Calculator@\_2 (score:2.945)
+                \item Calculator@\_3 (score:2.99)
+                \item Calculator@\_4 (score:2.975)
+                \item Calculator@\_5 (score:2.945)
+                \item Calculator@\_6 (score:3.005)
+                \item Calculator@\_8 (score:2.975)
+                \item Calculator@\_9 (score:3.005)
+                \item Evolved\_HMM\_5@\_0 (score:3.02)
+                \item Evolved\_HMM\_5@\_1 (score:3.02)
+                \item Evolved\_HMM\_5@\_2 (score:3.02)
+                \item Evolved\_HMM\_5@\_3 (score:3.02)
+                \item Evolved\_HMM\_5@\_4 (score:3.02)
+                \item Evolved\_HMM\_5@\_5 (score:3.02)
+                \item Evolved\_HMM\_5@\_6 (score:3.02)
+                \item Evolved\_HMM\_5@\_7 (score:3.02)
+                \item Evolved\_HMM\_5@\_8 (score:3.02)
+                \item Evolved\_HMM\_5@\_9 (score:3.02)
+
+                \item PSO\_Gambler\_1\_1\_1@\_1 (score:3.02)
+                \item PSO\_Gambler\_1\_1\_1@\_8 (score:3.02)
+                \item Winner12 (score:3.02)
+                \item Winner21 (score:3.0)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,196,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_1\_1\_1@\_3 (score:3.04)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,194,5 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_7 (score:2.38)
+                \item ZD-GTFT-2@\_4 (score:3.025)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,193,1,4,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-4@\_8 (score:1.785)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,99,1,88,1,8,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Remorseful\_Prober@\_7 (score:2.78)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,99,100 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Revised\_Downing@\_True (score:4.01)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,79,1,117,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Remorseful\_Prober@\_6 (score:2.67)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,76,1,34,1,86,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-4@\_6 (score:1.69)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,70,1,127,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_1 (score:2.37)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,68,1,10,1,13,1,101,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_5 (score:3.03)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,60,1,95,1,39,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_0 (score:3.06)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,45,1,35,1,19,1,34,1,60,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_8 (score:3.07)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,42,1,7,1,5,2,3,1,1,1,2,1,2,1,1,1,1,1,1,4,1,1,1,1,2,3,2,1,1,5,2,2,2,3,1,1,2,2,2,1,1,2,1,7,2,2,1,1,3,2,1,3,3,1,8,1,1,2,1,1,1,1,2,3,3,1,1,3,2,4,2,1,2,2,2,6,1,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_2 (score:3.81)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,21,1,20,1,75,1,6,1,24,1,46,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_2 (score:3.08)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,14,1,183,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-4@\_1 (score:1.785)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,10,1,25,1,14,1,78,1,16,1,49,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_3 (score:2.605)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,9,1,1,1,1,1,3,1,3,1,7,1,19,1,6,1,13,1,11,1,24,1,24,1,7,1,11,1,44,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_1 (score:3.17)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,7,1,1,1,7,182 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Worse\_and\_Worse\_2@\_2 (score:2.085)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,7,11,1,1,1,3,1,2,1,28,1,75,1,7,1,11,1,46 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_Cooperator@\_1 (score:2.555)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,7,192 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Grofman@\_2 (score:3.31)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,5,1,1,1,1,2,4,2,3,1,1,3,45,1,11,1,113,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_1 (score:3.07)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,5,2,6,1,1,1,5,2,5,1,2,1,4,1,3,1,2,1,4,1,2,1,7,1,1,1,6,1,2,1,3,1,6,2,6,1,2,1,3,1,2,1,4,1,3,1,5,1,2,1,6,1,1,1,6,2,6,1,2,1,6,1,1,1,7,2,6,1,1,1,4,1,1,1,5,1,2,1,6,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item MoreGrofman (score:3.49)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,5,2,1,2,1,1,2,3,1,1,2,1,2,2,2,3,3,5,7,8,1,5,1,2,1,2,2,1,1,1,1,1,1,1,1,1,1,5,1,1,2,1,2,3,1,2,4,1,5,1,1,3,1,1,2,5,3,1,1,2,4,1,2,1,1,1,2,2,1,1,1,1,1,2,1,9,2,3,1,3,1,4,1,1,1,4,5,3,1,3,3,2,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-SET-2@\_3 (score:2.385)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,5,194 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Grofman@\_3 (score:3.27)
+                \item Grofman@\_9 (score:3.41)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,4,1,90,1,29,1,23,1,18,1,24,1,4,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_9 (score:2.79)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,4,1,4,1,21,1,20,1,26,1,13,1,29,1,34,1,34,6 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Forgetful\_Fool\_Me\_Once@\_5 (score:3.11)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,4,1,1,2,4,1,14,2,10,1,1,1,14,1,5,1,11,1,13,1,4,1,14,1,13,1,23,1,15,1,20,1,2,1,1,11 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Evolved\_ANN\_5 (score:3.31)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,4,2,5,1,2,1,2,2,3,1,1,4,65,1,1,2,5,3,2,2,1,2,3,1,7,2,5,3,3,3,1,3,4,1,4,1,1,2,3,1,3,2,1,1,3,2,4,1,1,3,2,3,1,1,3,4,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_2 (score:3.325)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,4,20,1,174 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Grofman@\_6 (score:3.31)
+                \item Grofman@\_7 (score:3.37)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,4,178,1,16 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Grofman@\_4 (score:3.43)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,4,195 for 4 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Grofman@\_0 (score:3.22)
+                \item Grofman@\_1 (score:3.3)
+                \item Grofman@\_5 (score:3.38)
+                \item Grofman@\_8 (score:3.44)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,3,1,172,1,21,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-4@\_0 (score:1.705)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,3,1,80,1,1,1,3,1,5,2,2,1,1,1,1,2,1,1,1,2,2,2,1,4,2,1,1,2,3,3,1,1,1,3,1,1,2,3,1,1,2,1,1,4,2,1,2,1,1,1,1,1,1,1,1,1,1,2,2,1,1,2,1,3,2,1,1,1,2,2,5,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Feld@\_4 (score:2.225)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,3,1,52,1,50,1,24,1,7,1,11,1,43,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_1 (score:2.775)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,3,1,1,4,2,1,17,3,1,1,1,1,1,1,1,2,2,1,4,1,1,1,3,2,1,3,4,2,2,3,11,1,10,1,1,1,14,1,86,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_5 (score:2.715)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,3,196 for 4 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_0 (score:3.655)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_2 (score:3.655)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_5 (score:3.655)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_6 (score:3.655)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,1,18,1,7,1,26,1,13,1,69,1,52,4,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_1 (score:2.385)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,1,2,90,1,1,1,2,2,1,1,1,1,1,1,1,1,3,1,3,1,2,3,3,2,1,1,2,2,2,2,2,2,2,2,1,1,4,1,1,2,3,1,2,1,3,2,2,1,2,2,5,1,2,1,2,1,2,1,1,3,1,1,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Bush\_Mosteller@\_9 (score:3.27)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Black@\_0 (score:3.39)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,1,1,12,3,1,4,2,1,2,1,1,1,1,1,2,2,4,2,2,1,1,1,1,3,1,2,1,2,1,2,2,1,1,3,1,3,2,1,1,5,1,1,1,2,4,5,1,3,6,6,4,1,1,3,1,1,1,1,1,3,4,1,4,2,6,1,1,4,1,2,1,2,1,2,2,1,1,2,4,2,2,1,1,2,1,1,1,1,2,3,5,1,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mischief@\_7 (score:1.665)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,2,59,1,61,1,24,1,43,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extortion@\_2 (score:1.565)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,2,17,1,7,1,26,1,13,1,69,1,52,4,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2@\_1 (score:2.545)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,2,9,1,22,1,47,1,33,1,47,1,30,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Kluepfel@\_3 (score:3.04)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,2,3,1,1,1,3,4,1,2,1,1,1,1,2,2,2,4,2,1,1,4,1,1,1,1,1,1,2,2,1,2,2,1,1,2,3,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Grumpy@\_Nice,\_10,\_-10 (score:4.05)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,3,2,2,2,1,1,1,1,1,2,1,3,4,2,1,2,1,2,1,3,3,1,1,1,2,2,3,2,2,1,1,20,2,1,4,1,2,1,1,3,4,1,2,4,2,2,1,1,3,1,2,5,4,1,1,1,3,1,1,2,3,2,6,1,1,3,5,1,2,1,1,2,4,2,1,3,1,3,5,1,1,14,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mischief@\_8 (score:1.745)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,2,197 for 9 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_2\_2\_2@\_1 (score:3.025)
+                \item PSO\_Gambler\_2\_2\_2@\_4 (score:3.065)
+                \item PSO\_Gambler\_2\_2\_2@\_8 (score:3.025)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_1 (score:3.665)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_3 (score:3.665)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_4 (score:3.665)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_7 (score:3.665)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_8 (score:3.665)
+                \item PSO\_Gambler\_2\_2\_2\_Noise\_05@\_9 (score:3.665)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,116,1,11,1,16,1,47,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort3@\_3 (score:1.935)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,82,1,33,1,28,1,47,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_3 (score:2.235)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,82,1,33,1,11,1,16,1,47,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2@\_3 (score:2.32)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,3,1,6,1,2,1,2,1,37,1,139,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_0 (score:3.04)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,3,3,7,1,2,1,1,1,1,3,1,1,3,1,5,1,2,4,2,1,1,1,3,2,2,2,2,2,2,2,2,2,3,2,2,2,5,1,2,2,1,1,1,1,2,2,3,1,1,2,1,1,4,1,1,1,3,1,1,2,1,1,3,1,1,1,1,1,6,3,2,2,2,3,1,1,1,4,4,1,1,1,1,1,3,2,4,1,3,3,5,1,2,1,1,1,1,2,2,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Black@\_1 (score:3.56)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,2,2,1,1,2,1,3,5,21,2,24,2,22,1,4,1,29,1,2,1,20,1,31,1,11,1,2,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mischief@\_9 (score:1.93)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,194,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Calculator@\_0 (score:2.98)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,29,1,13,1,7,1,14,1,14,1,54,1,38,1,6,1,3,1,3,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_4 (score:2.605)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,22,1,25,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,29,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item RichardHufford (score:3.005)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,20,1,173,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-4@\_7 (score:1.94)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,17,1,41,1,54,1,31,1,46,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_2 (score:2.155)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,17,1,41,1,54,1,6,1,24,1,30,1,15,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2@\_2 (score:2.205)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,17,1,21,1,44,1,1,1,1,1,1,3,2,1,3,1,1,2,1,2,2,1,3,3,1,1,4,1,3,2,9,1,3,1,2,3,1,2,1,3,3,2,1,2,1,1,1,2,1,1,1,3,6,2,1,1,1,1,1,1,2,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort3@\_2 (score:2.125)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,3,1,1,1,68,1,4,7,1,2,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_7 (score:3.23)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,2,1,1,1,1,2,10,1,2,1,9,1,2,1,60,1,88,1,9,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_7 (score:2.83)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Sneaky\_Tit\_For\_Tat (score:3.265)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2 for 6 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Hard\_Tit\_For\_2\_Tats (score:4.01)
+                \item N\_Tit(s)\_For\_M\_Tat(s)@\_3,\_2 (score:4.01)
+                \item Once\_Bitten (score:4.01)
+                \item Pun1 (score:3.99)
+                \item Slow\_Tit\_For\_Two\_Tats\_2 (score:4.01)
+                \item Tit\_For\_2\_Tats (score:4.01)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,4,2,1,5,2,5,2,2,1,3,2,1,2,1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Black@\_6 (score:3.415)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Harrington@\_6 (score:3.205)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Harrington@\_2 (score:3.21)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Harrington@\_3 (score:3.21)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Harrington@\_4 (score:3.205)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Harrington@\_9 (score:3.21)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Harrington@\_8 (score:3.21)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Harrington@\_0 (score:3.205)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,1,1,1,1,3,2,1,1,1,1,1,1,2,4,1,2,1,1,1,1,1,4,2,1,2,3,1,1,1,3,2,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Black@\_9 (score:3.515)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Harrington@\_1 (score:3.21)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,1,1,6,4,1,1,1,4,3,2,2,2,4,3,1,2,2,2,2,2,6,2,1,1,3,1,1,2,2,2,1,1,1,1,1,1,1,1,2,2,1,1,1,3,1,1,2,3,1,3,1,1,1,2,1,1,3,1,2,1,2,1,1,1,1,1,1,1,2,4,1,4,2,2,1,5,2,1,1,1,1,3,2,4,2,5,1,4,2,2,3,1,1,4,4,2,1,2,2,4,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mischief@\_2 (score:1.125)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,2,143,1,49,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_9 (score:3.055)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,2,4,1,1,1,2,1,2,1,2,1,1,3,1,1,3,1,1,2,165,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_3 (score:3.06)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,2,1,1,1,1,5,2,9,2,3,2,10,1,40,1,2,1,16,1,71,1,8,1,15,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_8 (score:2.685)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,3,2,2,1,1,3,4,1,2,2,1,4,3,1,1,2,4,1,2,2,1,1,4,1,2,4,1,1,1,3,2,7,1,6,1,6,1,4,1,2,1,2,1,1,1,1,7,1,4,2,5,1,3,1,1,2,1,1,6,1,1,1,1,1,1,1,3,1,3,1,5,1,2,1,2,2,3,3,1,1,1,6,1,2,6,1,1,6,3,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extortion@\_6 (score:1.335)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,3,1,1,2,2,1,1,3,2,1,1,1,1,4,1,2,1,1,1,1,1,1,1,2,1,1,1,2,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Black@\_3 (score:3.555)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,4,1,4,1,2,1,2,1,1,1,1,1,9,1,2,1,1,1,10,1,8,1,9,1,3,2,2,1,4,1,3,1,5,1,7,2,1,1,2,1,6,1,2,1,2,1,3,1,4,1,4,2,3,1,2,2,4,1,1,1,2,1,3,5,1,1,3,2,7,2,6,1,2,1,1,2,3,2,3,2,1,1,1 for 4 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Arrogant\_QLearner@\_9 (score:4.31)
+                \item Cautious\_QLearner@\_9 (score:4.31)
+                \item Hesitant\_QLearner@\_9 (score:4.31)
+                \item Risky\_QLearner@\_9 (score:4.31)
+            \end{itemize}
+        \end{multicols}
+
+        \item D1,1,9,1,14,1,8,1,1,1,6,1,5,1,3,1,7,1,3,1,14,1,6,1,2,1,3,3,5,1,1,1,11,1,1,1,7,3,8,2,1,2,2,2,1,1,2,2,1,1,1,5,2,1,6,1,2,1,2,1,4,2,1,2,1,1,11,1 for 4 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Arrogant\_QLearner@\_8 (score:4.255)
+                \item Cautious\_QLearner@\_8 (score:4.255)
+                \item Hesitant\_QLearner@\_8 (score:4.255)
+                \item Risky\_QLearner@\_8 (score:4.255)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,197,1 for 3 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Fortress3 (score:2.99)
+                \item Prober (score:3.01)
+                \item Prober\_3 (score:2.995)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,196,2 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Kluepfel@\_2 (score:3.04)
+                \item Leyvraz@\_3 (score:3.025)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,195,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-GEN-2@\_6 (score:3.015)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,194,4 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Leyvraz@\_4 (score:3.06)
+                \item ZD-GEN-2@\_0 (score:3.025)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,193,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_1\_1\_1@\_4 (score:3.07)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,4,1,3,2,1,1,2,1,2,1,2,1,2,1,2,2,1,1,1,1,4,1,4,1,1,6,1,1,1,2,5,4,6,1,3,1,1,1,1,2,1,1,3,1,1,2,1,1,2,1,1,3,1,2,1,2,2,2,1,3,1,2,1,4,1,3,3,1,2,2,1,1,1,3,2,7,2,3,1,1,4,1,3,1,2,1,4,1,1,1,1,2,2,1,2,3,1,2,1,1,5,2,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-SET-2@\_0 (score:2.315)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,3,2,2,2,1,1,1,1,1,6,1,1,1,1,3,1,1,1,1,3,3,3,1,1,1,2,2,3,2,2,1,4,3,1,1,1,1,1,2,1,1,3,3,1,2,2,1,2,1,1,1,1,1,1,1,1,1,4,3,1,1,1,1,4,1,2,5,2,2,1,5,1,4,2,3,2,1,1,1,2,3,2,3,2,4,2,2,1,1,1,1,1,5,1,1,3,1,3,1,1,6,1,1,5,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort3@\_8 (score:2.475)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,3,2,2,4,1,4,3,2,5,1,1,1,1,1,2,1,3,3,1,1,1,2,2,3,2,2,1,2,3,2,1,1,1,4,1,1,2,1,3,1,2,2,1,2,1,1,1,1,1,1,1,1,1,4,3,1,1,1,1,4,1,2,5,2,2,1,5,1,4,2,1,1,1,2,1,1,1,2,3,2,1,1,1,2,4,2,2,1,1,1,1,1,5,1,1,3,1,5,6,1,1,5,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2@\_8 (score:2.505)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,3,3,2,1,2,1,1,1,1,1,1,1,2,3,2,1,13,1,155,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_8 (score:3.1)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,3,46,1,125,1,22 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_WSLS@\_0 (score:3.09)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,2,1,107,1,1,1,14,1,46,1,19,1,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Kluepfel@\_6 (score:3.06)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,2,1,17,1,26,1,7,1,97,1,43,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mem2@\_0 (score:2.62)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,2,1,17,1,7,1,19,1,6,1,13,1,36,1,24,1,7,1,11,1,42,4 for 1 opponents:
+        \begin{multicols}{3}
+
+            \begin{itemize}
+                \item ZD-Extort3@\_1 (score:2.145)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,2,1,4,1,1,2,3,1,1,1,1,3,1,3,1,1,5,2,1,7,5,3,3,1,1,7,2,1,5,1,3,2,2,2,1,1,5,1,1,1,1,5,1,1,1,2,1,5,3,1,2,1,2,3,2,1,1,6,8,4,1,8,3,6,1,3,2,1,1,4,3,1,1,2,1,2,1,9,2,2,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-SET-2@\_6 (score:2.375)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,2,1,2,1,1,1,1,3,2,1,1,1,3,3,5,1,2,3,4,4,4,4,4,4,4,4,6,2,5,1,1,2,3,1,1,1,1,1,1,1,1,2,1,2,2,2,7,1,1,2,2,3,1,1,6,2,1,4,4,1,2,1,1,1,1,1,1,1,2,1,1,2,1,1,2,1,2,2,1,1,4,3,2,1,2,1,1,1,1,1,1,2,1,1,2,2,3,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Black@\_5 (score:3.335)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,2,2,33,1,42,1,2,1,12,1,3,1,34,1,36,1,19,1,1,1,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_8 (score:2.37)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,1,194,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Kluepfel@\_8 (score:3.03)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,1,58,1,99,1,13,1,20,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_6 (score:3.055)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,1,47,1,52,1,92,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_0 (score:3.045)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,1,2,1,1,3,1,1,1,2,1,2,1,1,3,3,1,1,1,2,1,1,4,1,3,1,41,3,2,2,2,3,1,1,3,1,3,3,1,1,2,1,1,4,2,3,1,3,1,1,2,2,1,4,2,5,4,1,3,3,2,5,2,1,1,1,2,1,1,1,1,1,1,2,3,5,1,2,3,3,4,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort3@\_7 (score:2.27)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,1,1,1,1,1,2,1,3,3,1,1,1,1,1,2,102,1,55,1,14,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Cave@\_9 (score:3.07)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,1,1,2,2,1,1,1,69,1,15,2,2,1,1,1,1,2,1,1,1,2,2,2,1,4,2,1,1,2,3,3,1,1,1,3,1,1,2,3,1,1,2,1,2,3,2,1,2,1,1,1,1,1,1,1,1,1,1,2,2,1,1,2,1,4,1,3,2,2,5,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-4@\_4 (score:1.805)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,1,1,2,1,2,2,1,2,1,9,2,17,1,28,1,1,1,2,3,1,2,2,1,2,2,1,1,1,2,2,1,1,1,1,1,1,3,3,1,1,2,3,2,13,3,2,2,2,4,1,1,3,1,2,1,1,5,1,1,2,1,2,2,2,2,1,2,1,2,2,5,1,1,2,2,1,3,3,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2\_v2@\_7 (score:2.48)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,1,1,6,1,73,1,1,2,7,1,3,1,1,1,2,2,4,2,4,2,4,2,2,1,2,1,2,2,6,1,2,1,2,1,3,2,1,1,1,1,2,5,1,4,2,2,6,3,1,3,3,1,1,3,2,4 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Bush\_Mosteller@\_0 (score:3.31)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,193,2 for 2 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Leyvraz@\_1 (score:3.03)
+                \item Leyvraz@\_2 (score:3.025)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,192,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Leyvraz@\_6 (score:3.02)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,186,9 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item WmAdams@\_7 (score:3.07)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,4,1,187,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_8 (score:3.03)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,2,2,1,1,1,1,2,1,2,1,1,1,1,1,1,1,174,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item PSO\_Gambler\_1\_1\_1@\_7 (score:3.12)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,2,5,1,5,1,9,1,2,1,8,1,1,1,8,1,2,1,5,1,5,1,5,1,9,1,6,2,5,1,9,1,1,1,5,1,10,1,5,1,4,1,1,1,9,1,5,1,1,1,5,1,8,1,7,1,4,1,1,1,6,1,1,1,1,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Adaptive\_Pavlov\_2006 (score:4.01)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,1,1,1,24,1,20,1,57,1,88 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_WSLS@\_5 (score:3.02)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,3,1,2,2,2,2,2,2,3,1,2,1,3,2,2,2,2,2,2,1,3,2,2,2,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Leyvraz@\_5 (score:3.095)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,2,1,2,1,2,4,1,2,2,4,2,1,1,1,1,1,2,1,1,2,1,3,1,3,1,4,1,2,4,1,1,1,1,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,2,2,4,1,2,1,1,2,2,1,1,1,3,4,4,4,2,1,2,1,3,1,1,1,1,2,1,1,2,1,6,1,1,2,2,2,1,1,1,2,1,1,1,1,1,1,3,1,1,1,3,5,1,3,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Black@\_7 (score:3.59)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,3,1,4,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,2,2,2,2,2,2,2,2,2,2,2,2,1,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Leyvraz@\_9 (score:3.155)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,4,4,1,3,1,1,1,2,2,3,5,1,1,1,1,2,6,1,4,2,1,1,1,1,1,1,2,3,1,1,1,2,2,1,4,1,1,1,1,1,4,3,2,1,2,2,2,1,3,4,3,1,1,1,2,1,1,2,1,1,1,1,2,2,4,1,5,1,3,2,3,1,2,5,1,2,4,1,3,1,2,1,1,2,1,2,2,2,2,1,1,1,1,1,2,4,1,4,1,1,4,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-SET-2@\_2 (score:2.5)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,7,2,7,4,2,4,1,1,4,1,2,1,3,4,4,1,1,1,3,1,1,4,9,1,12,2,1,2,1,1,1,1,24,1,74,8 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-SET-2@\_4 (score:2.5)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,19,1,96,1,31,1,46,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_WSLS@\_2 (score:3.07)
+            \end{itemize}
+        \end{multicols}
+
+        \item D2,1,197 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Prober\_2 (score:4.97)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,196,1 for 4 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Fortress4 (score:2.98)
+                \item Hard\_Prober (score:3.0)
+                \item Predator (score:3.0)
+                \item Raider (score:3.0)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,194,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stein\_and\_Rapoport@\_0.05@\_(D,\_D) (score:3.02)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,192,5 for 8 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item WmAdams@\_0 (score:3.06)
+                \item WmAdams@\_1 (score:3.06)
+                \item WmAdams@\_2 (score:3.06)
+                \item WmAdams@\_3 (score:3.06)
+                \item WmAdams@\_5 (score:3.06)
+                \item WmAdams@\_6 (score:3.06)
+                \item WmAdams@\_8 (score:3.06)
+                \item WmAdams@\_9 (score:3.06)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,177,1,2,1,13,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Getzler@\_4 (score:3.065)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,97,100 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_1 (score:3.83)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,56,1,36,1,32,1,6,1,45,1,9,2,1,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tullock@\_9 (score:2.875)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,24,1,2,1,4,2,1,1,2,2,1,1,1,1,1,1,1,5,2,1,2,3,2,3,3,1,1,1,3,1,1,1,1,1,3,1,3,2,1,1,1,1,4,1,2,2,5,1,1,5,1,2,2,2,3,1,2,4,3,1,1,1,2,1,3,2,1,2,3,1,3,3,8,1,2,2,3,4,4,2,1,1,4,5,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Champion@\_8 (score:3.8)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,20,1,1,1,1,1,3,1,1,1,44,1,6,2,1,1,9,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tranquilizer@\_0 (score:3.245)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,12,1,151,1,22,10 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-4@\_3 (score:1.79)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,8,1,1,2,7,21,1,156 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Meta\_Hunter\_Aggressive@\_7\_players (score:2.615)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,4,4,1,2,2,5,1,1,3,2,2,3,2,2,1,5,3,4,2,2,1,1,1,2,1,1,6,2,2,1,2,2,1,1,5,1,1,1,4,3,1,2,1,1,1,4,1,1,1,1,2,1,1,5,1,1,1,1,1,1,2,5,5,1,4,2,3,1,2,2,2,2,1,1,1,1,1,1,1,4,4,1,1,2,1,1,2,3,1,5,1,1,2,5,1,2,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+
+                \item ZD-SET-2@\_1 (score:2.565)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,2,9,2,3,2,1,3,2,1,1,7,4,4,1,2,1,2,3,1,1,1,2,1,2,1,2,1,2,2,1,1,4,2,1,1,1,1,2,2,1,1,1,1,1,2,1,2,1,5,1,4,2,1,1,1,1,3,2,2,3,2,1,1,1,2,4,1,1,3,1,2,1,1,1,1,3,5,1,1,3,3,3,2,1,2,1,1,2,2,1,2,3,1,2,5,5,2,1,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mischief@\_3 (score:1.23)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,1,1,86,1,4,1,29,1,2,1,17,1,34,1,5,1,8,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extort-2@\_9 (score:2.555)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,1,1,54,1,36,1,3,50,1,43,1,5 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Stochastic\_Cooperator@\_9 (score:2.75)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,1,1,8,4,1,1,25,1,147,8 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Tullock@\_7 (score:2.92)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,1,1,4,2,2,2,2,1,1,1,2,2,3,2,1,1,1,1,2,2,2,7,28,1,2,2,4,1,1,1,4,1,1,2,3,1,1,1,1,3,1,1,2,1,2,4,6,2,4,2,2,1,4,1,3,1,2,5,3,1,2,1,2,3,1,3,3,2,2,1,1,1,1,1,6,2,3,1,2,2,1,1,3,2,1 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Mischief@\_1 (score:1.655)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,1,1,3,1,3,1,2,1,2,2,1,2,1,5,1,1,1,1,17,1,32,1,11,5,2,1,2,1,2,8,2,1,1,1,1,1,1,1,5,2,4,1,5,1,1,2,1,3,4,2,2,3,5,3,2,1,2,1,5,2,2,2,2,1,1,3,2,1,1,3 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item ZD-Extortion@\_1 (score:1.535)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,1,1,1,1,2,1,1,1,2,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,2,1,1,2,1,1,1,2,1,1,2,1,1,1,1,4,1,1,2,4,1,1,1,2,1,1,1,2,1,2,1,1,1,2,1,1,3,4,1,2,1,4,1,1,2,1,1,1,4,2,2,2,2,1,1,1,1,3,2,3,1,1,1,2,2,8,2,1,2,1,1,3,1,1,3,1,1,1,4,2,1,1,1,1,2,3,1,1,2,2,3,6,1,2,2,1,2 for 1 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item SelfSteem@\_4 (score:2.64)
+            \end{itemize}
+        \end{multicols}
+
+        \item D3,1,2,1,6,1,16,1,1,1,2,1,9,1,8,1,5,1,6,1,7,1,6,2,10,1,2,3,3,2,2,2,2,1,3,1,2,1,5,1,6,1,1,1,2,1,5,4,5,1,5,2,5,1,2,1,2,1,1,1,4,1,2,2,3,1,1,3,2,1,1,1,2,1,1,1 for 4 opponents:
+        \begin{multicols}{3}
+            \begin{itemize}
+                \item Arrogant\_QLearner@\_6 (score:4.98)
+                \item Hopeless@\_3 (score:5.0)
+                \item Hopeless@\_4 (score:5.0)
+                \item Hopeless@\_5 (score:4.98)
+                \item Hopeless@\_6 (score:4.98)
+                \item Hopeless@\_7 (score:5.0)
+                \item Hopeless@\_8 (score:5.0)
+                \item Hopeless@\_9 (score:5.0)
+                \item Knowledgeable\_Worse\_and\_Worse@\_0 (score:2.88)
+                \item Knowledgeable\_Worse\_and\_Worse@\_1 (score:3.04)
+                \item Knowledgeable\_Worse\_and\_Worse@\_2 (score:3.04)
+                \item Knowledgeable\_Worse\_and\_Worse@\_3 (score:2.82)
+                \item Knowledgeable\_Worse\_and\_Worse@\_4 (score:3.12)
+                \item Knowledgeable\_Worse\_and\_Worse@\_5 (score:2.74)
+                \item Knowledgeable\_Worse\_and\_Worse@\_6 (score:3.12)
+                \item Knowledgeable\_Worse\_and\_Worse@\_7 (score:3.14)
+                \item Knowledgeable\_Worse\_and\_Worse@\_8 (score:2.94)
+                \item Knowledgeable\_Worse\_and\_Worse@\_9 (score:3.18)
+                \item Math\_Constant\_Hunter (score:5.0)
+                \item Negation@\_0 (score:4.98)
+                \item Negation@\_1 (score:5.0)
+                \item Negation@\_2 (score:4.98)
+                \item Negation@\_3 (score:5.0)
+                \item Negation@\_4 (score:5.0)
+                \item Negation@\_5 (score:4.98)
+                \item Negation@\_6 (score:4.98)
+                \item Negation@\_7 (score:5.0)
+                \item Negation@\_8 (score:5.0)
+                \item Negation@\_9 (score:5.0)
+                \item Random@\_0 (score:2.86)
+                \item Random@\_1 (score:3.02)
+                \item Random@\_2 (score:2.96)
+                \item Random@\_3 (score:2.92)
+                \item Random@\_4 (score:3.04)
+                \item Random@\_5 (score:2.82)
+                \item Random@\_6 (score:3.0)
+                \item Random@\_7 (score:3.2)
+                \item Random@\_8 (score:3.14)
+                \item Random@\_9 (score:3.1)
+                \item Random\_Hunter (score:5.0)
+                \item ThueMorse (score:3.0)
+                \item ThueMorseInverse (score:3.0)
+                \item Tricky\_Cooperator (score:5.0)
+                \item Willing@\_1 (score:5.0)
+                \item Willing@\_3 (score:5.0)
+                \item Willing@\_4 (score:5.0)
+                \item Willing@\_7 (score:5.0)
+                \item Willing@\_8 (score:5.0)
+                \item Willing@\_9 (score:5.0)
+                \item Worse\_and\_Worse@\_0 (score:4.6)
+                \item Worse\_and\_Worse@\_1 (score:4.68)
+                \item Worse\_and\_Worse@\_2 (score:4.66)
+                \item Worse\_and\_Worse@\_3 (score:4.58)
+                \item Worse\_and\_Worse@\_4 (score:4.4)
+                \item Worse\_and\_Worse@\_5 (score:4.48)
+                \item Worse\_and\_Worse@\_6 (score:4.52)
+                \item Worse\_and\_Worse@\_7 (score:4.62)
+                \item Worse\_and\_Worse@\_8 (score:4.5)
+                \item Worse\_and\_Worse@\_9 (score:4.6)
+                \item ZD-Mischief@\_0 (score:1.02)
+            \end{itemize}
+        \end{multicols}
+    \end{itemize}
+    
+
 \end{appendices}
