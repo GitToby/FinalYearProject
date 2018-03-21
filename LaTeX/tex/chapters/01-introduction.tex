@@ -2,16 +2,69 @@
 
 \chapter{Introduction}\label{ch:intro}
 In this report we will be looking at how strategies of the Iterated Prisoners Dilemma (IPD) can be `countered' or `worked' in order to give a better overall score for a player on the other side of the game.
-We will look into explicit sequences which should be played for single games of length 200 against a single opponent.
+We will look into explicit sequences which should be played for $1$ vs $1$ games of length 200 to gain the highest score per turn upon the games conclusion.
 These sequences will then be compared and contrasted to understand how some opponents could be grouped together even though they have no structure in common.
 
-The concept of `working' a strategy is more fitting in this research as we will be looking into boosting the score or our player, which in most cases (due to the nature of the IPD) will also boost the score of our opponent.
+Our concept of `working' a strategy is more fitting in this research as we will be looking into boosting the score or our player, which in most cases (due to the nature of the IPD) will also boost the score of our opponent.
 `working' also has a better real world interpretation than `countering' as the real goal of increasing the score for our player is to generate as many Cooperation moves to Defect against without consequences as possible.
+
+This paper assumes a basic knowledge of game theory and how to model a normal form game.
 The IPD game itself is described in Section~\ref{sec:iteratedPrisonersDilemma} and the real world research is discussed in Chapter~\ref{ch:literature}.
 
-\section{Iterated Prisoners Dilemma}\label{sec:iteratedPrisonersDilemma}
 
-See https://vknight.org/gt/chapters/09/
+\section{The Prisoners Dilemma and Its Iterated Form}\label{sec:iteratedPrisonersDilemma}
+\begin{center}
+    \itshape~Two members of a criminal gang are arrested and imprisoned.
+    Each prisoner is in solitary confinement with no means of communicating with the other.
+    The prosecutors lack sufficient evidence to convict the pair on the principal charge.
+    They hope to get both sentenced to a year in prison on a lesser charge. Simultaneously, the prosecutors offer each prisoner a bargain.
+    Each prisoner is given the opportunity either to: betray the other by testifying that the other committed the crime, or to cooperate with the other by remaining silent.
+\end{center}
+
+The Prisoners Dilemma is a normal form game in the space $\mathbb{R}^{{2\times 2}^2}$ with utility matrices for the row and column player as follows:
+$$
+    A=\begin{pmatrix}R & S\\ T & P\end{pmatrix}\quad
+    B=\begin{pmatrix}R & T\\ S & P\end{pmatrix}
+$$
+with the following constraints (scoring highly is good):
+$$T>R>P>S \qquad \vert \qquad 2R>T+S$$
+These constraints model the above story with the following definitions:
+\begin{itemize}
+    \item $T$ --- Temptation, the utility for successfully tricking your opponent to confess.
+    \item $R$ --- Reward, by staying silent with your opponent you receive the reward.
+    \item $P$ --- Punishment, if both you and your opponent confess you'll receive the punishment
+    \item $S$ --- Sucker, if you confess but your opponent stays silent you're a sucker.
+\end{itemize}
+This ensures that the game reaches some fundamental dilemmas, and hence its name.
+Do you \textbf{Cooperate} and risk being taken advantage of by your opponent, first row or column.
+Or do you \textbf{Defect} and hope your opponent stays silent, second row or column.
+We will be using the following utilities for this paper.
+$$
+    A=\begin{pmatrix}3 & 0 \\ 5 & 1\end{pmatrix}\quad
+    B=\begin{pmatrix}3 & 5 \\ 0 & 1\end{pmatrix}
+$$    
+From a game theoretic point of view it can be seen that there exists a strongly dominant strategy for both the row and column players; to defect each move.
+This however doesn't reflect on the iterated version of the game where repetition can allow for higher overall scores if players are coordinated and cooperate with one another.
+
+We will be looking into the iterated form of the game which, simply put, is just a series of games back to back. 
+Players do not know what their opponent will play on any given turn, but can have an indefinite amount of time between turns.
+Players can algorithmically, stochastically or using a combination of the two decide on their next move.
+The number of turns is often provided beforehand, but doesn't need to be, and the overall score of the game is normalised to by this to allow for comparisons between games of different length.
+
+\section{Brief Task Overview}\label{sec:briefOverview}
+This document will be be looking at the creation of sequences to beat given opponents in The Iterated Prisoners Dilemma.
+Analysis will be focused on looking into just the single opponent use case, but the idea of designing a sequence for a tournament for a given number of opponents is a potential follow on to this work.
+Our task is as follows:
+
+Problem:
+\begin{center}
+    \itshape~When playing a given Iterated Prisoners Dilemma strategy, \(O\), as an opponent, what is the best ordered solution sequence of moves, \(S\), to play in order for us to obtain the highest possible average score per move across the game.
+\end{center}
+
+For example an opponent known as Tit For Tat, which cooperates on its first move and the copies your last move on subsequent moves, will have a solution sequence of moves that are all cooperation apart from the last.
+This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into every strategy as defined in the Axelrod Library.
+These are listed in appendix Section~\ref{apndx:opponents} and definitions can be found in the axelrod codebase\cite{axelrodproject}.
+
 
 \section{Machine Learning \& Computer Intelligence}\label{sec:machineLearningAndcomputerIntelligence}
 Machine Learning is a field of computer science that has existed since the first computers have been around.
@@ -48,22 +101,9 @@ By doing this we are saving the more successful candidates allowing us to rebuil
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1.0\textwidth, center]{./img/flows/ga_cycle.pdf}
-    \caption{Generic genetic algorithm cycle diagram}.\label{fig:genericGeneticAlgoCycle} 
+    \caption{Generic genetic algorithm cycle diagram}.\label{fig:genericGACycle} 
 \end{figure}
 
-Figure~\ref{fig:genericGeneticAlgoCycle} shows a flow diagram of a generic genetic algorithm cycle.
-The specific algorithm we will be using is described in Subsection~\ref{subsec:buildingTheAlgorthem}.
+Figure~\ref{fig:genericGACycle} shows a flow diagram of a generic genetic algorithm cycle.
+The specific algorithm we will be using is described in Subsection~\ref{sec:buildingTheAlgorithm}.
 
-\section{Brief Task Overview}\label{sec:briefOverview}
-This document will be be looking at the creation of sequences to beat given opponents in The Iterated Prisoners Dilemma.
-Analysis will be focused on looking into just the single opponent use case, but the idea of designing a sequence for a tournament for a given number of opponents is a potential follow on to this work.
-Our task is as follows:
-
-Problem:
-\begin{center}
-    \itshape~When playing a given Iterated Prisoners Dilemma strategy, \(O\), as an opponent, what is the best ordered solution sequence of moves, \(S\), to play in order for us to obtain the highest possible average score per move across the game.
-\end{center}
-
-For example an opponent known as Tit For Tat, which cooperates on its first move and the copies your last move on subsequent moves, will have a solution sequence of moves that are all cooperation apart from the last.
-This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into every strategy as defined in the Axelrod Library.
-These are listed in appendix Section~\ref{apndx:opponents} and definitions can be found in the axelrod codebase\cite{axelrodproject}.

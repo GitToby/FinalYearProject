@@ -1,15 +1,15 @@
 \chapter{Developing The Codebase}\label{ch:developingthecodebase}
-
+This chapter will discuss the development practices encountered during the project and a walkthrough of setting up an environment.
+Details on the set up and reasoning behind using specific development environments will be given along with a look at the open source contributions made.
+A brief look at version control will also show how code is developed to be sustainable and reproducible.
 
 \section{Research Environments}\label{subsec:settingUpAResearchEnvironment}
 A mix of Jupyter Notebooks and integrated development environments\footnote{Pycharm Professional Edition and Microsoft VS Code.} were used to write and execute code.
-The main analysis was run using a factory class pattern, called \mintinline{python}{AnalysisRun} in the \mintinline{python}{full_analysis} module, show in Figure~\ref{code:AnalysisRun.py} in Appendix Chapter~\ref{apndx:code}.
+The main analysis was run using a factory class pattern, called \mintinline{python}{AnalysisRun} in the \mintinline{python}{full_analysis} module, show in Figure~\ref{apcode:AnalysisRun.py}.
 This class was used to wrap a query to the Axelrod-Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.
 
 The analysis itself was done using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
-This will be discussed further in Subsection~\ref{subsec:settingUpAResearchEnvironment}.
-
-This section will go into detail on the set up and reasoning behind using specific development environments.This tutorial will also assume you're working with a local development station;
+.This tutorial will also assume you're working with a local development station;
 analysis on remote cloud instances of Jupyter Notebooks is possible but the set up is different.
 
 \paragraph{Installing Basic Libraries}
@@ -83,14 +83,14 @@ Figure~\ref{fig:PR-open} shows the initial scope of the PR and Figure~\ref{fig:c
 After a request is opened there is a period of reviews by the owners, this is to ensure code quality and scope coverage. 
 As my work progressed I continued to add to the PR which lead to more and more requests being added for features that fell outside the scope of the PR.
 Eventually we decided to create another fork of the PR that contained specialist code for my project that wouldn't benefit the codebase as a whole.
-Figures~\ref{fig:PR-discussion} \$~\ref{fig:PR-scope-discussion} show examples of requests and discussions around features and code quality.
+Figures~\ref{fig:PR-discussion} \&~\ref{fig:PR-scope-discussion} show examples of requests and discussions around features and code quality.
 Because of this review process the overall quality of the codebase can be kept high and the owners can decide on how their platforms are developed.
 
 \begin{figure}[ht]
     \centering
     \begin{minipage}{0.48\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth, center,keepaspectratio]{./img/vcs/scope-discussion.png}
+        \includegraphics[width=1.0\textwidth, center,keepaspectratio]{./img/vcs/feature-discussion.png}
         \caption{Feature discussions in PR on Github}\label{fig:PR-discussion}
     \end{minipage}\hfill
     \begin{minipage}{0.48\textwidth}
@@ -141,7 +141,7 @@ These are libraries which are not involved in the core functionality of the IPD\
     \centering
     \begin{tabular}{cc}
         \toprule
-        Library & Reason\\
+        Module & Reason\\
         \midrule
         \textbf{os} & For operating system functionality.\\
         \textbf{time} & For time calculations.\\
@@ -150,3 +150,14 @@ These are libraries which are not involved in the core functionality of the IPD\
     \end{tabular}
     \caption{Internal built in python modules used}\label{table:builtinmodules}
 \end{table*}
+
+\section{Conclusion}
+In this chapter we covered the code and techniques needed to complete research.
+Of the learning that was complexity during the project, learning a new version control system was the hardest along with handling the organic growth of the project.
+While writing code there where sections that needed changing or removing, however there was no scope or predetermined set of outcomes causing my own analysis notebooks to swell and become unwieldy at times.
+These problems were solved by selectively isolating work and levering 3rd party libraries more.
+
+The final codebase contributions were a success and version 0.0.8 of the Axelrod Dojo has been released to the python installer package, `pip'.\cite{dojoV008}
+Following the steps in Section~\ref{subsec:settingUpAResearchEnvironment} will allow a working environment to be set up on any platform, letting this experiment be repeated.
+Providing a reproducible experiment allows the open source and research communities independently verify any findings in this work to ensure a robust foundation for future work.
+All finalised notebooks and final code are published online on Github, urls can be found in Appendix~\ref{apndx:resources}.

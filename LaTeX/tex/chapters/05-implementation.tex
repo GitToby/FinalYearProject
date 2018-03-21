@@ -19,21 +19,19 @@ We will look into these as we can confirm that the genetic algorithm will select
         \toprule
         Player & Optimal Sequence & Representation\\
         \midrule
-        axl.TitForTat()&\(CCC\ldots CD\)&\\
-        axl.Alternator()&\(DDD\ldots DD\)&\\
-        axl.Grudger()&\(CCC\ldots CD\)&\\
-        axl.Random()&\(DDD\ldots DD\)&\\
-        axl.EvolvedFSM16()&TODO need to find&\\
-        axl.CollectiveStrategy()&TODO need to find&\\
-        axl.Champion()&TODO need to find&\\
+        axl.TitForTat()&\(CCC\ldots CD\)& $Cn-1,1$\\
+        axl.Alternator()&\(DDD\ldots DD\)&$Dn$\\
+        axl.Grudger()&\(CCC\ldots CD\)&$Cn-1,1$\\
+        axl.Random()&\(DDD\ldots DD\)&$Dn$\\
+        axl.EvolvedFSM16()& $CDC\ldots DD$ & $C1,1,n-2$\\
+        axl.CollectiveStrategy()&$CDC\ldots CD$&$C1,1,n-3,1$\\
+        axl.Champion()& Various\footnote{Champion is a stochastic opponent.} & $NA$\\
         \bottomrule
     \end{tabular}
 \end{table*}
 
 What we want to look at is how the best score rises over generations as we change certain features of the algorithm.
-Once the best score per turn hits a maximum such that it wont change no mater how many more generations are run;
-as described in Section~\ref{sec:solutionForm} this the optimal solution sequence and it is unique.
-NOTE: unique solution sequences only exist for non stochastic opponents.
+Once the best score per turn hits a maximum such that it wont change no mater how many more generations are run, as described in Section~\ref{sec:solutionForm}, this the optimal solution sequence. for a solution to be unique we must be playing a non stochastic opponent.
 
 Once a solution has been found the generation number where this plateau occurs is called the solution sequence distance, or solution distance;
 one of the goals of this initial investigation is to see how parameters affect the distance.
@@ -52,7 +50,7 @@ Some of the questions we will hope to be answering include:
 
 \section{Changing Initial Population Size}\label{sec:ChangingInitialPopulationSize}
 The initial population size is the number of starting sequences we use in our algorithms first generation.
-Once this generation concludes the population will go through the series of phases outlined in figure~\ref{fig:customGAcyclee}; altering the population to keep the best performers against our opponent to continue on to subsequent generations.
+Once this generation concludes the population will go through the series of phases outlined in figure~\ref{fig:customGAcycle}; altering the population to keep the best performers against our opponent to continue on to subsequent generations.
 During any given generation the population defines the maximum potential range of scores that we can achieve against our opponent.
 For example, having 2 members with distinct sequences in our population would provide us with 2 distinct new sequences after mutation.
 Because of this we can reasonably assume the larger our population the larger the number of distinct scores leading to a larger chance of finding the solution sequence with the optimal score;
@@ -67,11 +65,11 @@ However We are not working in a time restricted scenario, and so we should just 
 In a perfect world where everything was time independent we would brute force every possible sequence combination
 
 The code in Snippet~\ref{code:populationChecker} is an implementation how we go about analysing and storing the tests on generation sizes listed.
-It leverages the use of the function \mintinline{python}{runGeneticAlgo} show in appendix Snippet~\ref{code:runGeneticAlgo}.
+It leverages the use of the function \mintinline{python}{runGeneticAlgo} show in appendix Snippet~\ref{apcode:runGeneticAlgo.py}.
 This code will output data in the form of Table~\ref{table:popCheckerDataTable}.
 
 \begin{figure}
-    \inputminted{python}{code_snippets/populationChecker.py}
+    \inputminted[fontsize=\small]{python}{code_snippets/populationChecker.py}
     \caption{code to check multiple populations}\label{code:populationChecker}
 \end{figure}
 
@@ -102,7 +100,6 @@ This code will output data in the form of Table~\ref{table:popCheckerDataTable}.
 By grouping this data by the population we observe how initial populations affect different opponents.
 Its clear that from figure~\ref{fig:INIT-POP-bs-v-gens-all} that the initial population size has a significant effect on finding better sequences.
 We can see if there is a larger initial population there is typically a higher best score shown once concluding all of the generations.
-This can also be shown in figure~\ref{fig:INIT-POP-mean-bs-v-init-pop-all} that\ldots
 It doesn't, however, ensure that we find the solution sequence;
 as is shown in the lack of long plateaus in the lines.
 
@@ -112,13 +109,8 @@ as is shown in the lack of long plateaus in the lines.
 \end{figure}
 
 The improvement's from this effect are non-linear from observation.
-The change in overall final best score for a population of 50 compared with a population of 100 is huge in comparison to the same relative increase from 200 to 250.
-This may suggest there are more effective approaches to improving our score after a certain size of initial population than to continuing to increase it further.
-
-% TODO:comment on each test opponent below?
-% the RANDOM opponent tended to fare better with larger population, this may just be based on the probability that there is a sequence in the population that does better against the specific random sequence.
-% This may also be the genetic algorithm optimising itself to the pseudorandom generator, building the \(Random()\) opponent solution for next generation, this could be a reason as all of the final generation best performers are scoring higher than the original starting population.
-% the sequence is kind of converging to DDD...D, but there was no pattern for the algorithm to follow and so didn't converge.
+The change in final best score for a population of 50 compared with a population of 100 is large in comparison to the same relative increase from 200 to 250.
+This may suggest there are more efficient approaches to improving our final best score after a certain initial population is reached.
 
 None of these results have found a solution sequence (or at least we cant tell from the graph).
 It is clear that larger initial populations do, on a relative scale, much better than small ones.
