@@ -119,14 +119,18 @@ We can observe that there are lots of sequences with solutions that dont contain
     \caption{Sequence Diagram, sorted by score. \textit{note: labels are not complete, approx 1/4 shown.}}\label{fig:sequence_plot_score}
 \end{figure}
 
-\section{Clustering Analysis}
+\section{Clustering Analysis using SciKitLearn}
 Here we will look at ways of grouping opponents and what that means for potential scoring outcomes.
+These clustering algorithms are not meant for predictive purposes as there is not enough metadata present in each strategy to use as features.
+
 \subsection{K Means clustering}\label{ssec:k_means}
 
 
-\subsection{Classification Trees}
-Classification trees are a way of looking at reducing the variance of a parameter through attributes of observed instances. 
-In our case were looking at reducing the variance of the score by looking at which turns tend to cause the largest disparity in score.
+\subsection{Regression Trees}
+Regression trees are a way of looking at reducing the variance of a parameter through attributes of observed instances. 
+ScikitLearn has an implementation of regression trees, the code used to generate the data in this subsection is shown in appendix code~\ref{apcode:reg_tree.py}.
+
+Our case of regression trees we're looking at reducing the variance of the score by looking at which turns tend to cause the largest disparity in score.
 To do this we look at reducing the Mean Absolute Error of the scores, which is, in effect reducing the $L1$ loss of the scores.
 
 $$MAE = \frac{1}{n}\sum_{i=0}^n |x_i-y_i|$$
