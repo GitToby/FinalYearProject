@@ -513,8 +513,11 @@ After constructing the final analysis factory and running some environment check
 \end{itemize}
 
 These changes resulted in a streamlined piece of code we were able to run on the Cardiff University Mathematics department big compute machine.
-Each opponent was submitted to the compute engine using the standard analysis factory class \mintinline{python}{AnalysisRun}, shown in Figure~\ref{code:AnalysisRun.py}, using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
+Each opponent was submitted to the compute engine using the standard analysis factory class \mintinline{python}{AnalysisRun}, shown in Figure~\ref{apcode:AnalysisRun.py}, using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
 We ran the code over a period of days resulting in 200+ output files of data which could then be analysed.
 
 Reflecting on the execution and deployment of the code shows that we could have improved the analysis of short run time strategies against longer run time strategies and the reproducibility of the batch processing within the Axelrod Dojo Module.
 As far as each individuals analysis goes, I feel like the approach of adding predetermined sequences to an initial population was a huge improvement in compute time and overall predictions of best sequences. 
+
+% TODO: mention a sequence is not optimal if it ends in a C?
+% TODO: mention a sequence is not optimal if it ends in a C?
