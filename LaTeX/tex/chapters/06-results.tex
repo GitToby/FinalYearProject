@@ -130,11 +130,14 @@ We can conclude that there is no extra information shown in this diagram.
 \section{Solution Groups}\label{sec:solutionGroups}
 If we want to group opponents together, the most obvious way is to look at which opponents have have the same best score sequence.
 Appendix section~\ref{apndx:solutionGroups} has full details, but figure~\ref{fig:sequence_scatter} shows a plot of the trends. 
-We can observe that there are lots of sequences with solutions that dont contain many blocks ($\le 25$)
+We can observe that there are lots of sequences with solutions that dont contain many blocks ($\le 25$) and the solutions get more varied in number fo blocks in the mid range of scores.
 \begin{figure}[ht]
-    \includegraphics[width=0.7\textwidth, center]{./img/descriptive/sequence_scatter.pdf}
+    \includegraphics[width=0.7\textwidth, center]{./img/descriptive/sequence_scatter_colour.pdf}
     \caption{Trends for opponents grouped by their best sequence}\label{fig:sequence_scatter}
 \end{figure}
+
+This figure also shows an almost logarithmic/polynomial trend in the number of blocks in a sequence as we move up the score.
+Below this trend there are also a group of opponents who dont seem to follow the pattern. 
 
 \begin{figure}[ht]
     \centering
@@ -166,8 +169,15 @@ These clustering algorithms are not meant for predictive purposes as there is no
 
 \subsection{K Means clustering}\label{ssec:k_means}
 Nothing much was identified from the k means clustering data analysis.
-This is probably due to the fact that the clustering was conducted using post recording generated data.
-This means that we are just taking apar
+This is probably due to the fact that the clustering was conducted using secondary, extrapolated data.
+Figure~\ref{fig:k_means} shows the clustering for the most correlated variables in 3 dimensions.
+Its clear that these clusters are layered over the number of blocks of the solutions sequence.
+Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distributed over the solution sequences.
+
+\begin{figure}[ht]
+    \includegraphics[width=0.7\textwidth, center]{./img/descriptive/k_means.pdf}
+    \caption{K means clustering with 2,3 and 4 clusters}\label{fig:k_means}
+\end{figure}
 
 \subsection{Regression Trees}
 Regression trees are a way of looking at reducing the variance of a parameter through attributes of observed instances. 
