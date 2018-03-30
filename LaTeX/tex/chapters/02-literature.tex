@@ -15,8 +15,8 @@ It turns out the majority of strategies have properties of niceness and forgiven
 This allowed them to thrive in the tournament and have overall scores that rose above strategies without niceness or forgiveness.
 
 Since Axelrods' original tournament there have been many research papers on what makes a successful strategy for a specific objective.
-For example~\cite{press2012iterated} looks at how to remove an opponents moves to reach a high score and ~\cite{mittal2009optimal} looks at a range of different objectives at once.
-These specific objectives are really the core part of applying Game Theory and The Prisoners Dilemma in the really word.
+For example William H Press and Freeman J Dyson,~\cite{press2012iterated}, looked at how to remove an opponents moves to reach a high score and Shashi Mittal and Kalyanmoy Deb have looked at a range of different objectives at once~\cite{mittal2009optimal}.
+These specific objectives are the core part of applying Game Theory and The Prisoners Dilemma in the real word and modelling situations using this field of mathematics.
 Objectives are the wrapper for which we can work with real world scenarios, for example in a the cold war it was not the goal to get as many missiles as possible to pass an oppositions defence but to not allow any missiles through your own defence; i.e.minimising your opponents score.
 In a football tournament where winning is the number or goals your team scores it doesn't really matter how many goals you get in so long as you score the most overall.
 There are also some very useful applications such as rent splitting or work assignments~\cite{goldman2015spliddit}, all of which were programmed and deployed to a web server for general use online\footnote{http://www.spliddit.org}
@@ -30,42 +30,69 @@ Subsection~\ref{subsec:zdExtortion} discusses this in more detail.
 Ways of structuring a strategy are shown below:
 
 \begin{itemize}
- \item LookerUpper, find examples
- \item Gambler
- \item Neural Networks
- \item Finite State Machines
- \item Hidden Markov Models
- \item Explicit Move List
- \item Mixtures
+ \item LookerUpper, for example figure~\ref{fig:tit_for_tat_LUD}.
+ \item Gambler, for example the Stochastic stratergies; examples can be found in~\cite{press2012iterated}.
+ \item Neural Networks.
+ \item Finite State Machines, for example figure~\ref{fig:tit_for_tat_FSD}.
+ \item Hidden Markov Models.
+ \item Explicit Move List, for example the solutions given in Appendix~\ref{apndx:solutionGroups}.
+ \item Mixtures.
 \end{itemize}
 
 % ToDo: add figures of the above, where can I find them?
 
-\subsection{Equivalent strategies}\label{subsec:equivalentStrategies}
-When performing analysis of an opponent using a GA it can sometimes be useful to brute force the starting positions of our feature selection to create rare\footnote{For example of a random sequence that is a totality of Cs is incredibly rare, with around \(6.2^{-61}\) chance of occurring} starting points.
+\subsection{Equivalent Strategies}\label{subsec:equivalentStrategies}
 Looking at certain opponents there are occasions some strategies that look indistinguishable from others;
 for example Alternator and Random~(0.5) can very often create the same output.
 One of the ways we are able to identify strategies is the process of fingerprinting~\cite{Ashlock2004,Ashlock2008}.
+However this can be inconclusive and less accurate as desired.
+An effective method of identifying equivalent strategies is to write them down in the form of the other.
+For example if we can write any strategy in one of the forms given in figures~\ref{fig:tit_for_tat_FSD},\ref{fig:tit_for_tat_LUD} we know its an equivalent to Tit for Tat.
 
-Another way is to look up their structure definitions in the same model (for example\ldots~)
+The work being completed in this paper is another method of identifying strategies; identifying the best response to them may lead to observations about how and why different strategies act in similar manners.
+This wont lead to show strategy equivalence, but it will show how solution equivalence.
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \tikzset{EdgeStyle/.append style = {->} ,
+        LabelStyle/.style = {rectangle, rounded corners, draw, fill = black!5}}
+        \begin{tikzpicture}[
+            startnode/.style={rectangle, rounded corners, draw, fill = blue!5},
+            roundnode/.style={circle, draw=black!60, fill=green!10, very thick, minimum size=7mm}
+            ]
+            %Nodes
+            \node[roundnode](initial_state){1}; 
+            \node[startnode](start_node)[left=of initial_state]{Start};
+            %Lines
+            \Edge[label = $C$](start_node)(initial_state)
+            \Loop[dist = 3cm, dir = NO, label = $C/C$](initial_state.north)
+            \Loop[dist = 3cm, dir = SO, label = $D/D$](initial_state.south)
+        \end{tikzpicture}
+        \caption{Finite State diagram of strategy Tit for Tat}\label{fig:tit_for_tat_FSD}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth, center]{./img/examples/tit_for_tat_LUD.pdf}
+        \caption{Look Up diagram of strategy Tit for Tat}\label{fig:tit_for_tat_LUD}
+    \end{minipage}
+\end{figure}
+
 
 \section{Strategies Of Interest}\label{sec:strategiesOfInterest}
-\subsection{TitForTat}\label{subsec:titfortat}
-Tit For Tat was the
-\subsection{Alternator}\label{subsec:alternator}
-See Subsection~\ref{subsec:random}.
-\subsection{Grudger}\label{subsec:grudger}
-See Subsection~\ref{subsec:random}.
-\subsection{Random}\label{subsec:random}
-
-For all the strategies () given above we are able to logically deduce that the best counter is a totality of Ds, no matter what their definition structure is.
-This leads us to consider what the common theme is between the strategies as to be beaten in the same way.
-
-\subsection{EvolvedFSM16}\label{subsec:evolvedFSM16}
-\subsection{CollectiveStrategy}\label{subsec:collectiveStrategy}
-\subsection{ZDExtortion}\label{subsec:zdExtortion}
+\paragraph{Tit For Tat} was the winner of the original axelrod tournament in 1980~\cite{axelrod1980effective}. It s a very basic opponent who has strong forgiveness (it will forgive a defection after 1 move) and generosity (it will start with a cooperation) which is thought to give its well overall score in tournaments.
+\paragraph{Alternator} is a `dumb' opponent, i.e. no strategic method at all. All it will do is alternate between cooperation and defection until the game ends. Playing an Alternator effectively is to defect the whole game, however identifying an alternator to play this sequence without backlash can be difficult if we're playing a potentially similar strategy such as Random or 
+\paragraph{Grudger} can be considered as the most unforgiving strategy that exists.
+Starting by cooperating, if you defect even once then the Grudger will defect until the end of the game.
+In line with Tit For Tat, our best score will come from not `upsetting' the opponent (until the last move where it cant react.
+\paragraph{Random} is the most basic stochastic opponent, and like Alternator and Cycler it is `dumb'. 
+With a probability $p$ of cooperating and $1-p$ of defecting, we can just defect the whole time to beat this opponent; picking up bonus points on its cooperation moves.
+\paragraph{EvolvedFSM16}  
+\paragraph{CollectiveStrategy} has the property of a handshake? it will try to identify if the opponent is another
+\paragraph{ZDExtortion}
 This is the paper~\cite{press2012iterated}
-\subsection{Cycler}\label{subsec:cycler}
+\paragraph{Cycler}
 
 \section{Genetic Algorithms}
 This work will focus on Genetic Algorithms (GAs) which are a specific form of Machine Learning (ML).

@@ -365,10 +365,11 @@ The problem of mitigating sub optimal solutions may be more efficiently solved u
 Section~\ref{sec:alteringinitialpopulation} discusses this in more detail.
 
 \section{Altering Initial Population}\label{sec:alteringinitialpopulation}
+When performing analysis of an opponent using a GA it can sometimes be useful to brute force the starting positions of our feature selection to create rare\footnote{For example of a random sequence that is a totality of Cs is incredibly rare, with around \(6.2^{-61}\) chance of occurring naturally.} starting points.
 Altering the initial population allows us to select starting sequences that fit patterns we know will have good results.
 For example totalities, with heads/tails, are usually very effective against simple opponents;
 for example Tit For Tat, `dumb' opponents or Grudger.
-Alternating and certain known solution optimal sequences are good starting sequences for an initial population, allowing a more intelligently distributed set of starting points for the random mutation process.\footnote{This can be visualised as placing balls on a `lumpy' 2d plane to try and find the minimum, starting with an educated guess means we wont get all the balls stuck in one valley which isn't the deepest.}
+Alternating and certain known solution optimal sequences are good starting sequences for an initial population, allowing a more intelligently distributed set of starting points for the random mutation process.\footnote{This can be visualised as placing balls on a `lumpy' 3d plane to try and find the minimum, starting with an educated guess means we wont get all the balls stuck in one valley which isn't the deepest.}
 
 This section discusses the results of working on an initial population that contain common solution sequences.
 We will start by creating a population of `neat' starting members then allow the entropy of the genetic algorithm to alter these sequences.
