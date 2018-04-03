@@ -1,82 +1,74 @@
 % !TEX root = ../main.tex  
 
 \chapter{Introduction}\label{ch:intro}
-In this report we will be looking at how strategies of the Iterated Prisoners Dilemma (IPD) can be `countered' or `worked' in order to give a better overall score for a player on the other side of the game.
+In this report we will be looking best responses of strategies in the Iterated Prisoners Dilemma (IPD);
+we will try to identify the best overall score, and its corresponding set of moves, for a player on the other side of the game to the strategy.
 We will look into explicit sequences which should be played for $1$ vs $1$ games of length 200 to gain the highest score per turn upon the games conclusion.
-These sequences will then be compared and contrasted to understand how some opponents could be grouped together even though they have no structure in common.
 
-Our concept of `working' a strategy is more fitting in this research as we will be looking into boosting the score or our player, which in most cases (due to the nature of the IPD) will also boost the score of our opponent.
-`working' also has a better real world interpretation than `countering' as the real goal of increasing the score for our player is to generate as many Cooperation moves to Defect against without consequences as possible.
+This task will be completed using reinforcement techniques, specifically genetic algorithms, to continuously improve our sequences during training. Once we have best responses, these sequences will then be compared and contrasted to understand how some opponents could be grouped together even though they have no structure in common.
 
-This paper assumes a basic knowledge of game theory and how to model a normal form game.
-The IPD game itself is described in Section~\ref{sec:iteratedPrisonersDilemma} and the real world research is discussed in Chapter~\ref{ch:literature}.
-
+This work assumes a basic knowledge of game theory and how to model a normal form game.
+Knowledge if the Prisoners dilemma is helpful but not required, the IPD game itself is described in Section~\ref{sec:iteratedPrisonersDilemma} and the real world applications are discussed in Chapter~\ref{ch:literature}.
 
 \section{The Prisoners Dilemma and Its Iterated Form}\label{sec:iteratedPrisonersDilemma}
-\begin{center}
-    \itshape~Two members of a criminal gang are arrested and imprisoned.
-    Each prisoner is in solitary confinement with no means of communicating with the other.
-    The prosecutors lack sufficient evidence to convict the pair on the principal charge.
-    They hope to get both sentenced to a year in prison on a lesser charge. Simultaneously, the prosecutors offer each prisoner a bargain.
-    Each prisoner is given the opportunity either to: betray the other by testifying that the other committed the crime, or to cooperate with the other by remaining silent.
-\end{center}
+% \begin{center}
+%     \itshape~Two members of a criminal gang are arrested and imprisoned.
+%     Each prisoner is in solitary confinement with no means of communicating with the other.
+%     The prosecutors lack sufficient evidence to convict the pair on the principal charge.
+%     They hope to get both sentenced to a year in prison on a lesser charge. Simultaneously, the prosecutors offer each prisoner a bargain.
+%     Each prisoner is given the opportunity either to: betray the other by testifying that the other committed the crime, or to cooperate with the other by remaining silent.
+% \end{center}
 
-The Prisoners Dilemma is a normal form game in the space $\mathbb{R}^{{2\times 2}^2}$ with utility matrices for the row and column player as follows:
+The Prisoners Dilemma is a normal form game in the space $\mathbb{R}^{{2\times 2}^2}$ with utility matrices and mixed strategies for the row and column player as follows:
 $$
     A=\begin{pmatrix}R & S\\ T & P\end{pmatrix}\quad
     B=\begin{pmatrix}R & T\\ S & P\end{pmatrix}
 $$
-with the following constraints (scoring highly is good):
-$$T>R>P>S \qquad \vert \qquad 2R>T+S$$
-These constraints model the above story with the following definitions:
+$$
+    \sigma_r=\begin{pmatrix}C & D\\ \end{pmatrix}\quad
+    \sigma_c=\begin{pmatrix}C & D\\ \end{pmatrix}
+$$
+with the following utility constraints:
+$$T>R>P>S, \qquad 2R>T+S$$
+These constraints mean that the defection action, $D$ dominates the cooperation action, $C$, for both player and that the largest payoff comes when both players cooperate. This payoff model has the following interpretation:
 \begin{itemize}
     \item $T$ --- Temptation, the utility for successfully tricking your opponent to confess.
     \item $R$ --- Reward, by staying silent with your opponent you receive the reward.
     \item $P$ --- Punishment, if both you and your opponent confess you'll receive the punishment
     \item $S$ --- Sucker, if you confess but your opponent stays silent you're a sucker.
 \end{itemize}
-This ensures that the game reaches some fundamental dilemmas, and hence its name.
+Because of the way the game is put together we arrive at the dilemma.
 Do you \textbf{Cooperate} and risk being taken advantage of by your opponent, first row or column.
 Or do you \textbf{Defect} and hope your opponent stays silent, second row or column.
-We will be using the following utilities for this paper.
+We will be using the utilities originally from axelrods work,\cite{axelrod1980effective}.
 $$
     A=\begin{pmatrix}3 & 0 \\ 5 & 1\end{pmatrix}\quad
     B=\begin{pmatrix}3 & 5 \\ 0 & 1\end{pmatrix}
 $$    
-From a game theoretic point of view it can be seen that there exists a strongly dominant strategy for both the row and column players; to defect each move.
-This however doesn't reflect on the iterated version of the game where repetition can allow for higher overall scores if players are coordinated and cooperate with one another.
+From a game theoretic point of view it can be seen that there exists a strongly dominant strategy for both the row and column player: defection.
+This however does not reflect on the iterated version of the game where repetition can allow for higher overall scores and players can take advantage of each other.
 
 We will be looking into the iterated form of the game which, simply put, is just a series of games back to back. 
-Players do not know what their opponent will play on any given turn, but can have an indefinite amount of time between turns.
+Players do not know what their opponent will play on any given turn.
 Players can algorithmically, stochastically or using a combination of the two decide on their next move.
 The number of turns is often provided beforehand, but doesn't need to be, and the overall score of the game is normalised to by this to allow for comparisons between games of different length.
 
-\section{Brief Task Overview}\label{sec:briefOverview}
-This document will be be looking at the creation of sequences to beat given opponents in The Iterated Prisoners Dilemma.
-Analysis will be focused on looking into just the single opponent use case, but the idea of designing a sequence for a tournament for a given number of opponents is a potential follow on to this work.
-Our task is as follows:
-
-Problem:
-\begin{center}
-    \itshape~When playing a given Iterated Prisoners Dilemma strategy, \(O\), as an opponent, what is the best ordered solution sequence of moves, \(S\), to play in order for us to obtain the highest possible average score per move across the game.
-\end{center}
-
-For example an opponent known as Tit For Tat, which cooperates on its first move and the copies your last move on subsequent moves, will have a solution sequence of moves that are all cooperation apart from the last.
-This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into every strategy as defined in the Axelrod Library.
-These are listed in appendix Section~\ref{apndx:opponents} and definitions can be found in the axelrod codebase\cite{axelrodproject}.
-
-
 \section{Machine Learning \& Computer Intelligence}\label{sec:machineLearningAndcomputerIntelligence}
-Machine Learning is a field of computer science that has existed since the first computers have been around.
-Most famously the questions posed by Alan Turing in 1950~\cite{turing1950computing} asks `can machines think', a question that has been refined and analysed to this day.
+Machine learning was most famously introduced by questions posed by Alan Turing in 1950~\cite{turing1950computing} asking `can machines think', a question that has been refined and analysed to this day.
 The field of computer intelligence is rich in its complexities and has recently been making breakthroughs~\cite{knight2017alphaZeroMIT} on topics which would traditionally be considered `thinking'.
 Along with this, recently there has also been record levels of funding~\cite{chui2017artificial} put in to companies which operate in this field, producing results in areas that would usually seem `solved'.
 
+Computer intelligence breaks down into 2 general topics, supervised and unsupervised learning.
+Supervised learning is done with help from an external source; inferring a function from labelled examples that will be used to map unseen data to their potential labels.
+Unsupervised learning is the process of creating new data about a dataset which will be used to expand the understanding of existing data; for example finding a hidden structure or searching a solution space.
+Reinforcement learning is a technique that can be applied to both supervised and unsupervised learning.
+What it means is to repeat an algorithm using results from a previous run to improve parameters of its next run; genetic algorithms are a prime example of this.
+
 \subsection{Genetic Algorithms}\label{subsec:geneticAlgorithms}
-This report will cover one of the forms of machine learning called genetic algorithms (GAs).
+This report will cover a class of machine learning called genetic algorithms (GAs).
 Genetic Algorithms fall under a branch of machine learning called evolutionary feature selection algorithms.
 More generally, genetic algorithms are put into a class of unsupervised reinforcement learning algorithms.
-These are techniques of using genetic algorithms for generating solutions to problems that typically revolve around heuristically improving members of a population who represent these solutions.
+These are techniques of using genetic algorithms for generating solutions to problems that typically revolve around heuristically improving members of a population who represent these solutions,\cite{horn1994niched,rahmat1999electromagnetic}.
 The concept of a genetic algorithm, and more generally an evolutionary algorithm, comes from nature;
 like nature we create a survival of the fittest selection~\cite{darwin2009origin} competition to evaluate a population then kill off the weakest members.
 After this cull we create offspring from the most successful population or introduce new members from a predefined source.
@@ -98,12 +90,26 @@ By doing this we are saving the more successful candidates allowing us to rebuil
     \(M_f\) explains the percentage of how many members of the population are mutated.
 \end{itemize}
 
+Figure~\ref{fig:genericGACycle} shows a flow diagram of a generic genetic algorithm cycle.
+The specific algorithm we will be using is described in Subsection~\ref{sec:buildingTheAlgorithm}.
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1.0\textwidth, center]{./img/flows/ga_cycle.pdf}
     \caption{Generic genetic algorithm cycle diagram}.\label{fig:genericGACycle} 
 \end{figure}
 
-Figure~\ref{fig:genericGACycle} shows a flow diagram of a generic genetic algorithm cycle.
-The specific algorithm we will be using is described in Subsection~\ref{sec:buildingTheAlgorithm}.
+\section{Brief Task Overview}\label{sec:briefOverview}
+This work will look at the creation of sequences to beat given opponents in the Iterated Prisoners Dilemma.
+Analysis will be focused on looking into just the single opponent use case, but the idea of designing a sequence for a tournament for a given number of opponents is a potential follow on to this work.
+Our task is as follows:
+
+Problem:
+\begin{center}
+    \itshape~When playing a given Iterated Prisoners Dilemma strategy as an opponent, what is the best ordered solution sequence of moves to play in order for us to obtain the highest possible average score per move across the game.
+\end{center}
+
+For example an opponent known as Tit For Tat, which cooperates on its first move and the copies your last move on subsequent moves, will have a solution sequence of moves that are all cooperation apart from the last.
+This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into every strategy as defined in the Python Axelrod Library\cite{axelrodproject}.
+These opponents are listed in appendix Section~\ref{apndx:opponents} and definitions can be found in the axelrod codebase\cite{axelrodproject}.
 
