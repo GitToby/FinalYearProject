@@ -204,8 +204,8 @@ EFFICIENCY NOTE\@: This approach allows for an \(O(1)\) factor of scaling.
 This makes changes in mutation a great candidate for an approach to reduce our solution sequence distance compared with other approaches, for example increasing the population size.
 
 \subsection{Changing Mutation Potency}\label{subsec:changingMutationPotency}
-Changing the potency of the algorithm will mainly generate the noise in our sequence generation to generation, increasing the distance\footnote{Distance concept has been taken from coding theory; \(d(s_1,s_2)\) = the number of differing positions between 2 sequences \(s_1\) and \(s_2\).
-For example: \(d(111,110) = d(CCC,CCD) = 1 \)} between the mutated sequence from the original.
+Changing the potency of the algorithm will mainly generate the noise in our sequence generation to generation, increasing the distance\footnote{Distance measure used is hamming distance; \(d(s_1,s_2)\) = the number of differing positions between 2 sequences \(s_1\) and \(s_2\).
+For example: \(d(111,110) = d(CCC,CCD) = 1 \). This is covered in deatils in section~\ref{sec:distance_matracies}} between the mutated sequence from the original.
 
 This potentially could create an algorithm that is too `jumpy' for narrowing in on a solution.
 We can imagine a sequence as a vector in 200 dimension space then a mutation for element \(S_i\) is the same as changing the vector in its \(i^th\) dimension.

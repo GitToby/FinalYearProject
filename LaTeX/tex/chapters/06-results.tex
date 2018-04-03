@@ -1,17 +1,15 @@
 % !TEX root = ../main.tex
 \chapter{Results and Discussion}\label{ch:results}
 This chapter will look into the results we gained after running the analysis across all opponents.
-As of writing this section there are strategies missing from the analysis due to run times.
 Details of the distribution of the results and basic output from the computation are given in section~\ref{sec:descriptive_data}.
 
 The analysis performed in this chapter contains data for opponents listed in Appendix~\ref{apndx:opponents}.
-Opponents without data due to being incomplete are all the (LRT) strategies listed.
+Opponents without results due to being incomplete are all the Long Run Time (LRT) strategies.
 As these become available they will be added to the analysis.
+% TODO: add the extra data if it becomes available
 
 \section{Descriptive Data}\label{sec:descriptive_data}
-The data we received from the final analysis contained 760 of the XXX opponents we set out to analyse.
-The missing data is due to long run time opponent with high computational complexity.
-
+The data we generated from the final analysis contained 760 of the 959 opponents we set out to analyse.
 Figure~\ref{table:data_dump} shows a raw data head from the output of the $\phi$ opponent.
 
 \begin{table*}[ht]
@@ -33,16 +31,39 @@ Figure~\ref{table:data_dump} shows a raw data head from the output of the $\phi$
 \end{table*}
 
 The data collected was, for each of the strategies, merged and collated with metadata to form an analysis table which was then processed.
-This metadata data included player classifiers as given in the Axelrod library.
-ultimately this data came down to one usable piece of information which was the stochastic boolean. 
+This metadata data included player classifiers as given in the Axelrod library, generated values from fields in Table~\ref{table:data_dump} and information generalizing stochastic players to their original base player before seeding.
+Table~\ref{table:meta_data} shows the first few rows of this information.
+
+\begin{table*}[ht]
+    \centering
+    \begin{tabular}{cccccccc}
+        \toprule
+        base & stochastic & memory depth & makes use of & score bin & start move & blocks & mean block length\\
+        \midrule
+        $\phi$ & False & inf & \mintinline{python}{set()} & very high &  $D$ & 1 & 200\\
+
+        $\pi$ & False & inf & \mintinline{python}{set()} & very high &  $D$ & 1 & 200\\
+
+        $e$ & False & inf & \mintinline{python}{set()} & very high &  $D$ & 1 & 200\\
+
+        ALLCorALLD & True & 1 & \mintinline{python}{set()} & very low/high\footnote{Stochastic opponents can have different score bins depending on the seed.} &  $D$ & 1 & 200\\
+
+        Adaptive & False & inf & \mintinline{python}{'game'} & very high &  $C$ & 2 & 100\\
+
+        \ldots & \ldots & \ldots & \ldots & \ldots & \ldots & \ldots & \ldots\\    
+        \bottomrule
+    \end{tabular}
+    \caption{Metadata which was merged to Table~\ref{table:data_dump} during analysis}\label{table:meta_data}
+\end{table*}
 
 When analysing the overall best sequences for each opponent we can pick out some interesting and descriptive data.
-The distribution on best scores are showing in Figure~\ref{fig:best_score_hist}, its kernel density estimate (KDE) exaggerates that fact we have a skew towards the higher scores with a fat tail on 4.5 to 5.
-This means, in a head to head, we can score higher than the majority of opponents to win the game.
+The distribution on best scores are showing in Figure~\ref{fig:best_score_hist}, its kernel density estimate (KDE) \cite{tukey1977exploratory} exaggerates that fact we have a skew towards the higher scores with a fat tail on 4.5 to 5.
+This shows we can average a score higher than 3.0 against the majority of opponents per turn.
+From this we can infer that there is a way of outplaying our our opponent (if it where an even game both players would have an avg score of $3.0$ from mutual cooperations).
 If there is a way of identifying an opponent then we would be able to tip the scales in a tournament in our favour by playing the sequences shown.
 
 \begin{figure}[ht]
-    \includegraphics[width=0.7\textwidth, center]{./img/descriptive/best_score_hist.pdf}
+    \includegraphics[width=0.9\textwidth, center]{./img/descriptive/best_score_hist.pdf}
     \caption{A histogram showing the distribution of best scores with overlaid KDE}\label{fig:best_score_hist}
 \end{figure}
 
@@ -57,16 +78,20 @@ This can be explained by the fact there are lots more negative stochastic oppone
     \caption{A joint plot of best score vs number of blocks coloured by stochastic boolean}\label{fig:cor_plot}
 \end{figure}
 
-\section{Solution Distance Matrices}
-The first avenue of analysis, after constructing descriptive data, was to look at the relationship solutions have with each other.
+\section{Solution Distance Matrices}\label{sec:distance_matracies}
+The first avenue of analysis, after constructing descriptive data, was to look at the relationship best response sequences have with each other.
 A distance matrix shows how much  sequence for one opponent differs from every other, if 2 sequences are similar with respect to the distance function then they will score lower than 2 sequences that are more distinct.
 
 In each matrix we order the sequences by score; $S_{O_0}\ge S_{O_1} \ge \ldots \ge S_{O_n}$, but we will shorten this notation $S_{O_i}$ to $S_{i}$ for simplicity.
-The solution sequence for the $i$th opponent, $S_i$ vs the solution sequence for the $j$th, $S_j$ is scored using our distance function, for example $d(S_0,S_n)$ is the distance between the best and worst scoring sequences respectively.
-The Matrix itself will be symmetric down the diagonal, so looking across rows vs columns tends to make more logical sense; the top rows are the highest scoring opponents, and the lower rows the worse scorers.
+The best response sequence for the $i$th opponent, $S_i$ vs the best response sequence for the $j$th, $S_j$ is scored using our distance function, for example $d(S_0,S_n)$ is the distance between the best and worst scoring sequences respectively.
+The Matrix itself will be symmetric down the diagonal, so looking across rows vs columns tends to make more logical sense; the top rows are the highest scoring best response sequences, and the lower rows the worse scoring sequences.
 
-\paragraph{Hamming Distance}
-$$d(S_i,S_j) = S_i \cdot S_j^T \text{ or } 1-\frac{\sum^n_{i,j=0}\delta_{ij}}{n}\text{ where } \delta_{ij} = \begin{cases} 
+There were two distance measures considered: Hamming Distance and Cosine Distance.
+
+\paragraph{Hamming Distance}\cite{norouzi2012hamming}
+$$d(S_i,S_j) = S_i \cdot S_j^T $$
+This corresponds to 
+$$ 1-\frac{\sum^n_{i,j=0}\delta_{ij}}{n}\text{ where } \delta_{ij} = \begin{cases} 
     1 & i=j \\
     0 & i\ne j 
 \end{cases} $$
@@ -80,7 +105,7 @@ The top section of the plot shows the best scoring sequences vs other high scori
 At the very top left there crossing dark and light columns, suggesting that there are lots of very similar or dissimilar solutions at the high vs high end of the score level.
 As we move to  the high vs low scores there are larger blocks of dark red representing high dissimilarity.
 This is shown again as we move to the bottom of the diagram.
-The large blocks or red covering the bottom 100 or so rows show that the lowest scoring opponents have very different sequences to the higher scorers, but as a group of low vs low they're quite similar.
+The large blocks or red covering the bottom 100 or so rows show that the lowest scoring opponents have very different sequences to the higher scorers, but as a group of low scoring vs low scoring they're quite similar.
 
 We can look into what distances we expect by trying to analyse how scored are formed.
 The recording of an average score means that we can estimate the ratio of move combinations that formed a score because we know, if we are the first player, the pay offs for the combinations: $(C,C)=3$, $(C,D)=0$, $(D,C)=5$, $(D,D)=1$.
@@ -105,8 +130,8 @@ Hence for one of our solution sequences to be optimal the result must end in a $
 This is true for all but $57$ of the solutions, meaning there is room for possible improvement in more than one result.
 These sub optimal results were all stochastic.
 
-\paragraph{Cosine Distance}
-$$ d(S_i,S_j) = cos(\theta) = \frac{{S_i} \cdot {S_j}}{|| {S_i} || \; || {S_j} ||} $$
+\paragraph{Cosine Distance}\cite{bora2014effect}
+$$ d(S_i,S_j) = \cos(\theta) = \frac{{S_i} \cdot {S_j}}{|| {S_i} || \; || {S_j} ||} $$
 The cosine of two vectors constructed by using the dot product formula as shown above.
 In our interpretation each dimension represents a sequence element so we are working in $\mathbb{R}^{200}$ with every value taking a $C:1$ a $D:0$.
 Figure~\ref{fig:dist_cos} shows the distance matrix generated from the data files using code in Figure~\ref{apcode:dist_matrix.py}
@@ -163,13 +188,13 @@ Below this trend there are also a group of opponents who dont seem to follow the
     \caption{Sequence Diagram, sorted by score. \textit{note: labels are not complete, approx 1/4 shown.}}\label{fig:sequence_plot_score}
 \end{figure}
 
-\section{Clustering Analysis using SciKitLearn}
-Here we will look at ways of grouping opponents and what that means for potential scoring outcomes.
-These clustering algorithms are not meant for predictive purposes as there is not enough metadata present in each strategy to use as features.
+\section{Clustering Analysis}
+Here we will look at ways of grouping opponents based on their best response sequences and what that means for scores and potential hidden relationships between strategies.
+These clustering algorithms are not meant for predictive purposes and are all forms of unsupervised learning; there is not enough metadata present in each strategy definition to use as features for supervised prediction of our best response sequences.
+These clustering algorithms come from the python library SciKit Learn~\cite{pedregosa2011scikit}
 
-\subsection{K Means clustering}\label{ssec:k_means}
+\subsection{K Means clustering~\cite{bora2014effect}}\label{ssec:k_means}
 Nothing much was identified from the k means clustering data analysis.
-This is probably due to the fact that the clustering was conducted using secondary, extrapolated data.
 Figure~\ref{fig:k_means} shows the clustering for the most correlated variables in 3 dimensions.
 Its clear that these clusters are layered over the number of blocks of the solutions sequence.
 Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distributed over the solution sequences.  
@@ -181,26 +206,26 @@ Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distribu
 
 \subsection{Regression Trees}
 Regression trees are a way of looking at reducing the variance of a parameter through attributes of observed instances. 
-ScikitLearn has an implementation of regression trees, the code used to generate the data in this subsection is shown in appendix code~\ref{apcode:reg_tree.py}.
+SciKit Learn has an implementation of regression trees, the code used to generate the data in this subsection is shown in appendix code~\ref{apcode:reg_tree.py}.
 
-Our case of regression trees we're looking at reducing the variance of the score by looking at which turns tend to cause the largest disparity in score.
-To do this we look at reducing the Mean Absolute Error of the scores, which is, in effect reducing the $L1$ loss of the scores.
+Our case, we're looking at reducing the variance of the score by looking at which turns tend to cause the largest disparity in score.
+To do this the algorithm look at reducing the Mean Absolute Error (MAE) of the scores, which is, in effect, reducing the $L1$ norm (sometimes referred to as the $L_1$ loss of the algorithm) of the scores.
 
-$$MAE = \frac{1}{n}\sum_{i=0}^n |x_i-y_i|$$
+$$\text{MAE} = \frac{1}{n}\sum_{i=0}^n |x_i-y_i|$$
 
-Hence Figure~\ref{fig:reg_tree} shows which moves cause the largest variance in scores.
-As you move right on the tree, or move in the false direction, then you're playing cooperations at the moves listed. 
+Figure~\ref{fig:reg_tree} shows which moves cause the largest variance in resulting score per turn.
+As you move right on the tree (or move in the false direction on the tree) then playing cooperations at the moves listed. 
 The diagram backs up that by playing $C$ moves consistently (furthest right leaf) we reach a score value of $3.01$, and with 325 samples and $MAE=0.205$ this is a clear way of doing well against a large number of opponents.
 If we move left on the diagram then the score value increases, which is to be expected; these are the best turns to defect and get a higher score as a result.
 
 The move that dictates the best change in score is move $164$ (starting from the 0th turn), if we defect on this move then the score value goes up but so does the $MAE$.
 Looking at leaf nodes provides an overview of solutions being grouped into minimal $MAE$ after considering 5 moves.
 These represent which moves are played on the same turn by multiple solutions, all who scored approximately the same.
-Its clear that there are some paths that, considering one move difference, have clusters of very different scores. 
+It is clear that there are some paths that, considering one move difference, have clusters of very different scores. 
 For example, the 3rd and 4th groups from the left (with 19 and 4 members respectively) show that, on the turn $156$, you can defect and most likely get around a $3.2$ or cooperate and get half that score.
 This shows that even though some solutions are similar, the corresponding opponents are vastly different in operation and will punish at some points others would forgive.
 
-This tree doesn't have very many useful properties other than displaying the complexities in trying to predict a solution for any opponent.
+This tree does not have very many useful properties other than displaying the complexities in trying to predict a solution for any opponent.
 As discussed in Section~\ref{sec:solutionGroups} if an opponent doesn't sit in one of the major groups it becomes incredibly hard to observe some sort of pattern between them.
 One solution may be to look into combinations of initial handshakes that create the largest variation of responses in the population of opponents; from this we could map these results to a best response sequence to play for the remainder of the game.
 
