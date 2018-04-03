@@ -100,7 +100,9 @@ The specific algorithm we will be using is described in Subsection~\ref{sec:buil
 \end{figure}
 
 \section{Brief Task Overview}\label{sec:briefOverview}
-This work will look at the creation of sequences to beat given opponents in the Iterated Prisoners Dilemma.
+This work will look at discovering which sequences provide the highest score in a game for each given opponent in the Iterated Prisoners Dilemma.
+For every game of length $n$ there are $2^n$ possible combinations of moves we can make against an opponent, we are trying to find the sequence which provides us with the highest score overall.
+
 Analysis will be focused on looking into just the single opponent use case, but the idea of designing a sequence for a tournament for a given number of opponents is a potential follow on to this work.
 Our task is as follows:
 
@@ -110,7 +112,7 @@ Problem:
 \end{center}
 
 For example an opponent known as Tit For Tat, which cooperates on its first move and the copies your last move on subsequent moves, will have a solution sequence of moves that are all cooperation apart from the last.
-This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into every strategy as defined in the Python Axelrod Library\cite{axelrodproject}.
+This is an obvious example and a simple strategy to calculate for, the ultimate goal of this investigation is to look into every strategy as defined in the open source Axelrod Library\cite{axelrodproject}, where over 200 strategies are implemented.
 These opponents are listed in appendix Section~\ref{apndx:opponents} and definitions can be found in the Axelrod Library codebase.
 
 This problem can be reduced to searching the solution space of every single possible combination of $C$ and $D$ moves.
