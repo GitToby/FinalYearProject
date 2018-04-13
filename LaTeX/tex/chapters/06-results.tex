@@ -8,6 +8,9 @@ Opponents without results due to being incomplete are all the Long Run Time (LRT
 As these become available they will be added to the analysis.
 % TODO: add the extra data if it becomes available
 
+Each opponent was submitted to the compute engine using the standard analysis factory class \mintinline{python}{AnalysisRun}, shown in Figure~\ref{apcode:AnalysisRun.py}, using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
+We ran the code over a period of days resulting in 200+ output files of data which could then be analysed.
+
 \section{Descriptive Data}\label{sec:descriptive_data}
 The data we generated from the final analysis contained 760 of the 959 opponents we set out to analyse.
 Figure~\ref{table:data_dump} shows a raw data head from the output of the $\phi$ opponent.
@@ -63,7 +66,7 @@ From this we can infer that there is a way of outplaying our our opponent (if it
 If there is a way of identifying an opponent then we would be able to tip the scales in a tournament in our favour by playing the sequences shown.
 
 \begin{figure}[ht]
-    \includegraphics[width=0.9\textwidth, center]{./img/descriptive/best_score_hist.pdf}
+    \includegraphics[width=0.95\textwidth, center]{./img/descriptive/best_score_hist.pdf}
     \caption{A histogram showing the distribution of best scores with overlaid KDE}\label{fig:best_score_hist}
 \end{figure}
 
@@ -74,7 +77,7 @@ There are sections, namely low scoring \& mid number of blocks for stochastic op
 This can be explained by the fact there are lots more negative stochastic opponents, like ZD strategies and Q learners which would appear here. 
 
 \begin{figure}[ht]
-    \includegraphics[width=0.7\textwidth, center]{./img/descriptive/cor_plot.pdf}
+    \includegraphics[width=0.95\textwidth, center]{./img/descriptive/cor_plot.pdf}
     \caption{A joint plot of best score vs number of blocks coloured by stochastic boolean}\label{fig:cor_plot}
 \end{figure}
 
@@ -157,7 +160,7 @@ If we want to group opponents together, the most obvious way is to look at which
 Appendix section~\ref{apndx:solutionGroups} has full details, but figure~\ref{fig:sequence_scatter} shows a plot of the trends. 
 We can observe that there are lots of sequences with solutions that dont contain many blocks ($\le 25$) and the solutions get more varied in number fo blocks in the mid range of scores.
 \begin{figure}[ht]
-    \includegraphics[width=0.7\textwidth, center]{./img/descriptive/sequence_scatter_colour.pdf}
+    \includegraphics[width=0.95\textwidth, center]{./img/descriptive/sequence_scatter_colour.pdf}
     \caption{Trends for opponents grouped by their best sequence}\label{fig:sequence_scatter}
 \end{figure}
 
@@ -200,7 +203,7 @@ Its clear that these clusters are layered over the number of blocks of the solut
 Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distributed over the solution sequences.  
 
 \begin{figure}[ht]
-    \includegraphics[width=0.7\textwidth, center]{./img/descriptive/k_means.pdf}
+    \includegraphics[width=1.0\textwidth, center]{./img/descriptive/k_means.pdf}
     \caption{K means clustering with 2,3 and 4 clusters}\label{fig:k_means}
 \end{figure}
 
