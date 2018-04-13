@@ -23,10 +23,10 @@ Figure~\ref{table:data_dump} shows a raw data head from the output of the $\phi$
         \midrule
         1 & 2.90966 & 3.0575 & 1.665496 & 4.985 & 5.0 & DDD\ldots & $\phi$ & 0 \\
         2 & 4.79004 & 4.9250 & 0.420476 & 2.275 & 5.0 & DDD\ldots & $\phi$ & 0\\
-        3 & 4.79352 & 4.97 & 0.489173 & 2.185 & 5 & DDD\ldots & $\phi$ & 0\\
-        4 & 4.81386 & 5 & 0.460776 & 2.2 & 5 & DDD\ldots & $\phi$ & 0\\
-        5 & 4.81826 & 5 & 0.479307 & 2.18 & 5 & DDD\ldots & $\phi$ & 0\\
-        6 & 4.83508 & 5 & 0.430063 & 2.03 & 5 & DDD\ldots & $\phi$ & 0\\
+        3 & 4.79352 & 4.97 & 0.489173 & 2.185 & 5.0 & DDD\ldots & $\phi$ & 0\\
+        4 & 4.81386 & 5 & 0.460776 & 2.2 & 5.0 & DDD\ldots & $\phi$ & 0\\
+        5 & 4.81826 & 5 & 0.479307 & 2.18 & 5.0 & DDD\ldots & $\phi$ & 0\\
+        6 & 4.83508 & 5 & 0.430063 & 2.03 & 5.0 & DDD\ldots & $\phi$ & 0\\
         \ldots & \ldots & \ldots & \ldots & \ldots & \ldots & \ldots & \ldots & \ldots\\        
         \bottomrule
     \end{tabular}
@@ -34,7 +34,7 @@ Figure~\ref{table:data_dump} shows a raw data head from the output of the $\phi$
 \end{table*}
 
 The data collected was, for each of the strategies, merged and collated with metadata to form an analysis table which was then processed.
-This metadata data included player classifiers as given in the Axelrod library, generated values from fields in Table~\ref{table:data_dump} and information generalizing stochastic players to their original base player before seeding.
+This metadata included player classifiers as given in the Axelrod library, generated values from fields in Table~\ref{table:data_dump} and information generalizing stochastic players to their original base player before seeding.
 Table~\ref{table:meta_data} shows the first few rows of this information.
 
 \begin{table*}[ht]
@@ -62,7 +62,7 @@ Table~\ref{table:meta_data} shows the first few rows of this information.
 When analysing the overall best sequences for each opponent we can pick out some interesting and descriptive data.
 The distribution on best scores are showing in Figure~\ref{fig:best_score_hist}, its kernel density estimate (KDE) \cite{tukey1977exploratory} exaggerates that fact we have a skew towards the higher scores with a fat tail on 4.5 to 5.
 This shows we can average a score higher than 3.0 against the majority of opponents per turn.
-From this we can infer that there is a way of outplaying our our opponent (if it where an even game both players would have an avg score of $3.0$ from mutual cooperations).
+From this we can infer that there is a way of outplaying our our opponent (if it were a game where both players would have an avg score of $3.0$ from mutual cooperations).
 If there is a way of identifying an opponent then we would be able to tip the scales in a tournament in our favour by playing the sequences shown.
 
 \begin{figure}[ht]
@@ -242,3 +242,4 @@ One solution may be to look into combinations of initial handshakes that create 
 
 
 \section{Conclusion}
+
