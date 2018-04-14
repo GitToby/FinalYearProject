@@ -186,8 +186,8 @@ This makes changes in mutation a great candidate for an approach to reduce our s
 Changing the potency of the algorithm will generate the noise in our sequence generation to generation.
 Increasing the potency also has the effect of increasing the hamming distance\footnote{Hamming distance: \(d(s_1,s_2)\) = the number of differing positions between 2 sequences \(s_1\) and \(s_2\).
 For example: \(d(111,110) = d(CCC,CCD) = 1 \). This is covered in details in section~\ref{sec:distance_matracies}} between original and the mutated sequence.
-
-Increasing potency too much has the potential for an algorithm that is too unstable for convergence.
+ 
+Increasing potency too much has the potential for an algorithm that is too unstable for convergence. 
 We can imagine a sequence as a vector in 200 dimensional space then a mutation for the \(i^{th}\) sequence element is the same as changing the vector in its \(i^{th}\) dimension.
 Shortening this example to a vector in 3 dimensions (or a sequence of length 3) then a mutation is much more easily visualised.
 It is clear that a mutation potency should be kept low as to keep consecutively mutated sequences more similar;

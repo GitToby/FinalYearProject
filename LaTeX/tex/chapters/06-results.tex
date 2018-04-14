@@ -56,13 +56,13 @@ Table~\ref{table:meta_data} shows the first few rows of this information.
         \ldots & \ldots & \ldots & \ldots & \ldots & \ldots & \ldots & \ldots\\    
         \bottomrule
     \end{tabular}
-    \caption{Metadata which was merged to Table~\ref{table:data_dump} during analysis}\label{table:meta_data}
+    \caption{Metadata which was merged to Table~\ref{table:data_dump} during analysis; joined base on name.}\label{table:meta_data}
 \end{table*}
 
 When analysing the overall best sequences for each opponent we can pick out some interesting and descriptive data.
 The distribution on best scores are showing in Figure~\ref{fig:best_score_hist}, its kernel density estimate (KDE) \cite{tukey1977exploratory} exaggerates that fact we have a skew towards the higher scores with a fat tail on 4.5 to 5.
 This shows we can average a score higher than 3.0 against the majority of opponents per turn.
-From this we can infer that there is a way of outplaying our our opponent (if it were a game where both players would have an avg score of $3.0$ from mutual cooperations).
+From this we can infer that there is a way of outplaying many of the opponents in the Axelrod Library (i.e. we can perform better than a game where both players would have an avg score of $3.0$ from mutual cooperations).
 If there is a way of identifying an opponent then we would be able to tip the scales in a tournament in our favour by playing the sequences shown.
 
 \begin{figure}[ht]
@@ -70,11 +70,17 @@ If there is a way of identifying an opponent then we would be able to tip the sc
     \caption{A histogram showing the distribution of best scores with overlaid KDE}\label{fig:best_score_hist}
 \end{figure}
 
-Figure~\ref{fig:cor_plot} tries to show patterns related to how the nature of sequences change depending on score and opponent type.
-What can be seen is that there are lots of variation and not much in the way of a significant correlation between any of the variables.
-Looking at the blank areas of the diagram shows more about the dat we have produced however.
-There are sections, namely low scoring \& mid number of blocks for stochastic opponents dont overlap with non stochastic  opponents.
-This can be explained by the fact there are lots more negative stochastic opponents, like ZD strategies and Q learners which would appear here. 
+Figure~\ref{fig:cor_plot} shows patterns related to how the number of blocks within a sequence changes depending on score, opponent type and start move.
+In the left plot, solution sequences starting with a defection lead to 3 groupings; low block number, between 50 \& 125 blocks and near 200.
+This pattern has little information that describes the relationship between the solutions, but there could be an underling reason in the make-up of an opponent which describes the groupings.
+All 3 contain both stochastic and non stochastic and have a wide range of scores.
+Starting with a cooperation shows a trend for non stochastic opponents; ignoring the near totalities on the far right shows a linear trend from 0 to 200 blocks as the score increases.
+This trend describes that, for non stochastic opponents, there are complicated solutions that score us more than simple solutions for particular opponents.
+Its shows that if an opponent is more complicated in its solution, we can do better than if it is simple; for example, the solution for Tit For Tat is $C199,1$ which scores 3.01 whereas Adaptive Pavlov 2011 has the alternator solution $C1,1,1,1,\ldots$ and scores 3.97.
+
+By looking into the distributions of best scores and the make up of solutions we are showing 2 things.
+That most opponents can be outplayed; we are able to score higher than an average of 3 per turn over the course of the game and hence, by the definition of the prisoners dilemma, defiantly come out with a higher score than our opponent.
+And that solution sequences are varied and there is little correlation between the complexity of a solution and the best score we can achieve. 
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, center]{./img/descriptive/cor_plot.pdf}
@@ -157,11 +163,11 @@ We can conclude that there is no extra information shown in this diagram.
 
 \section{Solution Groups}\label{sec:solutionGroups}
 If we want to group opponents together, the most obvious way is to look at which opponents have have the same best score sequence.
-Appendix section~\ref{apndx:solutionGroups} has full details, but figure~\ref{fig:sequence_scatter} shows a plot of the trends. 
+Appendix~\ref{apndx:solutionGroups} has full details, and figure~\ref{fig:sequence_scatter} shows a plot of the trends. 
 We can observe that there are lots of sequences with solutions that dont contain many blocks ($\le 25$) and the solutions get more varied in number fo blocks in the mid range of scores.
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, center]{./img/descriptive/sequence_scatter_colour.pdf}
-    \caption{Trends for opponents grouped by their best sequence}\label{fig:sequence_scatter}
+    \caption{Trends for opponents grouped by their best sequence. Size of dot represents the number of opponents in the group.}\label{fig:sequence_scatter}
 \end{figure}
 
 This figure also shows an almost logarithmic/polynomial trend in the number of blocks in a sequence as we move up the score.

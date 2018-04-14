@@ -9,7 +9,7 @@ Classification of opponents was quite difficult.
 What were actually doing is finding a sequence that will manipulate our opponent into providing us the most number of cooperation moves we can subsequently defect against.
 
 \section{Applications of results}
-maybe how this works with respect to pathfinding, who we should select in a set of opponents if we only have to play a single opponent in the set.
+maybe how this works with respect to pathfinders, who we should select in a set of opponents if we only have to play a single opponent in the set.
 If we can score an average of 3.8 against op1 or 3 against op2, we play op2 etc.
 
 game shows to win money?
@@ -18,4 +18,21 @@ We want to win as much money as possible but we don't mind how much our opponent
 Failing that we are manipulating the opponent for cooperation moves we can cooperate against, then defection moves we can defect against, then defection moves we must cooperate for.
 
 \section{Potential follow up work}
-create the player to beat all players though opponent lookup; we just need to create a solvable opponent identifier. 
+This report has backed up the idea that there is no existence of one universal strategy that will beat every opponent.
+Theoretically, if a method of identifying an opponent without affecting the games scores could be created, a lookup to the results of this report could be introduced and the solution sequence could be played for the remainder of the game.
+There are 2 flaws to creating a strategy with this approach:
+\begin{enumerate}
+    \item {As of writing this report there are 231 strategies listed in the Axelrod library.
+    For simplicity we can create this `perfect' strategy for only non stochastic opponents\footnote{Using only these we will know the exact solution every time}, all 138 that we analysed.
+    Of these there are 43 solution sequences that contain only non stochastic opponents and another 9 that contain both stochastic and non stochastic, meaning we have a total of 52 sequences to select from as we start a game.
+    From here we have to predict, with the minimal amount of moves in the game, which sequence to play in order to beat our opponent.
+    This however leads us to the second problem:}
+
+    \item {Creating enough variance in order to identify the solution sequence to play may  ruin our chances to score well.
+    For example, lets take Collective Strategy as an opponent.
+    When we start our game we wont know were playing Collective Strategy and we will most likely miss the $CD$ handshake, in turn we will have a constant defector to play against for the rest of the game.
+    This will lead to us not being able to play $C1,1,197,1$ and getting the $3.0$, we would have to play $D$ to stop our losses.}
+\end{enumerate}
+
+Because of these reasons in order to implement a beat any opponent we have to first find a way of identify that opponent without harming our opportunity to play our solution sequence. 
+Further work could be done to investigate a method of predicting which opponent we are playing.
