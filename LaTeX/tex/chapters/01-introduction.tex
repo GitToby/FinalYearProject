@@ -51,7 +51,7 @@ This however does not reflect on the iterated version of the game where repetiti
 We will be looking into the iterated form of the game which, simply put, is just a series of games back to back. 
 Players do not know what their opponent will play on any given turn.
 Players can algorithmically, stochastically or using a combination of the two decide on their next move.
-The number of turns is often provided beforehand, but doesn't need to be, and the overall score of the game is normalised to by this to allow for comparisons between games of different length.
+The number of turns is often provided beforehand, but doesn't need to be~\cite{axelrod1980more}, and the overall score of the game is normalised to by this to allow for comparisons between games of different length.
 
 \section{Machine Learning \& Computer Intelligence}\label{sec:machineLearningAndcomputerIntelligence}
 Machine learning (ML) was most famously introduced by questions posed by Alan Turing in 1950~\cite{turing1950computing} asking `can machines think', a question that has been refined and analysed to this day.
@@ -66,7 +66,7 @@ What it means is to repeat an algorithm using results from a previous run to imp
 
 \subsection{Genetic Algorithms}\label{subsec:geneticAlgorithms}
 This report will cover a class of ML called genetic algorithms (GAs).
-Genetic Algorithms fall under a branch of ML called evolutionary feature selection algorithms.
+Genetic Algorithms fall under a branch of ML called evolutionary algorithms.
 More generally, genetic algorithms are put into a class of unsupervised reinforcement learning algorithms.
 These are techniques of using genetic algorithms for generating solutions to problems that typically revolve around heuristically improving members of a population who represent these solutions,\cite{horn1994niched,rahmat1999electromagnetic}.
 The concept of a genetic algorithm, and more generally an evolutionary algorithm, comes from nature;
@@ -162,13 +162,12 @@ $$
 \end{matrix}
 $$
 
-\section{conclusion and Structure of this report}
+\section{Conclusion and Structure of this report}
 This chapter contained introduction to references that will be needed moving forward. 
 All the topics mentioned in this chapter are core themes to what the rest of this report focuses on.
 
 This report will contain the following chapters:
 \begin{itemize}
-    \item Chapter~\ref{ch:intro} is this chapter.
     \item Chapter~\ref{ch:literature} looks into previous work and literature behind the concepts we will be working with.
     \item Chapter~\ref{ch:taskBackground} describes concepts that will be needed to understand results in later chapters.
     \item Chapter~\ref{ch:developingthecodebase} looks into the programming and development that was undertaken to complete the work.

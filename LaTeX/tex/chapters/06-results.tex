@@ -190,12 +190,48 @@ Figure~\ref{fig:sequence_plot_score} provides a visual representation of sequenc
 Families of similar solutions can be picked out, for example the Qlearners at the bottom right of the figure all have chunky sections to their solution sequences and are all grouped near one another, even though the hamming distance between any two in different families could be vastly different.
 The bottom of the left figure shows many occurrences of the largest group, $C199,1$ with some that have similar stratergies with larger tails.
 Grouping stratergies by their solution sequence seems to be very restrictive for providing relationships between stratergies and solutions. 
-% TODO: It may be beneficial to apply some binary pattern recognition to the solutions. the solutions all seem quite chaotic that could have patterns in other areas of maths.
+It may be beneficial to apply some binary pattern recognition to the solutions, the solutions all seem quite chaotic that could have patterns in other areas of mathematics.
 
+Of the likely sequences that were predicted to occur as solutions, as described in Section~\ref{sec:alteringinitialpopulation}, 29 of them appeared as actual solution sequences. 
+This is shown below.
+
+\begin{multicols}{3}
+    \begin{itemize}
+        \item  C199,1 with 96 opponents
+	    \item  C198,2 with 21 opponents
+	    \item  C196,4 with 3 opponents
+	    \item  C194,6 with 1 opponent
+	    \item  C193,7 with 2 opponents
+	    \item  C100,100 with 8 opponents
+	    \item  C5,195 with 3 opponents
+	    \item  C2,1,1,196 with 1 opponent
+	    \item  C2,198 with 2 opponents
+	    \item  C1,1,1,1,\ldots with 17 opponents
+	    \item  C1,1,1,197 with 1 opponent
+	    \item  C1,2,1,196 with 1 opponent
+	    \item  C1,199 with 11 opponents
+	    \item  D1,198,1 with 21 opponents
+	    \item  D1,196,3 with 1 opponent
+	    \item  D1,194,5 with 2 opponents
+	    \item  D1,4,195 with 4 opponents
+	    \item  D1,3,196 with 4 opponents
+	    \item  D1,2,197 with 9 opponents
+	    \item  D2,197,1 with 3 opponents
+	    \item  D2,196,2 with 2 opponents
+	    \item  D2,195,3 with 1 opponent
+	    \item  D2,194,4 with 2 opponents
+	    \item  D2,193,5 with 1 opponent
+	    \item  D2,1,197 with 1 opponent
+	    \item  D3,196,1 with 4 opponents
+	    \item  D3,194,3 with 1 opponent
+	    \item  D3,192,5 with 8 opponents
+	    \item  D200 with 113 opponents
+    \end{itemize}
+\end{multicols}
 \section{Clustering Analysis}
 Here we will look at ways of grouping opponents based on their best response sequences and what that means for scores and potential hidden relationships between strategies.
 These clustering algorithms are not meant for predictive purposes and are all forms of unsupervised learning; there is not enough metadata present in each strategy definition to use as features for supervised prediction of our best response sequences.
-These clustering algorithms come from the python library SciKit Learn~\cite{pedregosa2011scikit}
+These clustering algorithms come from the python library SciKit Learn~\cite{pedregosa2011scikit}.
 
 \subsection{K Means clustering~\cite{bora2014effect}}\label{ssec:k_means}
 Nothing much was identified from the k means clustering data analysis.

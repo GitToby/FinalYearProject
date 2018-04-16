@@ -1,4 +1,6 @@
-players = (axl.DefectorHunter(), axl.SolutionB1(), axl.Willing(), axl.TrickyDefector(), axl.Cycler("C"+"D"*199))
+players = [axl.DefectorHunter(), axl.SolutionB1(), 
+            axl.Willing(), axl.TrickyDefector(), 
+            axl.Cycler("C"+"D"*199)]
 tournament = axl.Tournament(players,turns=200)
 results = tournament.play()
 
