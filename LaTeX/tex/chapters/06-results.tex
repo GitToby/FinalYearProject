@@ -114,13 +114,13 @@ The top section of the plot shows the best scoring sequences vs other high scori
 At the very top left there crossing dark and light columns, suggesting that there are lots of very similar or dissimilar solutions at the high vs high end of the score level.
 As we move to  the high vs low scores there are larger blocks of dark red representing high dissimilarity.
 This is shown again as we move to the bottom of the diagram.
-The large blocks or red covering the bottom 100 or so rows show that the lowest scoring opponents have very different sequences to the higher scorers, but as a group of low scoring vs low scoring they're quite similar.
+The large blocks or red covering the bottom 100 or so rows show that the lowest scoring opponents have very different sequences to the higher scorers, but as a group of low scoring vs low scoring they are quite similar.
 
 We can look into what distances we expect by trying to analyse how scored are formed.
 The recording of an average score means that we can estimate the ratio of move combinations that formed a score because we know, if we are the first player, the pay offs for the combinations: $(C,C)=3$, $(C,D)=0$, $(D,C)=5$, $(D,D)=1$.
 Thus we can assume scoring in the midrange ($3$ ish) means mostly cooperating, or a combination of $(C,D)$ and $(D,C)$, whereas at the high and low ends its more likely we are to be defecting.
 This would mean when looking at the high vs low section and low vs high section of the graph we would expect a high level of similarity; $d(S_i,S_j)\approx 0$.
-However this hypothesis isn't supported, its clear there's a mix of distances because all 4 corners of the graph are not showing $d(S_i,S_j)\approx 0$. 
+However this hypothesis is not supported; its clear there is a mix of distances because all 4 corners of the graph are not showing $d(S_i,S_j)\approx 0$. 
 
 To understand why this disparity between expectation and result exists we can look at a visual representation of each of the strategies.
 Figure~\ref{fig:sequence_plot_score} shows what the solution sequence looks like move by move, sorted by best scoring at the top of the left image moving down to worst scoring on the bottom of the right.
@@ -248,7 +248,7 @@ Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distribu
 Regression trees are a way of looking at reducing the variance of a parameter through attributes of observed instances. 
 SciKit Learn has an implementation of regression trees, the code used to generate the data in this subsection is shown in appendix code~\ref{apcode:reg_tree.py}.
 
-Our case, we're looking at reducing the variance of the score by looking at which turns tend to cause the largest disparity in score.
+Our case, we are looking at reducing the variance of the score by looking at which turns tend to cause the largest disparity in score.
 To do this the algorithm look at reducing the Mean Absolute Error (MAE) of the scores, which is, in effect, reducing the $L1$ norm (sometimes referred to as the $L_1$ loss of the algorithm) of the scores.
 
 $$\text{MAE} = \frac{1}{n}\sum_{i=0}^n |x_i-y_i|$$
@@ -266,7 +266,7 @@ For example, the 3rd and 4th groups from the left (with 19 and 4 members respect
 This shows that even though some solutions are similar, the corresponding opponents are vastly different in operation and will punish at some points others would forgive.
 
 This tree does not have very many useful properties other than displaying the complexities in trying to predict a solution for any opponent.
-As discussed in Section~\ref{sec:solutionGroups} if an opponent doesn't sit in one of the major groups it becomes incredibly hard to observe some sort of pattern between them.
+As discussed in Section~\ref{sec:solutionGroups} if an opponent does not sit in one of the major groups it becomes incredibly hard to observe some sort of pattern between them.
 One solution may be to look into combinations of initial handshakes that create the largest variation of responses in the population of opponents; from this we could map these results to a best response sequence to play for the remainder of the game.
 Section~\ref{sec:follow_up} looks into this in more detail.
 

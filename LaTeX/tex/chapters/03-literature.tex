@@ -1,7 +1,7 @@
 % !TEX root = ../main.tex
 
 \chapter{Literature Review}\label{ch:literature}
-In this chapter I will look at previous works in areas relevant to this work.
+In this chapter we will look at previous works in areas relevant to this report.
 This chapter looks at how these pieces of work have developed and the methods of studying them with computer models. 
 
 \section{Background}\label{sec:background}
@@ -24,7 +24,7 @@ Since Axelrods' original tournament there have been many research papers on what
 For example William H Press and Freeman J Dyson,~\cite{press2012iterated}, looked at how to it is possible to deterministically set an opponents score and Shashi Mittal and Kalyanmoy Deb have looked at a range of different objectives at once~\cite{mittal2009optimal}.
 These specific objectives are the core part of applying Game Theory and the Prisoners Dilemma in the real word~\cite{rehmeyer2012climateNegotiations,osang2013environmental,Schneier2012doping}.
 Objectives are the wrapper for which we can work with real world scenarios, for example in a the cold war it was not the goal to get as many missiles as possible to pass an oppositions defence but to not allow any missiles through your own defence; i.e.minimising your opponents score.
-In a football tournament where winning is the number or goals your team scores it doesn't really matter how many goals you get in so long as you score the most overall.
+In a football tournament where winning is the number or goals your team scores it does not matter how many goals you get in so long as you score the most overall.
 This leads to observing that the IPD describes that a players world is better if their opponent is cooperative.  
 There are also some very useful applications such as rent splitting or work assignments~\cite{goldman2015spliddit}, all of which were programmed and deployed to a website for general use online~\cite{spliddit}.
 
@@ -89,7 +89,9 @@ This wont lead to show strategy equivalence, but it will show how solution equiv
 \section{Strategies Of Interest}\label{sec:strategiesOfInterest}
 \textbf{Tit For Tat} was the winner of the original axelrod tournament in 1980~\cite{axelrod1980effective}. It s a very basic opponent who has strong forgiveness (it will forgive a defection after 1 move) and generosity (it will start with a cooperation) which is thought to give its well overall score in tournaments.
 
-\textbf{Alternator} is a `dumb' opponent, i.e. no strategic method at all. All it will do is alternate between cooperation and defection until the game ends. Playing an Alternator effectively is to defect the whole game, however identifying an alternator to play this sequence without backlash can be difficult if we're playing a potentially similar strategy such as Random or 
+\textbf{Alternator} is a `dumb' opponent, i.e. no strategic method at all. All it will do is alternate between cooperation and defection until the game ends. 
+Playing against an Alternator effectively is to defect the whole game; identifying an alternator to play this sequence of defections without backlash can be difficult.
+If we are playing a similar starting strategy such as Collective Strategy defecting in the first two moves will cause us to sore badly overall.
 
 \textbf{Grudger} can be considered as the most unforgiving strategy that exists.
 Starting by cooperating, if you defect even once then the Grudger will defect until the end of the game.
@@ -111,7 +113,7 @@ This cycler class will contain our solution sequence and the sequence can be ext
 
 \section{Genetic Algorithms}
 This work will focus on GAs which are a specific form of ML.
-Advanced techniques of machine learning can be combined and used together\footnote{Techniques for teaching and versioning static algorithms such as building a `clever' game AIs, where the core concept of the AI is fine tuned using GA in an development environment but isn't implemented into the game~\cite{bakkes2009rapid}.} in many situations, lots of these techniques combine genetic algorithms or some sort of fitness testing within a larger scope.
+Advanced techniques of machine learning can be combined and used together\footnote{Techniques for teaching and versioning static algorithms such as building a `clever' game AIs, where the core concept of the AI is fine tuned using a GA in an development environment but isn't implemented into the game~\cite{bakkes2009rapid}.} in many situations, lots of these techniques combine genetic algorithms or some sort of fitness testing within a larger scope.
 The field of mathematics research is one which has plenty of examples of GAs in action;
 for example the same techniques as we will using is used in~\cite{chu1997genetic} to solve the Generalised Assignment Problem.
 Another example, \cite{bhanu1995adaptive}, used neural networks when approaching the state regulation problem.
