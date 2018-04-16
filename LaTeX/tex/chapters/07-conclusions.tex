@@ -1,21 +1,30 @@
 % !TEX root = ../main.tex
-\chapter{Practical Applications for Solution Sequences}\label{ch:conclusions}
+\chapter{Conclusions}\label{ch:conclusions}
 
-\section{summary of approach}
+\section{Summary of approach}
 This part should defiantly include the fact it was hard to get information about the opponents.
 Classification of opponents was quite difficult.
 
-\section{summary of analysis execution}
-What were actually doing is finding a sequence that will manipulate our opponent into providing us the most number of cooperation moves we can subsequently defect against.
+\section{Summary of analysis execution}
+During the analysis we were finding a sequence that will manipulate our opponent into providing us the most number of cooperation moves we can subsequently defect against without retaliation.
+The genetic algorithm was just one method of approaching this problem.
+While executing the genetic algorithm there could be some extra implantations which could improve runtime performance and the results overall.
+\begin{itemize}
+    \item {We know that the best score per turn we can achieve is a 5.0; adding a check at the end of every generation for the top scoring result for this score per turn may have allowed us to complete the search faster.
+    The LRT stratergies, which took over 900 hours of computation, may have found the best result with one of the initial population but were not added to this report due to unneeded extra computation.}
+    \item {Suboptimal results were given for 57 stratergies, as mentioned in Section~\ref{sec:distance_matracies}.
+    By definition we know we could continue the search until a result with a defection move on turn 200 occurs before terminating the number of generations} 
+    \item {Improving the genetic algorithm further could have improved runtimes and potentially shown better results.
+    This could have been done using more sophisticated crossover and mutation methods or the use of multi population models~\cite{whitley2012genetic}.}
+\end{itemize}
+
+Failing that we are manipulating the opponent for cooperation moves we can cooperate against, then defection moves we can defect against, then defection moves we must cooperate for.
 
 \section{Applications of results}
 maybe how this works with respect to pathfinders, who we should select in a set of opponents if we only have to play a single opponent in the set.
 If we can score an average of 3.8 against op1 or 3 against op2, we play op2 etc.
 
-game shows to win money?
-We want to win as much money as possible but we don't mind how much our opponent wins, as long as we get lots.
 
-Failing that we are manipulating the opponent for cooperation moves we can cooperate against, then defection moves we can defect against, then defection moves we must cooperate for.
 
 \section{Potential follow up work}\label{sec:follow_up}
 This report has backed up the idea that there is no existence of one universal strategy that will beat every opponent.
