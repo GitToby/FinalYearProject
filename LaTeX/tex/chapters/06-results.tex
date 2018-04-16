@@ -162,28 +162,16 @@ We can conclude that there is no extra information shown in this diagram.
 \end{figure}
 
 \section{Solution Groups}\label{sec:solutionGroups}
-If we want to group opponents together, the most obvious way is to look at which opponents have have the same best score sequence.
-Appendix~\ref{apndx:solutionGroups} has full details, and figure~\ref{fig:sequence_scatter} shows a plot of the trends. 
-We can observe that there are lots of sequences with solutions that dont contain many blocks ($\le 25$) and the solutions get more varied in number fo blocks in the mid range of scores.
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, center]{./img/descriptive/sequence_scatter_colour.pdf}
-    \caption{Trends for opponents grouped by their best sequence. Size of dot represents the number of opponents in the group.}\label{fig:sequence_scatter}
+    \caption{Trends for opponents grouped by their best sequence. Dot size represents the number of opponents in the group.}\label{fig:sequence_scatter}
 \end{figure}
 
-This figure also shows an almost logarithmic/polynomial trend in the number of blocks in a sequence as we move up the score.
-Below this trend there are also a group of opponents who dont seem to follow the pattern. 
-
-\begin{figure}[ht]
-    \centering
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth, center]{./img/descriptive/sequence_plot_alphabetical_pt1.pdf}
-    \end{minipage}\hfill
-    \begin{minipage}{0.48\textwidth}
-        \includegraphics[width=1.0\textwidth, center]{./img/descriptive/sequence_plot_alphabetical_pt2.pdf}
-    \end{minipage}
-    \caption{Sequence Diagram, sorted by move in turns. \textit{note: labels are not complete, approx 1/4 shown.}}\label{fig:sequence_plot_alphabetical}
-\end{figure}
+If we want to group opponents together, the most obvious way is to look at which opponents have have the same best score sequence.
+Appendix~\ref{apndx:solutionGroups} has full details, and figure~\ref{fig:sequence_scatter} shows a plot of the trends. 
+This figure shows an almost logarithmic/polynomial trend in score as the number of blocks in a sequence increases.
+Below this trend there are also a group of stochastic opponents who dont seem to follow the pattern and form a group below this.
+This could indicate that the trend only applies to specific strategies and that this grouping of stochastic opponents use more unforgiving approaches, such as the ZD Extort strategies.
 
 \begin{figure}[ht]
     \centering
@@ -194,8 +182,15 @@ Below this trend there are also a group of opponents who dont seem to follow the
     \begin{minipage}{0.48\textwidth}
         \includegraphics[width=1.0\textwidth, center]{./img/descriptive/sequence_plot_score_pt2.pdf}
     \end{minipage}
-    \caption{Sequence Diagram, sorted by score. \textit{note: labels are not complete, approx 1/4 shown.}}\label{fig:sequence_plot_score}
+    \caption{Sequence Diagram, sorted by score; High: top left $\rightarrow$ bottom right: Low. $C$ is light and $D$ is Dark.
+    \textit{NOTE: labels are not complete, approx 1 in 4 shown.}}\label{fig:sequence_plot_score}
 \end{figure}
+
+Figure~\ref{fig:sequence_plot_score} provides a visual representation of sequences so that identifying groups of equivalent or almost equivalent solution sequences is easy.
+Families of similar solutions can be picked out, for example the Qlearners at the bottom right of the figure all have chunky sections to their solution sequences and are all grouped near one another, even though the hamming distance between any two in different families could be vastly different.
+The bottom of the left figure shows many occurrences of the largest group, $C199,1$ with some that have similar stratergies with larger tails.
+Grouping stratergies by their solution sequence seems to be very restrictive for providing relationships between stratergies and solutions. 
+% TODO: It may be beneficial to apply some binary pattern recognition to the solutions. the solutions all seem quite chaotic that could have patterns in other areas of maths.
 
 \section{Clustering Analysis}
 Here we will look at ways of grouping opponents based on their best response sequences and what that means for scores and potential hidden relationships between strategies.
@@ -237,6 +232,7 @@ This shows that even though some solutions are similar, the corresponding oppone
 This tree does not have very many useful properties other than displaying the complexities in trying to predict a solution for any opponent.
 As discussed in Section~\ref{sec:solutionGroups} if an opponent doesn't sit in one of the major groups it becomes incredibly hard to observe some sort of pattern between them.
 One solution may be to look into combinations of initial handshakes that create the largest variation of responses in the population of opponents; from this we could map these results to a best response sequence to play for the remainder of the game.
+Section~\ref{sec:follow_up} looks into this in more detail.
 
 \begin{sidewaysfigure}
     \includegraphics[width=1.0\textwidth, center]{./img/descriptive/reg_tree.pdf}
@@ -248,4 +244,29 @@ One solution may be to look into combinations of initial handshakes that create 
 
 
 \section{Conclusion}
+This chapter includes most of the analysis conducted on the data output.
+The results are showing signs of patterns between the complexities in the solution sequence and the stratergies they correspond to.
+However there is no strong correlation or predictor that can be seen to allow accurate prediction of how to beat an opponent
 
+The data produced by this report is very interesting to identify basics responses to predetermined tournaments. For example in a tournament against Defector Hunter, Solution B1, Willing and Tricky Defector we can play $C1,199$ and easily come out on top:
+
+\begin{figure}
+    \inputminted{python}{code_snippets/tournCode.py}
+    \caption{Tournament code and results}\label{code:tournCode.py}
+\end{figure}
+
+\begin{table*}
+    \centering
+    \begin{tabular}{ccccc}
+        \toprule    
+        Rank & Name & Median score & Cooperation rating & Wins \\
+        \midrule
+        0 & Cycler: C1,199 & 4.9625 & 0.005 & 4.0 \\ 
+        1 & Tricky Defector & 2.23625 & 0.2475 & 1.5 \\ 
+        2 & SolutionB1 & 1.7675 & 0.71775 & 2.0 \\ 
+        3 & Defector Hunter & 1.508125 & 0.995 & 0.0 \\ 
+        4 & Willing & 1.5 & 0.849 & 0.5 \\ 
+        \bottomrule
+    \end{tabular}
+    \caption{Table of test opponents}\label{table:table_test_opsponents}
+\end{table*}
