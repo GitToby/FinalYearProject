@@ -7,16 +7,16 @@ We will also look at our specific instance of genetic algorithm that exists in t
 Lastly Section~\ref{sec:solutionForm} looks at the what results we will expect from the analysis and the potential problems we want to mitigate.
 
 \section{Notation}\label{sec:notation}
-As described in Chapter 1 this work focuses on identifying best responses against the set of opponents in the Python Axelrod Library. The best responses are in a sequence format with a length of 200. In this Section we introduce a notation which will allow us to study are represent such sequences.
+As described in Chapter 1 this work focuses on identifying best responses against the set of opponents in the Python Axelrod Library. The best responses are in a sequence format with a length of 200. In this Section we introduce a notation which will allow us to represent such sequences in a concise format.
 
 Let \(S\in\{C, D\}^L\) where \(C\), \(D\) represents a cooperation, defection respectively.
 \(L=200\) is used throughout this report.
-We can split up sequences into blocks of consecutive move elements of the same type.
+Using the binary nature of the sequence we can split up sequences into blocks of consecutive move elements of the same type.
 We will use \(B_i\) to denote the block after \(i\) changes of move type from the explicitly stated starting move type.
 \begin{itemize}
-    \item Every move in a block is of the same type;
+    \item Every move in a block is of the same type, $C$ or $D$;
     the type is implicit based on whether \(i\) is even or not and what the starting move type was.
-    \item We can use the notation \(|B_i|\) to denote the length of the \(i\)th block in the sequence.\(|B_i| \in \mathbb{Z}\)
+    \item We can use the notation \(|B_i|\) to denote the length of the \(i\)th block (number of moves within the block) in the sequence.\(|B_i| \in \mathbb{Z}\)
 \end{itemize}
 
 This means we can write a sequence as a series of blocks:
@@ -24,7 +24,7 @@ This means we can write a sequence as a series of blocks:
 A sequence can also be represented shorthand by specifying the starting move and the length of subsequent blocks:
 \[S = C\ |B_1|,|B_2|,\ldots,|B_n|\ \quad \Rightarrow \quad S=\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{(C|D)\ldots (C|D)}^{|B_n|} \]
 We can also construct sequences from repetitions of a sequence of blocks when it makes sense:
-\[C\ \big{(}|B_1|,|B_2|,\ \ldots,\ |B_m|\big{)}^{k}\ \quad \Rightarrow \quad {\small{\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{D\ldots D}^{|B_m|}}}^{k-times}\]
+\[C\ \big{(}|B_1|,|B_2|,\ \ldots,\ |B_m|\big{)}^{k}\ \quad \Rightarrow \quad \big{(}\small{\overbrace{C\ldots C}^{|B_1|}\overbrace{D\ldots D}^{|B_2|}\ldots\overbrace{D\ldots D}^{|B_m|}}\big{)}^{k-times}\]
 The two notations can be combined to add starting and ending blocks to a repeating sequence (shown in the examples).
 
 It is also possible to define sets of sequences by adding variables to parameters of the sequence.
@@ -41,6 +41,11 @@ Examples:
     C1,(2,1)^{2},2,1 &= CDDCDDCDDC\\
     \{D[i,5-i]\} \quad i\in [2,4] &= \{DDCCC,\ DDDCC,\ DDDCC\}\\
 \end{align}
+
+To avoid confusion between a sequence for a given opponent, $S_{O_i}$, and the score for a given sequence we will define the score function $f(S_{O_i})$ as follows.
+$$f(S_{O_i}):S_{O_i} \rightarrow [0,5]$$
+This score function represents playing the sequence against the given opponent and calculating the score per turn over 200 turns.
+
 
 \section{Customizing An Algorithm}\label{sec:buildingTheAlgorithm}
 In order to generate a solution sequence we have to train against each Axelrod opponent.
@@ -95,7 +100,8 @@ Here we have looked at the background required to answer a specific question, bu
 The concepts themselves are extensions to the basic models brought up in Chapter~\ref{ch:intro} and should allow us to provide relevant results in a uniform manner.
 
 We have also looked at what problems may arise from certain areas of development, such as understanding what a best response for a stochastic opponents could be or how to represent a complex solution in a result.
-Because of this Chapters~\ref{ch:implementation} and~\ref{ch:results} will be concise.
+Because of this premeditation of the problem and its components Chapters~\ref{ch:implementation} and~\ref{ch:results} will be more concise.
 
-After we conclude the runtime of the GA we will have an output for each opponent.
-These sequences will then be compared on how similar they are to each other, what type of opponents and their corresponding `best scores' are and whether there are patterns to how to group strategies, Chapter~\ref{ch:results} contains further details.
+After we conclude the runtime of the GA and obtain a solution we will have an output sequence for each opponent.
+These solution sequences can then be compared on how similar they are to each other;
+what type of opponents and their corresponding `best scores' are and whether there are patterns to how to group strategies, Chapter~\ref{ch:results} contains further details.

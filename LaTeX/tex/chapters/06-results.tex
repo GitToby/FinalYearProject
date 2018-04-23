@@ -11,7 +11,7 @@ As these become available they will be added to the analysis.
 Each opponent was submitted to the compute engine using the standard analysis factory class \mintinline{python}{AnalysisRun}, shown in Figure~\ref{apcode:AnalysisRun.py}, using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
 We ran the code over a period of days resulting in 200+ output files of data which could then be analysed.
 
-\section{Descriptive Data}\label{sec:descriptive_data}
+\section{Resulting Data}\label{sec:descriptive_data}
 The data we generated from the final analysis contained 760 of the 959 opponents we set out to analyse.
 Figure~\ref{table:data_dump} shows a raw data head from the output of the $\phi$ opponent.
 
@@ -92,7 +92,7 @@ And that solution sequences are varied and there is little correlation between t
 The first avenue of analysis, after constructing descriptive data, was to look at the relationship best response sequences have with each other.
 A distance matrix shows how much  sequence for one opponent differs from every other, if 2 sequences are similar with respect to the distance function then they will score lower than 2 sequences that are more distinct.
 
-In each matrix we order the sequences by score; $S_{O_0}\ge S_{O_1} \ge \ldots \ge S_{O_n}$, but we will shorten this notation $S_{O_i}$ to $S_{i}$ for simplicity.
+In each matrix we order the opponents, $S_(O_i)$, by the score of their sequences\footnote{See section~\ref{sec:notation} for explanations of notation.} so that the order is now $f(S_{O_0}) \ge f(S_{O_1}) \ge \ldots \ge f(S_{O_n})$. but we will shorten this notation $S_{O_i}$ to $S_{i}$ for simplicity.
 The best response sequence for the $i$th opponent, $S_i$ vs the best response sequence for the $j$th, $S_j$ is scored using our distance function, for example $d(S_0,S_n)$ is the distance between the best and worst scoring sequences respectively.
 The Matrix itself will be symmetric down the diagonal, so looking across rows vs columns tends to make more logical sense; the top rows are the highest scoring best response sequences, and the lower rows the worse scoring sequences.
 
@@ -235,10 +235,11 @@ These clustering algorithms are not meant for predictive purposes and are all fo
 These clustering algorithms come from the python library SciKit Learn~\cite{pedregosa2011scikit}.
 
 \subsection{K Means clustering~\cite{bora2014effect}}\label{ssec:k_means}
-Nothing much was identified from the k means clustering data analysis.
+Here we attempted to label k clusters depending on their parameters.
+Nothing much was identified from the k means clustering data analysis, typically clusters were found to strongly correlate with parameters such as number of blocks or mean block length.
 Figure~\ref{fig:k_means} shows the clustering for the most correlated variables in 3 dimensions.
 Its clear that these clusters are layered over the number of blocks of the solutions sequence.
-Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distributed over the solution sequences.  
+Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distributed over the solution sequences. 
 
 \begin{figure}[ht]
     \includegraphics[width=1.0\textwidth, center]{./img/descriptive/k_means.pdf}
@@ -280,17 +281,14 @@ Section~\ref{sec:follow_up} looks into this in more detail.
 \end{sidewaysfigure}
 
 
-\section{Conclusion}
-This chapter includes most of the analysis conducted on the data output.
+\section{Conclusion}\label{sec:results_conclusion}
+This chapter includes the most useful results from the analysis conducted on the data output.
 The results are showing signs of patterns between the complexities in the solution sequence and the stratergies they correspond to.
 However there is no strong correlation or predictor that can be seen to allow accurate prediction of how to beat an opponent
 
-The data produced by this report is very interesting to identify basics responses to predetermined tournaments. For example in a tournament against Defector Hunter, Solution B1, Willing and Tricky Defector we can play $C1,199$ and easily come out on top:
-
-\begin{figure}
-    \inputminted{python}{code_snippets/tournCode.py}
-    \caption{Tournament code and results}\label{code:tournCode.py}
-\end{figure}
+The data produced by this report is very interesting to identify basics responses to predetermined tournaments. For example in a tournament against Defector Hunter, Solution B1, Willing and Tricky Defector we can play $C1,199$ and easily come out on top.
+The code in appendix Section~\ref{apcode:tournCode.py} produced the results in Table~\ref{table:table_test_opsponents}.
+It is clear that our solution sequence came out on top for this field of opponents, however if we played this against a separate field we would score very low.
 
 \begin{table*}
     \centering
@@ -307,3 +305,9 @@ The data produced by this report is very interesting to identify basics response
     \end{tabular}
     \caption{Table of test opponents}\label{table:table_test_opsponents}
 \end{table*}
+
+
+The results given in this chapter represent a descriptive overview of what data we have produced.
+We have looked at various methods of grouping and reducing the solutions to try and observe a clear reason for an opponent having a certain solution; yet within the data we have created there seems to be no clear sign of correlation.
+If the information here is assessed further it would be beneficial to gather more data on each opponent to work with. 
+The lack of usable opponent meta-data means that the GA, currently, is the only reasonable method of identifying solution sequences. 

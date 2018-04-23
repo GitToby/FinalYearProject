@@ -2,7 +2,10 @@
 
 \chapter{Literature Review}\label{ch:literature}
 In this chapter we will look at previous works in areas relevant to this report.
-This chapter looks at how these pieces of work have developed and the methods of studying them with computer models. 
+We will look at how these pieces of work have developed and the methods of studying them with computer models. 
+
+
+Section~\ref{sec:strategiesOfInterest} describes interesting opponents we will look at in more detail during Chapter~\ref{ch:implementation} to provide our algorithm a variety of opponents to be developed against.
 
 \section{Background}\label{sec:background}
 The PD and its a large area of repeated games in GT and has applications in the real world.
@@ -113,13 +116,22 @@ This cycler class will contain our solution sequence and the sequence can be ext
 
 \section{Genetic Algorithms}
 This work will focus on GAs which are a specific form of ML.
-Advanced techniques of machine learning can be combined and used together\footnote{Techniques for teaching and versioning static algorithms such as building a `clever' game AIs, where the core concept of the AI is fine tuned using a GA in an development environment but isn't implemented into the game~\cite{bakkes2009rapid}.} in many situations, lots of these techniques combine genetic algorithms or some sort of fitness testing within a larger scope.
+Advanced techniques of machine learning can be combined and used together\footnote{Techniques for teaching and developing static algorithms vary. For example building a video game AI where the core goals of the AI are fine tuned using a GA in an development environment, but the training isn't implemented into the game~\cite{bakkes2009rapid}.}
 The field of mathematics research is one which has plenty of examples of GAs in action;
 for example the same techniques as we will using is used in~\cite{chu1997genetic} to solve the Generalised Assignment Problem.
-Another example, \cite{bhanu1995adaptive}, used neural networks when approaching the state regulation problem.
+In it the authors discuss how to solve an NP-complete problem by exploring solutions in the problem space using a GA.
+This is similar to what the result of this report will contain;
+we will be searching the problem space (Every possible sequence permutation of $C$ and $D$ with length 200) to create solutions to the problem described in Chapter~\ref{ch:taskBackground}.
+
+% GAs are not limited to mathematics, in~\cite{hauptpractical} there are discussions around the applications of GAs in art, spelling and music.
+% The goals of a GA have to be defined beforehand and can be as abstract as we like, both art and music are abstract and would require careful consideration for what the algorithms fitness function would be. 
+% Our goal of optimising score per turn seems relevant;
+% we want to get the highest payout possible.
+% As we look int the conclusions of this work keeping this idea in mind may lead to another goal that makes more sense. 
 
 \section{Conclusion}
 In this chapter we have looked at previous work and how they influence the work contained in this report.
-Most importantly we have looked at how strategies can be linked together through certain properties, such as their structure.
+Most importantly we have looked at structures of stratergies and some various examples that would be good to peruse when looking into constructing an effective GA.
+We have also outlined how strategies can be linked together through certain properties, such as their structure.
 As we continue looking at solutions for certain strategies we will be constructing another grouping of strategies in their solution sequences.
 This may lead to finding similarities to opponents who seem to have vastly different in structure.
