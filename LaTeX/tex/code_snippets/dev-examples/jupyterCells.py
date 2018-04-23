@@ -2,7 +2,7 @@
 # -------- CELL 1 --------
 # The ! means 'run this as a bash script' 
 ! pip install axelrod
-! pip install git+https://github.com/Axelrod-Python/axelrod-dojo.git
+! pip install axelrod-dojo
 ! wget https://raw.githubusercontent.com/GitToby/FinalYearProject/master/code/full_analysis.py
 
 # -------- CELL 2 --------

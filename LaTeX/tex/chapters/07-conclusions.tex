@@ -1,0 +1,78 @@
+% !TEX root = ../main.tex
+\chapter{Conclusions}\label{ch:conclusions}
+This final chapter of the report will contain conclusions to the major areas of work undertaken.
+Each section corresponds to reflecting in a period that significant time was taken to produce useful content and conduct discussions with my supervisors on results.
+Section~\ref{sec:conclusion_approach} looks at the first period of the project; researching relevant topics,  writing code, creating relevant tools and building a rapport with supervisors.
+% TODO make this sound right ^ 
+Section~\ref{sec:conclusion_execution} looks at the execution of the algorithm and how well the problem described in Section~\ref{sec:briefOverview} was solved.
+Section~\ref{sec:conclusion_application} covers where the work completed in this report can be applied in practice.
+Finally Section~\ref{sec:follow_up} identifies areas that could be followed up in further work by myself or others.
+
+\section{Reflection of Approach}\label{sec:conclusion_approach}
+Undertaking this project was the first piece of collaborative work undertaken at Cardiff University and, as such, meant learning new skill to apply to what I would be doing.
+My project supervisors were incredibly helpful and inclusive towards questions I had and suggestions to work on.
+As with any project there were small teething problems with the scope of work I was expected to complete and the time frame it was expected to be completed in.
+These were worked out quickly and the work was then accelerated with regular meetings to review progress and set goals.
+The level of supervision allowed me to stay focused on the goal of the project while also peruse areas of the project i personally found interesting.
+
+The initial part of the project was focused on background to the PD, ML, previous research and work that was to be used further on in the project. 
+Learning Git and the rest of the content in Chapter~\ref{ch:developingthecodebase} took less time than expected, this lead to an extended period of analysing the algorithm leading to a successful result overall. 
+This time could have also been used to properly scope and implement a larger expansion of the Axelrod Dojo codebase; I could have picked up more issues that had been previously put forward by the owners on GitHub, increasing this projects contribution to open source research software.
+
+% Overall the work that was completed regarding code, research and developing topics and tools used was well rounded and ...
+
+\section{Summary of Analysis Execution}\label{sec:conclusion_execution}
+During the analysis we were finding a sequence that will manipulate our opponent into providing us the most number of cooperation moves we can subsequently defect against without retaliation.
+The genetic algorithm was just one method of approaching this problem.
+While executing the genetic algorithm there could be some extra implantations which could improve runtime performance and the results overall.
+\begin{itemize}
+    \item {We know that the best score per turn we can achieve is a 5.0; adding a check at the end of every generation for the top scoring result for this score per turn may have allowed us to complete the search faster.
+    The LRT stratergies, which took over 900 hours of computation, may have found the best result with one of the initial population but were not added to this report due to unneeded extra computation.}
+    \item {Suboptimal results were given for 57 stratergies, as mentioned in Section~\ref{sec:distance_matracies}.
+    By definition we know we could continue the search until a result with a defection move on turn 200 occurs before terminating the number of generations} 
+    \item {Improving the genetic algorithm further could have improved runtimes and potentially shown better results.
+    This could have been done using more sophisticated crossover and mutation methods or the use of multi population models~\cite{whitley2012genetic}.}
+\end{itemize}
+
+Once the data had been collected the analysis was purely descriptive.
+The extra data, not included in the output, was limited to some classifiers provided in the Axelrod library.
+From observation these didn't add much to the analysis other than the stochastic variable for each opponent.
+If any models for predicting solution sequences are to be built, much more data (other than their explicit class structure) would be required from each opponent to identify it from a pool of others.
+During my research I found no other content I could use as predictor variables; Section~\ref{sec:follow_up} discusses potential data that could be used to predict sequences in a game environment.
+
+\section{Applications of results}\label{sec:conclusion_application}
+The application of these results can be leveraged clearly in an IPD instance.
+As described in Section~\ref{sec:follow_up} and~\ref{sec:results_conclusion} we can `solve' tournaments to win them.
+As long as we can identify the opponent (if they are stochastic we would also need to know the seed) in a game we can play our solution sequence to get an optimal result.
+However this information typically is not provided; Section~\ref{sec:follow_up} looks at problems with identifying opponents.
+
+Outside of a purely IPD setting the largest take away is understanding that the algorithm was finding methods of manipulating the opponent for the highest cooperation moves we can defect against without encoring a penalty.
+Along with the fact the solution sequence with the largest number of opponents was $C199,1$, representing the idea that, for your own highest benefit, you should be cooperative up until your opponent cannot react any more at which point you should defect.
+
+\section{Potential follow up work}\label{sec:follow_up}
+This report has backed up the idea that there is no existence of one universal strategy that will beat every opponent.
+Theoretically, if a method of identifying an opponent without affecting the games scores could be created, a lookup to the results of this report could be introduced and the solution sequence could be played for the remainder of the game.
+There are 2 flaws to creating a strategy with this approach:
+\begin{enumerate}
+    \item {As of writing this report there are 231 strategies listed in the Axelrod library.
+    For simplicity we can create this `perfect' strategy for only non stochastic opponents\footnote{Using only these we will know the exact solution every time}, all 138 that we analysed.
+    Of these there are 43 solution sequences that contain only non stochastic opponents and another 9 that contain both stochastic and non stochastic, meaning we have a total of 52 sequences to select from as we start a game.
+    From here we have to predict, with the minimal amount of moves in the game, which sequence to play in order to beat our opponent.
+    This however leads us to the second problem:}
+
+    \item {Creating enough variance in order to identify the solution sequence to play may  ruin our chances to score well.
+    For example, lets take Collective Strategy as an opponent.
+    When we start our game we wont know were playing Collective Strategy and we will most likely miss the $CD$ handshake, in turn we will have a constant defector to play against for the rest of the game.
+    This will lead to us not being able to play $C1,1,197,1$ and getting the $3.0$, we would have to play $D$ to stop our losses.}
+\end{enumerate}
+
+Because of these reasons in order to implement a beat any opponent we have to first find a way of identify that opponent without harming our opportunity to play our solution sequence. 
+Further work could be done to investigate a method of predicting which opponent we are playing without impact on the current game being played.
+This could involve statistical data generated within a match, a package of information players are allowed to analyse before the game or some technique to play each strategy against one another to identify the player the same way some LRT stratergies do.
+
+This work also opens up the observation that there is a lack of meta-data about each strategy in the Axelrod Library.
+The library does a good job of creating a central location for computational IPD tournaments, however the information for separating and identify stratergies, other than their explicit class structure, relies on 5 classifier variables.
+Expanding on data regarding each strategy, whether it be analyticity or statistically, may allow more sophisticated algorithms to be applied to research on the complexities of how individual IPD stratergies are linked.
+
+Finally the results found in this report have weak correlations and patterns with regard to the areas of analysis undertaken.
+Other areas of mathematics, such as pattern recognition or chaos theory, may be able to provide more clarity in the solution sequence data. 
