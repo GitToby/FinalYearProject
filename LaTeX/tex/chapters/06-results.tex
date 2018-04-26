@@ -141,10 +141,11 @@ This is true for all but $57$ of the solutions, meaning there is room for possib
 These sub optimal results were all stochastic.
 
 \paragraph{Cosine Distance}\cite{bora2014effect}
-$$ d(S_i,S_j) = \cos(\theta) = \frac{{S_i} \cdot {S_j}}{|| {S_i} || \; || {S_j} ||} $$
-The cosine of two vectors constructed by using the dot product formula as shown above.
+The cosine of two vectors constructed by using the dot product formula as shown.
 In our interpretation each dimension represents a sequence element so we are working in $\mathbb{R}^{200}$ with every value taking a $C:1$ a $D:0$.
 Figure~\ref{fig:dist_cos} shows the distance matrix generated from the data files using code in Figure~\ref{apcode:dist_matrix.py}
+
+$$ d(S_i,S_j) = \cos(\theta) = \frac{{S_i} \cdot {S_j}}{|| {S_i} || \; || {S_j} ||} $$
 
 The Matrix for Cosine and Hamming are almost exactly similar, the only difference being the value of the distance between sequences.
 This is due to the two measures being similar in their relationship of space~\cite{choi2010survey}.
