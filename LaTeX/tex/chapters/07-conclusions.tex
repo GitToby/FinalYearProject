@@ -1,6 +1,6 @@
 % !TEX root = ../main.tex
 \chapter{Conclusions}\label{ch:conclusions}
-This report has looked at the concept, structure and generation of solution sequences to stratergies within the IPD game. 
+This report has looked at the concept, structure and generation of solution sequences to strategies within the IPD game. 
 It has identified a successful method of generating these solutions using an evolutionary algorithm and executed analysis to find these solutions to the majority of opponents listed in the Python Axelrod Library. 
 After these solutions were generated analysis was performed into how we could group opponents with similar solutions and considered any patterns that existed within the data we produced.
 
@@ -30,8 +30,8 @@ The genetic algorithm was just one method of approaching this problem.
 While executing the genetic algorithm there could be some extra implantations which could improve runtime performance and the results overall.
 \begin{itemize}
     \item {We know that the best score per turn we can achieve is a 5.0; adding a check at the end of every generation for the top scoring result for this score per turn may have allowed us to complete the search faster.
-    The LRT stratergies, which took over 900 hours of computation, may have found the best result with one of the initial population but were not added to this report due to unneeded extra computation.}
-    \item {Suboptimal results were given for 57 stratergies, as mentioned in Section~\ref{sec:distance_matracies}.
+    The LRT strategies, which took over 900 hours of computation, may have found the best result with one of the initial population but were not added to this report due to unneeded extra computation.}
+    \item {Suboptimal results were given for 57 strategies, as mentioned in Section~\ref{sec:distance_matracies}.
     By definition we know we could continue the search until a result with a defection move on turn 200 occurs before terminating the number of generations} 
     \item {Improving the genetic algorithm further could have improved runtimes and potentially shown better results.
     This could have been done using more sophisticated crossover and mutation methods or the use of multi population models~\cite{whitley2012genetic}.}
@@ -71,11 +71,11 @@ There are 2 flaws to creating a strategy with this approach:
 
 Because of these reasons in order to implement a beat any opponent we have to first find a way of identify that opponent without harming our opportunity to play our solution sequence. 
 Further work could be done to investigate a method of predicting which opponent we are playing without impact on the current game being played.
-This could involve statistical data generated within a match, a package of information players are allowed to analyse before the game or some technique to play each strategy against one another to identify the player the same way some LRT stratergies do.
+This could involve statistical data generated within a match, a package of information players are allowed to analyse before the game or some technique to play each strategy against one another to identify the player the same way some LRT strategies do.
 
 This work also opens up the observation that there is a lack of meta-data about each strategy in the Axelrod Library.
-The library does a good job of creating a central location for computational IPD tournaments, however the information for separating and identify stratergies, other than their explicit class structure, relies on 5 classifier variables.
-Expanding on data regarding each strategy, whether it be analyticity or statistically, may allow more sophisticated algorithms to be applied to research on the complexities of how individual IPD stratergies are linked.
+The library does a good job of creating a central location for computational IPD tournaments, however the information for separating and identify strategies, other than their explicit class structure, relies on 5 classifier variables.
+Expanding on data regarding each strategy, whether it be analyticity or statistically, may allow more sophisticated algorithms to be applied to research on the complexities of how individual IPD strategies are linked.
 
 Finally the results found in this report have weak correlations and patterns with regard to the areas of analysis undertaken.
 Other areas of mathematics, such as pattern recognition or chaos theory, may be able to provide more clarity in the solution sequence data. 
