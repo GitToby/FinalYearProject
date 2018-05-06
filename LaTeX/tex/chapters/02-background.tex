@@ -9,9 +9,9 @@ Lastly Section~\ref{sec:solutionForm} looks at the what results we will expect f
 \section{Notation}\label{sec:notation}
 As described in Chapter 1 this work focuses on identifying best responses against the set of opponents in the Python Axelrod Library. The best responses are in a sequence format with a length of 200. In this Section we introduce a notation which will allow us to represent such sequences in a concise format.
 
-Let \(S\in\{C, D\}^L\) where \(C\), \(D\) represents a cooperation, defection respectively.
+Let $S$ be a sequence where \(S\in\{C, D\}^L\) and \(C\), \(D\) represents a cooperation, defection respectively.
 \(L=200\) is used throughout this report.
-Using the binary nature of the sequence we can split up sequences into blocks of consecutive move elements of the same type.
+Using the binary nature of the sequence elements, we can split up sequences into blocks of consecutive move elements of the same type.
 We will use \(B_i\) to denote the block after \(i\) changes of move type from the explicitly stated starting move type.
 \begin{itemize}
     \item Every move in a block is of the same type, $C$ or $D$;
@@ -42,14 +42,15 @@ Examples:
     \{D[i,5-i]\} \quad i\in [2,4] &= \{DDCCC,\ DDDCC,\ DDDCC\}\\
 \end{align}
 
-To avoid confusion between a sequence for a given opponent, $S_{O_i}$, and the score for a given sequence we will define the score function $f(S_{O_i})$ as follows.
+To avoid confusion between a sequence for a given opponent, $S_{O_i}$, and the score for a given sequence we define the score function $f(S_{O_i})$ as follows.
 $$f(S_{O_i}):S_{O_i} \rightarrow [0,5]$$
-This score function represents playing the sequence against the given opponent and calculating the score per turn over 200 turns.
-
+This score function represents playing the sequence against the given opponent and calculating the score per turn over 200 turns. 
+In this report the score will not be given its own notation other than the result of the function $f$.
 
 \section{Customizing an Algorithm}\label{sec:buildingTheAlgorithm}
 In order to generate a solution sequence we have to train against each Axelrod opponent.
-Our implementation of a genetic algorithm has the following steps:
+We will expand on the GA described in Section~\ref{subsec:geneticAlgorithms} to produce our own.
+Our implementation of a GA has the following steps:
 \begin{enumerate}
     \item Start with a predefined population, supplemented with randomly generated member until to size.
     \item Each member plays the given opponent with their sequence and returns with the average score per turn.
@@ -69,7 +70,7 @@ Our implementation of a genetic algorithm has the following steps:
 \end{figure}
 
 Figure~\ref{fig:customGAcycle} shows a flow diagram of our cycle.
-This is the algorithm we will use in Chapter~\ref{ch:implementation} when analysing the algorithms parameters
+This is the algorithm we will use in Chapter~\ref{ch:implementation} when analysing the algorithms parameters.
 The model means we can create a population of Cycler players, described in Section~\ref{sec:strategiesOfInterest}, and input a sequence of length 200 as a parameter to set off our genetic algorithm.
 The subsequent inputs for the populations Cycler players will be created using the genetic mutation and crossover techniques, see Section~\ref{subsec:geneticAlgorithms} for details.
 
@@ -88,18 +89,18 @@ More real world applications of these results are discussed in Chapter~\ref{ch:c
 Each solution sequence is uniquely generated for each opponent.
 If there are two similar opponents, say Grudger and Collective Strategy, these will be independently analysed and individual solutions will be generated.
 
-If needed we may re-run analysis on some opponents if there are bugs that arise in the code.
+If needed, we may re-run analysis on some opponents if there are bugs that arise in the code.
 In this case older results will be overwritten and previous analysis discarded.
 
-When working with stochastic players, we will be seeding them in order to determine the best sequence.
+When working with stochastic players, we will be seeding the random numbers they use in order to determine the best sequence.
 Each stochastic player will be considered under a variety of seeds.
-The motive to allow this to happen is explained described in Section~\ref{sec:stochasticOpponents}. Non-stochastic opponents will be seeded in the code, however there is no change in their behaviour because of this.
+The motive to allow this to happen is described in Section~\ref{sec:stochasticOpponents}. Non-stochastic opponents will be seeded in the code, however there is no change in their behaviour because of this.
 
 \section{Conclusion}
 Here we have looked at the background required to answer a specific question, build a relevant model and understand what were looking for.
 The concepts themselves are extensions to the basic models brought up in Chapter~\ref{ch:intro} and should allow us to provide relevant results in a uniform manner.
 
-We have also looked at what problems may arise from certain areas of development, such as understanding what a best response for a stochastic opponents could be or how to represent a complex solution in a result.
+We have also looked at what problems may arise from certain areas of solving the task, such as understanding what a best response for a stochastic opponents could be or how to represent a complex solution in a result.
 Because of this premeditation of the problem and its components Chapters~\ref{ch:implementation} and~\ref{ch:results} will be more concise.
 
 After we conclude the runtime of the GA and obtain a solution we will have an output sequence for each opponent.

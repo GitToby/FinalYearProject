@@ -72,7 +72,7 @@ If there is a way of identifying an opponent then we would be able to tip the sc
 
 Figure~\ref{fig:cor_plot} shows patterns related to how the number of blocks within a sequence changes depending on score, opponent type and start move.
 In the left plot, solution sequences starting with a defection lead to 3 groupings; low block number, between 50 \& 125 blocks and near 200.
-This pattern has little information that describes the relationship between the solutions, but there could be an underling reason in the make-up of an opponent which describes the groupings.
+This pattern has little information that describes the relationship between the solutions, but there could be an underlying reason in the make-up of an opponent which describes the groupings.
 All 3 contain both stochastic and non stochastic and have a wide range of scores.
 Starting with a cooperation shows a trend for non stochastic opponents; ignoring the near totalities on the far right shows a linear trend from 0 to 200 blocks as the score increases.
 This trend describes that, for non stochastic opponents, there are complicated solutions that score us more than simple solutions for particular opponents.
@@ -287,9 +287,12 @@ This chapter includes the most useful results from the analysis conducted on the
 The results are showing signs of patterns between the complexities in the solution sequence and the strategies they correspond to.
 However there is no strong correlation or predictor that can be seen to allow accurate prediction of how to beat an opponent
 
-The data produced by this report is very interesting to identify basics responses to predetermined tournaments. For example in a tournament against Defector Hunter, Solution B1, Willing and Tricky Defector we can play $C1,199$ and easily come out on top.
+The data produced by this report allows us to easily identify basic responses to certain predetermined tournaments.
+For example, in a tournament against players Defector Hunter, Solution B1, Willing and Tricky Defector we can play $C1,199$ and easily come out on top.
 The code in appendix Section~\ref{apcode:tournCode.py} produced the results in Table~\ref{table:table_test_opsponents}.
-It is clear that our solution sequence came out on top for this field of opponents, however if we played this against a separate field we would score very low.
+It is clear that our solution sequence came out on top for this set of opponents, however if we played this against a different set we would score very low.
+If all players in the tournament have the same solution then selecting the absolute sequence to play is trivial, however if we have multiple solutions then the problem becomes one of identifying which opponent we are playing in any round.
+This problem is looked into in more detail in Section~\ref{sec:follow_up}. 
 
 \begin{table*}
     \centering
