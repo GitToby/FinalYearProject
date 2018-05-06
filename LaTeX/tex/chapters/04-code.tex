@@ -1,17 +1,20 @@
 \chapter{Developing The Codebase}\label{ch:developingthecodebase}
-This chapter will discuss the development practices encountered during the project and a walkthrough of setting up an environment.
+This chapter will discuss the development practices encountered during the project and a walkthrough of setting up a research environment.
 Details on the set up and reasoning behind using specific development environments will be given along with a look at the open source contributions made.
-A brief look at version control will also show how code is developed to be sustainable and reproducible.
+A brief look at version control will also show how modern code is developed to be sustainable and reproducible.
 
 \section{Codebase Contributions}
 Throughout the project I had split time between writing my own code and expanding the Axelrod Dojo codebase. 
 In modern software development there is a commitment in the developer community to track and reuse as much code as possible, typically using a version control system such as Git or Subversion.
-The majority of open source community development is conducted on GitHub\cite{GitHub} using Git, the Axelrod libraries, along with most other libraries I used, are hosted here.
+The majority of open source community development is conducted on GitHub\cite{GitHub} using Git.
+The Axelrod libraries, along with most other libraries I used, are primarily hosted here.
 
-When writing code in a professional environment there is a predetermined scope that all parties agree upon before the work commences.  This, however, is not the case for research development which is more organic;
+When writing code in a professional environment there is a predetermined scope that all parties agree upon before the work commences.  
+However research development is more organic;
 final products that are created when conducting research for papers are highly personalised and typically cannot be used in other areas.
-This leads to more flexible products that operate more as platforms or tools for further research, this is why the Axelrod, Axelrod Dojo and other libraries mentioned in table~\ref{table:functionalLibrares} exist.
-My final code will only be used for researching the IPD in my projects specific direction, this meant extending the platforms to handle what I needed them to do, subsection~\ref{ssec:versioncontrol} looks into how this was completed in my project.
+This leads to more flexible products that operate more as platforms or tools for further research.
+The Axelrod, Axelrod Dojo and other libraries mentioned in table~\ref{table:functionalLibrares} exist as platforms because of this and the open source drive for reusable code.
+My final code will only be used for researching the IPD in my projects specific direction, as I worked on the project I had to extend the platforms in order to handle what my project needed them to do, subsection~\ref{ssec:versioncontrol} looks into how this was completed in my project.
 
 \subsection{Version Control}\label{ssec:versioncontrol}
 During the project I created a `fork' of the Axelrod Dojo in order to add content to the open source community. 
@@ -70,7 +73,7 @@ Snippet~\ref{code:test-example} shows an example of a test.
 \section{Libraries And External Modules}
 \paragraph{Main Research Libraries}
 \begin{itemize}
-    \item \textbf{Axelrod} --- Used for the core of the prisoners dilemma and iterated prisoners dilemma functionality code.\cite{axelrodproject}
+    \item \textbf{Axelrod} --- Used for the core of the prisoners dilemma and iterated prisoners dilemma functionality code~\cite{axelrodproject}.
     \item \textbf{Axelrod Dojo} --- Applied machine learning techniques that revolve around generating solutions to questions relating to the Axelrod library~\cite{dojoV008}.
 \end{itemize}
 
@@ -107,12 +110,13 @@ These are libraries which are not involved in the core functionality of the IPD\
 
 \section{Reproducing Analysis}\label{subsec:settingUpAResearchEnvironment}
 A mix of Jupyter Notebooks and integrated development environments\footnote{Pycharm Professional Edition and Microsoft VS Code.} were used to write and execute code.
-The main analysis was run using a factory class pattern, called \mintinline{python}{AnalysisRun} in the \mintinline{python}{full_analysis} module, show in Figure~\ref{apcode:AnalysisRun.py}.
+The main analysis was run using a factory class pattern, called \mintinline{python}{AnalysisRun} in the \mintinline{python}{full_analysis} module, show in Appendix Figure~\ref{apcode:AnalysisRun.py}.
 This class was used to wrap a query to the Axelrod Dojo functionality and subsequently to the Axelrod Library in such a way that was easy to control batch executions.
-
 The analysis itself was done using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
-.This tutorial will also assume you're working with a local development station;
+
+The remainder of this tutorial will also assume you're working with a local development station;
 analysis on remote cloud instances of Jupyter Notebooks is possible but the set up is different.
+The steps for working on a cloud instance are described after the local set up.
 
 \paragraph{Installing Basic Libraries}
 Your first step should be to download and install the Anaconda distribution for your OS here: https://www.anaconda.com/download/.
@@ -120,16 +124,18 @@ This will allow you to use the integrated c++ libraries python has to offer with
 Anaconda also has them majority of Functional Libraries above and Jupyter Notebooks pre installed to make setting up much easier.
 From here, follow the instructions the install wizard has to add any environment variables to allow CMD/Bash access to binaries.
 
-Installing the Axelrod and Axelrod Dojo libraries uses the pip tool that already comes with Anaconda and should be ready to execute after the last step.Running `pip install axelrod' then `pip install axelrod-dojo' will install these.
+Installing the Axelrod and Axelrod Dojo libraries uses the pip tool that already comes with Anaconda and should be ready to execute after the last step.
+Running `pip install axelrod' then `pip install axelrod-dojo' will install these.
 
-Once this is installed the \mintinline{python}{full\_analysis.py} file has to be downloaded from GitHub\footnote{https://github.com/GitToby/FinalYearProject}, it can be found in the code directory.This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
+Once this is installed the \mintinline{python}{full\_analysis.py} file has to be downloaded from GitHub\footnote{https://github.com/GitToby/FinalYearProject}, it can be found in the code directory.
+This can just be copied and pasted if needed all were interested in is the class to generate a sequence for an opponent.
 
 \paragraph{Running a Test}
 Figure~\ref{code:analysisExample} is some sample code that will run an analysis with the following settings:
 \begin{itemize}
-    \item Override the default mutation frequency of \(0.1\) to \(0.3\).
+    \item Override the default mutation frequency of \(0.1\) to \(0.33\).
     \item Set the prefix for all the files to be `example-'.
-    \item Analysing 3 opponents.(Random will have multiple instances for different seeds.) 
+    \item Analysing 3 opponents. (Random will automatically have multiple instances for different seeds.) 
 \end{itemize}
 \begin{figure}[ht]
     \centering
@@ -153,10 +159,10 @@ Figure~\ref{code:jupyterExample} shows and example in azure, copy these in your 
 \end{figure}
 
 \section{Conclusion}
-In this Chapter we covered the contributions needed to the Axelrod Dojo to carry on the work described in this report. Moreover, we covered the procedure of implementing and contributing to an open source package.
+In this chapter we covered the contributions needed to the Axelrod Dojo to carry on the work described in this report. Moreover, we covered the procedure of implementing and contributing to an open source package.
 Of the learning that was complexity during the project, learning a new version control system was the hardest along with handling the organic growth of the project.
 While writing code there where sections that needed changing or removing, however there was no scope or predetermined set of outcomes causing my own analysis notebooks to swell and become unwieldy at times.
-These problems were solved by selectively isolating work and levering 3rd party libraries more.
+These problems were solved by selectively isolating work and leveraging 3rd party libraries more.
 
 The final codebase contributions were a success and version 0.0.8 of the Axelrod Dojo has been released to the python installer package, `pip'~\cite{dojoV008}.
 Following the steps in Section~\ref{subsec:settingUpAResearchEnvironment} will allow a working environment to be set up on any platform, letting this experiment be repeated.
