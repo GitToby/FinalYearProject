@@ -242,7 +242,7 @@ These sections did show, in a clear manner, that there were local maxima found.
 Section~\ref{subsec:changingMutationFrequency} showed clearly that sub optimal solutions for EvolvedFSM16 and Grudger were common.
 Section~\ref{sec:mitigatingLocalMaximums} will discuss approaches we can take to reduce the chances of this happening.
 
-\section{Mitigating local maximum solutions}\label{sec:mitigatingLocalMaximums}
+\section{Mitigating Local Maximum Solutions}\label{sec:mitigatingLocalMaximums}
 Local maxima have clearly occurred only for solutions when the algorithm calculates sequences for opponents Grudger and EvolvedFSM16.
 There may be other occurrences we have not observed.
 Each stochastic opponent is also incredibly difficult to understand whether a solution is actually found, this is discussed further ing Section~\ref{sec:stochasticOpponents}
@@ -280,42 +280,44 @@ Grudger and Tit For Tat differ in their strategies in two ways:
 
 To investigate this we will play two totality games against grudger, one of all Cs and one of all Ds, shown in Snippet~\ref{code:gudgerTotalities}. 
 These games show we should be converging on a totality of Cs rather than what its doing, finding the totality of Ds after a number of cooperations.
-This is probably because the algorithm initially limits its best score per turn once the first generation is complete and a cut-off has been established for each of the initial population.
-The crossover method between generations then doesn't provide enough of a mix up to allow the algorithm to escape the local minimum by switching a subsection with a sufficiently different potentially better subsection.
-Then when it comes to mutating, there is little any number of mutations can do to drastically change large sections of the sequence without having a huge effect on the score
-
-
-These totalities are edge cases and would be rarely encountered as a starting point in the random initial population.
-Because of this, the algorithm has to shuffle towards the potential benefit of using these totalities rather than start with analysing them.
-Our case against grudger requires the algorithm to attempt this shuffle towards a totality after encountering the grudging effect.
-This would then require the algorithm to select the first defection move and change it to a cooperation move all by chance.
-The likelihood of this occurring is incredibly small, and starting at common or uniform sequences would be more beneficial to searching to solution space, as posed in Section~\ref{sec:alteringinitialpopulation}.
+This is probably because the algorithm initially limits its best score per turn once the first generation is complete and a cut-off defection has been established for each of the initial population.
+The crossover method between generations then doesn't provide enough of a mix up to allow the algorithm to escape the local minimum by switching a subsection with a sufficiently different, potentially better, subsection.
+Then when it comes to mutating, there is little any number of mutations can do to drastically change large sections of the solution sequence without knowing exactly where to target.
 
 \begin{figure}
     \inputminted{python}{code_snippets/grudgerTotalities.py}
     \caption{Grudger matches against totalities}\label{code:gudgerTotalities}
 \end{figure}
 
-\subsection{Ineffective Approach of Altering Crossover And Mutation}\label{subsec:ineffectiveApproachOfAlteringCrossoverAndMutation}
-The process of converging to Ds when building a solution against grudger then sheds light on the process the algorithm takes to find a solution.
-If we are to find the optimal solution sequence, we must take a crossover and mutation path which doesn't cut off better paths as we work our way towards good solutions;
-this is much easier said than put into practice due to the way the algorithm `cuts off paths'.
-If we reverse this thinking and try to alter our crossover design and mutation rate such that instead of `cutting off' a path we are able to `build' new ones.
-We can re-design the crossover to switch up large subsections of the sequence then allow the mutations to optimise these sub-sequences.
+The example totalities, shown in Snippet~\ref{code:gudgerTotalities}, are edge cases and would be rarely encountered as a starting point in the random initial population.
+Because of this, the algorithm has to shuffle towards the potential benefit of using these totalities rather than start with analysing them.
+Our case against grudger requires the algorithm to attempt this shuffle towards a totality after encountering the grudging effect.
+This would then require the algorithm to select the first defection move and change it to a cooperation move all by chance.
+The likelihood of this occurring is incredibly small, and starting at common or uniform sequences would be more beneficial to searching to solution space, as posed in Section~\ref{sec:alteringinitialpopulation}.
 
-Currently we have the following design:
+\subsection{Ineffective Approaches of Altering Crossover And Mutation}\label{subsec:ineffectiveApproachOfAlteringCrossoverAndMutation}
+The process of converging to Ds when building a solution against grudger then sheds light on the process the algorithm takes to find a solution.
+If the algorithm is to find the optimal solution sequence, it must take a crossover and mutation path which doesn't cut off better paths as the algorithm work our way towards good solutions.
+This is much easier said than put into practice due to the way the algorithm `cuts off paths'.
+The current technique is taking halves from 2 members and merging them, potentially removing successful relationships between elements in both the first and second halves.
+If we reverse this thinking and try to alter our crossover design and mutation rate such that, instead of `cutting off' a path by taking large sections of each member, it may be possible to `build' new ones using more, smaller, sections of the 2 parents.
+
+We can re-design the crossover to switch up smaller subsections of the solution sequence then allow the mutations to optimise these sub-sequences.
+The current design is shown in Figure~\ref{fig:oldCrossover}.
+We want to allow the crossover to have more of an impact on optimizing each section. 
+i.e.go from:
+\[|oooooooooooooooooooo| \text{ and } |xxxxxxxxxxxxxxxxxxxx|= |ooooooooooxxxxxxxxxx|\]
+to the mixture:
+\[|oooooooooooooooooooo|\text{ and } |xxxxxxxxxxxxxxxxxxxx|= |ooxxooxxooxxooxxooxx|\]
+This will allow the mutation to alter the subsections in a more interlaced manner, hopefully overcoming the pitfalls of sparse mutations to escape local maximums.
+
 \begin{figure}
     \inputminted{python}{code_snippets/oldCrossover.py}
     \caption{Old Crossover algorithm}\label{fig:oldCrossover}
 \end{figure}
 
-We want to allow the crossover to have more of an impact than just halving the sequence and optimizing each section.i.e.go from:
-\[|oooooooooooooooooooo| \text{ and } |xxxxxxxxxxxxxxxxxxxx|= |ooooooooooxxxxxxxxxx|\]
-to the mixture:
-\[|oooooooooooooooooooo|\text{ and } |xxxxxxxxxxxxxxxxxxxx|= |ooxxooxxooxxooxxooxx|\]
-This will allow the mutation rate to edit the subsections in a more interlaced manner, hopefully overcoming the pitfalls of sparse mutations to escape local maximums.
 Our new crossover method is shown in Figure~\ref{fig:newCrossover}.
-As shown, the algorithm splits the two sequences into 10 section and the new sequence is formed from Alternating sections.
+As shown, the algorithm splits the two sequences into 10 section and the new sequence is formed from alternating sections.
 Figure~\ref{fig:newCrossoverEX} shows an example of the new crossover method.
 
 \begin{figure}
@@ -328,120 +330,133 @@ Figure~\ref{fig:newCrossoverEX} shows an example of the new crossover method.
     \caption{Example of new crossover algorithm}\label{fig:newCrossoverEX}
 \end{figure}
 
-We will look at how this new crossover algorithm works with the default mutation (freq=.1 and pot=1) to improve our local maximums with the selection off opponents.
-
-There was no noticeable improvement from introducing this change of function.
-Each players average score per turn was in the expected score if the algorithms crossover method was unchanged.
+After testing at this new crossover algorithm with the default mutation (freq=.1 and pot=1), there was no noticeable improvement of mitigating local maxima from introducing this change of function.
+Each players average score per turn was within the original score per turn if the algorithms crossover method was unchanged.
 The problem of mitigating sub optimal solutions may be more efficiently solved using a predefined population.
 Section~\ref{sec:alteringinitialpopulation} discusses this in more detail.
 
 \section{Altering Initial Population}\label{sec:alteringinitialpopulation}
-When performing analysis of an opponent using a GA it can sometimes be useful to brute force the starting positions of our feature selection to create rare\footnote{For example of a random sequence that is a totality of Cs is incredibly rare, with around a \(6.2^{-61}\) chance of occurring naturally with a random selection.} starting points.
-Altering the initial population allows us to select starting sequences that fit patterns we know will have good results.
+When performing analysis of an opponent using a GA it can sometimes be useful to allocate the starting positions of our feature selection to create uncommon\footnote{For example of a randomly constructed sequence that is a totality of Cs is incredibly rare, with around a \(6.2^{-61}\) chance of occurring naturally with a random selection.} starting points.
+Altering the initial population allows selection of starting sequences that fit patterns known to have good results against certain strategies.
 For example totalities, with some head/tail moves, are usually very effective against some opponents;
-for example Tit For Tat, very simple opponents or Grudger.
-Alternating and certain known solution optimal sequences are good starting sequences for an initial population, allowing a more intelligently distributed set of starting points for the random mutation process.\footnote{This can be visualised as placing balls on a `lumpy' 3d plane to try and find the minimum, starting with an educated guess means we wont get all the balls stuck in one valley which isn't the deepest.}
+Tit For Tat, Random or Grudger for example.
+Alternating sequences are also good starting sequences for an initial population, allowing a more intelligently distributed set of starting points for the random mutation process.
 
-This section discusses the results of working on an initial population that contain common solution sequences.
-We will start by creating a population of successful known starting members, along with some random members, then allow the entropy of the genetic algorithm to alter these sequences.
+Adding a pre defined starting population can be visualised as placing balls on a lumpy 3d plane to try and find the deepest valley.
+Starting with an educated guess and distributing the starting positions evenly means we are less likely get all the balls stuck in one, sub optimal, valley.
+This section looks into benefits of using a pre defined population in the GA.
+
+\subsection{Constructing a population}
+We will start by creating a population of successful known starting members.
+When starting with these members we allow the entropy of the genetic algorithm to alter these sequences towards optimal solutions (assuming these are not already optimal).
 Deciding where to start our algorithm may mitigate potential sub-optimal solutions by reducing the distance between the starting sequences and optimal solutions.
 This list of starting members are stated below:
 
 Totalities
 \begin{itemize}
-    \item \(C:[200]\) | 1 sequence
+    \item \(C:[200]\) | 1 $\times$ 2 sequence 
 \end{itemize}
 
 Single Change Sequences
 \begin{itemize}
-    \item \(\{C:[i,200-i]\} \quad i\in [1,10],\ i \in \mathbb{Z}\) | 10 sequences
-    \item \(\{C:[200-i,i]\} \quad i\in [1,10],\ i \in \mathbb{Z}\) | 10 sequences
+    \item \(\{C:[i,200-i]\} \quad i\in [1,10]\) | 10 $\times$ 2 sequences
+    \item \(\{C:[200-i,i]\} \quad i\in [1,10]\) | 10 $\times$ 2 sequences
 \end{itemize}
 
 Matching Tail Sequences
 \begin{itemize}
-    \item \(\{C:[i,200-(i+j),j]\} \quad i,j \in [1,5],\ i,j \in \mathbb{Z}\) | 25 sequences
+    \item \(\{C:[i,200-(i+j),j]\} \quad i,j \in [1,5]\) | 25 $\times$ 2 sequences
 \end{itemize}
 
 Alternating
 \begin{itemize}
-    \item \(C:[\ (i,i)^{100/i}] \quad i \in \{1,2,4,5\}, i \in \mathbb{Z}\) | 4 sequences
+    \item \(C:[\ (i,i)^{100/i}] \quad i \in \{1,2,4,5\}\) | 4 $\times$ 2 sequences
 \end{itemize}
 
-3 Block Handshakes
+3 Block Handshakes*\footnote{This was added after the first test with the new population}
 \begin{itemize}
-    \item \(C:[\ i,j,k,200-(i+j+k)] \quad i,j,k \in \{0,1,2,3\}, i \in \mathbb{Z}\) | 4 sequences
+    \item \(C:[\ i,j,k,200-(i+j+k)] \quad i,j,k \in \{0,1,2,3\}\) | 32 $\times$ 2 sequences
 \end{itemize}
 
-For each of these sequence sets the inverse, with a defection move start, will also be added to the set of starting sequences.
-This in total gives 164 (after code~\ref{code:initialPopulationCode}) of sequences, we will then make up the difference to the population limit using a set of random sequences.
+For each of these starting members, a sequence with a defection move to start but with the same pattern will also be added to the set of starting sequences.
+This in total gives 164 (after code~\ref{code:initialPopulationCode}) constructions of sequences, we will then make up the difference to the population limit using a set of random sequences.
 
-Now that the Initial population has been altered we can conduct the analysis in Sections~\ref{sec:ChangingInitialPopulationSize},~\ref{subsec:populationSize},~\ref{sec:generationlengthanalysis},~\ref{sec:changeingmutationrate} and \ref{subsec:changingMutationPotency}.
+Now that the Initial population has been altered we can conduct the analysis in Sections~\ref{sec:ChangingInitialPopulationSize},~\ref{subsec:populationSize},~\ref{sec:generationlengthanalysis},~\ref{sec:changeingmutationrate} and \ref{subsec:changingMutationPotency} again.
 
 \subsection{Population Size}\label{subsec:populationSize}
+Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-all} shows the best score generation to generation for each population size.
+We will have \(|P| \in [102,200,250,500]\) due to starting with the 102 initial members (*this was increased to 164 after this test).
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_INIT_POP_bs_v_gen_all_old.pdf}
     \caption{Best Score vs generations for pre-set initial populations on top of random sequences}\label{fig:NEW-INIT-POP-bs-v-gen-all}
 \end{figure}
 
-Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-all} shows the results of using a given initial population of sequences of size 102 along with supplementing this with random members.
-We will have \(|P| \in [102,200,250,500]\).
-
-The Collective Strategy run in Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-all} appears to have a better results with an initial set population for the algorithm.
-Of the results that are not showing straight lines we can observe that the algorithm has found the optimal sequence for all but Random, Collective Strategy, ZD Extort and Champion.
+Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-all} appears to have a better results for Collective Strategy with an initial set population for the algorithm.
+Of the results that are not showing optimal solutions we can observe that the algorithm has score plateaus for all but Random, Collective Strategy, ZD Extort and Champion.
 This is probably due to 2 different reasons:
 
-\textbf{Random}: This strategy should being beaten with a totality of D, the algorithm has in fact converged to almost this totality, but still has intermittent Cs.
+\textbf{Random \& Stochastic Opponents}: This strategy should being beaten with a totality of D, the algorithm has in fact converged to almost this totality, but still has intermittent Cs.
 The reason for this is the scoring grade `score per turn' will reflect on the number of intermittent Cs in the Random players sequence.
-More Cs in the Random sequence will allow the algorithm to score more.
-This leads to a solution sequence containing some random Cs not because they score better in some turns, but because the totality of Ds played against
-a Random sequence would `loose' to a sequence containing some Cs in because its not a fair trial;
-the two sequences play against different Random opponent sequences.
+More Ds in the Random sequence will allow the solutions defections to score less.
+This leads to a solution sequence containing some random Cs not because they score better in some turns, but because these tests not a fair trial.
+The two sequences play against different Random opponents generation to generation without then being seeded.
 
 \textbf{Collective Strategy}: This strategy is a combination of a handshake and the Grudger strategy.
-If we look into the sequence it selected we can see its found the handshake but then arrives on Grudger.
-After this encounter the same problem as we had before population selection occurs and the algorithms limits the damage by splitting into Cs then Ds.Solving the collective strategy (and handshakes in general) may be simple;
+If we look into the solution it would be seen to have found the handshake but then arrives on the Grudger effect later in the game.
+After this encounter the same problem as we had before, with grudger, the algorithms limits the damage by splitting solutions into Cs then Ds.
+Solving the collective strategy (and handshakes in general) may be simple;
 we just put in all the possible n move handshakes followed by totalities and then set to work on the 2nd part of the sequence.
+(*This means we increase our initial population from 102 members to 164)
 
 It is clear that having a larger population is good from the old analysis, but the initial population still has to be tweaked to improve its scores against certain handshake opponents.
-The Random opponent is a special case that requires more analysis to find the absolute optimal.
-The new initial population, now of size 164, will include all combinations of C \& D of length 5, followed by finishing on all Cs or Ds as shown in the Totalities \& handshakes section of Snippet~\ref{code:initialPopulationCode}.
-This run will also supplement with random members for running test for \(|P| \in [164,200,250,500]\)
+The Random and other stochastic opponents are a special cases that require more analysis to find the absolute optimal.
+The new initial population, now of size 164, will include all combinations of C \& D of length 4, followed by finishing on all Cs or Ds as shown in the Totalities \& handshakes section of Snippet~\ref{code:initialPopulationCode}.
+Further tests will also supplement this population with random members for \(|P| \in [164,200,250,500]\)
 
 \begin{figure}
     \inputminted{python}{code_snippets/initialPopulationCode.py}
     \caption{Initial Population Code}\label{code:initialPopulationCode}
 \end{figure}
 
-After adding the extra members of the initial population we can see, from the new plot of sub optimal sequences in Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-non-performers}, that now the handshake strategy (such as Collective Strategy) are solved much sooner.
-Also shown in Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-non-performers} is the Random and ZD extort players, these are examples of Stochastic players which are not finding optimal solutions.
-This is examined further in Section~\ref{sec:stochasticOpponents}.
+Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-non-performers} shows the best score generation to generation for each population size, this time for the previous strategies where an optimal solution was not found.
+After adding the extra members of the initial population we can see that now the handshake strategy (such as Collective Strategy) are solved much sooner.
+Also shown is the Random and ZD extort players, these are examples of Stochastic players which are still not finding optimal solutions due to the observation of seeding stochastic opponents.
+These classes of opponent are examined further in Section~\ref{sec:stochasticOpponents}.
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_INIT_POP_bs_v_gen_non_performers.pdf}
     \caption{Non optimal sequence players after changing initial population}\label{fig:NEW-INIT-POP-bs-v-gen-non-performers}
 \end{figure}
 
-\subsection{Generation Length, Mutation Potency \& Mutation Frequency Analysis after change of initial population}\label{subsec:starting_pop_analysis}
-Figure~\ref{fig:NEW-GEN-bs-v-gen-all} shows the results from changing the number of generations the algorithm will run to \(G \in [50,150,250,350,450,500] \) whilst also running with a population size of \(|P|=200\).
-It shows no real improvement from increasing the generations, we will use the results from analysis above sections for constructing the full analysis.
+It is clear the change of initial population is beneficial.
+The actual parameter we will use in the full analysis will be given consideration in Section~\ref{sec:conclusionOfApproach}, but the initial population will stay as an effective starting point for the GA.
+
+\subsection{Generation Length, Mutation Potency \& Mutation Frequency Analysis After Change of Initial Population}\label{subsec:starting_pop_analysis}
+Figure~\ref{fig:NEW-GEN-bs-v-gen-all} shows how the best score is affected while changing the number of generations the algorithm will run to \(G \in [50,150,250,350,450,500] \).
+This figure is also displaying with a population size of \(|P|=200\), 164 of which are pre defined.
+It shows no real improvement from increasing the generations, the actual parameter we will use in the full analysis will be given consideration based off conclusions made in Section~\ref{sec:generationlengthanalysis}.
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_GEN_bs_v_gen_all.pdf}
     \caption{\textbf{New Population:} Generation Length analysis for best score mean against generation length.}\label{fig:NEW-GEN-bs-v-gen-all}
 \end{figure}
 
-Figure~\ref{fig:NEW-MUT-POT-bs-v-gen-all} shows the results from changing mutation potency the algorithm will use to be \(M_p \in [1,2,3,5,10,15,20] \) whilst also running with a population size of \(|P|=200\).
-It shows no real improvement from increasing this variable of the algorithm, we will use the results from analysis in previous sections for constructing the full analysis.
+Figure~\ref{fig:NEW-MUT-POT-bs-v-gen-all} shows the best score generation to generation while changing the mutation potency.
+\(M_p \in [1,2,3,5,10,15,20] \) was used whilst also running with a population size of \(|P|=200\).
+The figure shows no real improvement from increasing this variable of the algorithm.
+The actual parameter we will use in the full analysis will be given consideration based off conclusions made in Section~\ref{subsec:changingMutationPotency}.
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_MUT_POT_bs_v_gen_all.pdf}
     \caption{\textbf{New Population:} Best score against generation for different mutation potency levels}\label{fig:NEW-MUT-POT-bs-v-gen-all}
 \end{figure}
 
-Figure~\ref{fig:NEW-MUT-FREQ-bs-gen-all} shows the results from changing mutation potency the algorithm will use to be \(M_f \in [0.1,0.15,0.2,0.25] \) whilst also running with a population size of \(|P|=200\).
-It shows no real improvement from increasing this variable of the algorithm, we will use the results from analysis in previous sections for constructing the full analysis.
+
+Figure~\ref{fig:NEW-MUT-FREQ-bs-gen-all} shows the best score generation to generation while changing the mutation frequency.
+\(M_f \in [0.1,0.15,0.2,0.25] \) was used whilst also running with a population size of \(|P|=200\).
+The figure shows no real improvement from increasing this variable of the algorithm.
+The actual parameter we will use in the full analysis will be given consideration based off conclusions made in Section~\ref{subsec:changingMutationFrequency}.
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_MUT_FREQ_bs_v_gen_all.pdf}
@@ -450,32 +465,35 @@ It shows no real improvement from increasing this variable of the algorithm, we 
 
 \subsubsection{Discussion}\label{subsubsec:discussion}
 The approach of adding a predefined set of members to the population before running the algorithm was incredibly successful.
-We have seen that for most opponents the solution sequence were looking for is given almost immediately.
+Most opponents have solution sequence equal to or very close to members in the starting population.
 This result will mean that when calculating the solution sequence for the main population the predefined set, generated by Snippet~\ref{code:initialPopulationCode}, will be used to shorten analysis times.
 
-Opponents such as Random, ZDExtort and Champion are showing that they are not finding the optimal solution.
+Random, ZDExtort and Champion are still being shown that the algorithm is not finding the optimal solution for these opponents.
 This is due to the fact these player belong to the class of stochastic opponents.
-Section~\ref{sec:stochasticOpponents} will look into these in more detail, putting forward possible approaches to simplify `solving' these opponents.
+Section~\ref{sec:stochasticOpponents} will look into these in more detail, putting forward a possible approach to simplify finding of a solution sequence for these opponents.
 
 \section{Stochastic Opponents}\label{sec:stochasticOpponents}
-Stochastic opponents form a problem with respect to continuity.
-The algorithm we are using continues to generate a new opponent sequence for every generation we run.
-This, essentially, leads to the algorithm playing a new version of the opponent every time, leaving very little opportunity to identify features which can be exploited.
+Stochastic opponents create a problem with respect to continuity of testing.
+The programming of the algorithm we are using generates a new opponent for every member every generation we run.
+This, essentially, leads to the algorithm playing a new version of the opponent every time, leaving very little opportunity to identify features of stochastic opponents which can be exploited.
 
-The concept of a stochastic opponent can be somewhat `overridden' by seeding the pseudo random number generator that creates the parameters that define what moves our opponent will take.
-Currently the only way of doing this is by seeing the whole Axelrod library upon initialising the opponent instance, Snippet~\ref{code:wrappingFunction} shows the code for wrapping any given opponent with the global seed command.
+The concept of a stochastic opponent can be somewhat `overridden' by seeding the pseudo random number generator that creates the parameters that define what moves the strategy will take.
+Currently the only way of doing this is by seeing the whole Axelrod library upon initialising the opponent instance.
+Snippet~\ref{code:wrappingFunction} shows the code for wrapping any given opponent with the global seed command.
 
 \begin{figure}
     \inputminted{python}{code_snippets/classWrappingFunction.py}
     \caption{A function for wrapping a player with a global seed function call}\label{code:wrappingFunction}
 \end{figure}
 
-When calculating the sequence solution for all of the opponents we will do so with seeded versions of the stochastic opponents.
-The parameters for stochastic opponents will be the default set by the creators and new instances will be made for any variations with real world applications.
-For example, default Random players will have a 0.5 chance of playing a C move;
-this parameter can optionally be changed, and will for certain opponents.
+When calculating the solution sequence for all of the opponents we will do so with seeded versions of the stochastic opponents.
+The parameters for stochastic opponents will be the default set by the creators and new instances will be made with the seed that is set for algorithm as a whole.
+The means we will be playing the same `version' of a stochastic opponent over and over, removing the layer of abstraction in its strategy.
 
 \section{Conclusion of approach}\label{sec:conclusionOfApproach}
+Each section of testing allowed the algorithm to become more specialised in solving the given task.
+The list at the end of this section shows which parameters we have chosen for the final analysis.
+
 After constructing the final analysis factory and running some environment checks we made the following changes to the code for ease of use:
 \begin{itemize}
     \item Number of generations changed: $300\rightarrow600$.
