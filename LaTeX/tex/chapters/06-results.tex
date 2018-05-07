@@ -249,7 +249,7 @@ Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distribu
 
 \subsection{Regression Trees}
 Regression trees are a way of looking at reducing the variance of a parameter through attributes of observed instances. 
-SciKit Learn has an implementation of regression trees, the code used to generate the data in this subsection is shown in appendix code~\ref{apcode:reg_tree.py}.
+SciKit Learn has an implementation of regression trees, the code used to generate the data in this subsection is shown in Appendix code~\ref{apcode:reg_tree.py}.
 
 Our case, we are looking at reducing the variance of the score by looking at which turns tend to cause the largest disparity in score.
 To do this the algorithm look at reducing the Mean Absolute Error (MAE) of the scores, which is, in effect, reducing the $L1$ norm (sometimes referred to as the $L_1$ loss of the algorithm) of the scores.
@@ -289,7 +289,7 @@ However there is no strong correlation or predictor that can be seen to allow ac
 
 The data produced by this report allows us to easily identify basic responses to certain predetermined tournaments.
 For example, in a tournament against players Defector Hunter, Solution B1, Willing and Tricky Defector we can play $C1,199$ and easily come out on top.
-The code in appendix Section~\ref{apcode:tournCode.py} produced the results in Table~\ref{table:table_test_opsponents}.
+The code in Appendix Section~\ref{apcode:tournCode.py} produced the results in Table~\ref{table:table_test_opsponents}.
 It is clear that our solution sequence came out on top for this set of opponents, however if we played this against a different set we would score very low.
 If all players in the tournament have the same solution then selecting the absolute sequence to play is trivial, however if we have multiple solutions then the problem becomes one of identifying which opponent we are playing in any round.
 This problem is looked into in more detail in Section~\ref{sec:follow_up}. 
