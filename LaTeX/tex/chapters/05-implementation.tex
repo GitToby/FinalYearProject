@@ -1,18 +1,19 @@
 % !TEX root = ../main.tex
 \chapter{Implementation Of Sequence Discovery}\label{ch:implementation}
 Genetic algorithms can have many variations depending on parameters and implementations of any attached methods. In this chapter, consideration will be given to the process of finding the optimal sequence of moves against another player.
-The various approaches used and a detailed analysis of the optimisation procedures and parameters will be described.
+There will be various approaches used and a detailed analysis of the optimisation procedures and parameters will be described for each parameter.
 
-Before conducting the bulk calculations for the set of opponents listed in the appendix we will test values for the algorithms' parameters to see what settings are best for finding solution sequences.
-We will describe a series of sequences as `converged' if the best score over the set number of generations has reached a stable point;
-described as when none of the moves in the sequences has changed over a number of generations.
-In order to find these settings we look at is how the best score in a population rises over the number generations after changing the parameter were observing.
-Once the best score per turn hits a maximum such that it wont change no mater how many more generations are run, as described in Section~\ref{sec:solutionForm}, this the optimal solution sequence.
-Note that for a solution to be unique we must be playing a non stochastic opponent.
+In this chapter the terms strategy and opponent are used interchangeably.
+An opponent has a set of rules for calculating its next move, this is known as its strategy and is unique.
+Also in this chapter the terms solution and sequence are interchange, often called the solution sequence.
+A solution is a sequence of $C$ and $D$ moves, as described in Section~\ref{sec:solutionForm}.
 
-The test opponents have been selected because they are interpretable and have calculable solution sequences, Table~\ref{table:table_test_opsponents} shows the opponents and their solution.
-They are mostly `simple' and can be explained in a sentence or two, but each one has a fundamentally different structure to how they work.
-We will look into these as we can confirm that the genetic algorithm will select the optimal sequence solution for the selected type of opponent.
+\section{Background}
+Before conducting the bulk calculations for the set of opponents listed in Appendix Section~\ref{apndx:opponents} we will test values for the algorithms' parameters to see what values of parameters are best for finding solution sequences.
+We will run a series of tests against pre selected strategies and review the results of their best score per turn before running the full analysis.
+These test opponents have been selected because they are interpretable and have either calculable solution sequences or are interesting stochastic opponents.
+Table~\ref{table:table_test_opsponents} shows the opponents and their solution.
+Each one has a fundamentally different structure to how they work, because of this we can confirm that the genetic algorithm can select the optimal sequence solution for each structure.
 
 \begin{table*}
     \centering
@@ -33,38 +34,42 @@ We will look into these as we can confirm that the genetic algorithm will select
     \caption{Table of test opponents}\label{table:table_test_opsponents}
 \end{table*}
 
-During the investigation we may find solutions that are not optimal, meaning that the algorithm will have found a solution that will do well against an opponent but wont find the optimal solution.
-These sub optimal solutions are due to the occurrence of local maxima in the plane of neighbouring sequences; we cant mutate out of a local maximum if every sequence that is 1 mutation away is always going to score lower.
-Genetic algorithms are designed in way to avoid local maxima's;
-the property of mutating allow members of the population to potentially remove themselves from these local maximas and crossing over with other members creates new members that may have sufficiently different parents to put itself into a different local maximum.
+In this chapter sequences will be loosely described as `converged' if the best score of the population has reached a stable point considering the generations it has run.
+In order to find these settings we look at is how the best score in a population rises over the number generations after changing the parameter were observing.
+Once the best score per turn hits a maximum such that it doesn't appear to change no mater how many more generations are run this will be described as an optimal solution sequence.
+Note that for a solution to be unique we must be playing a non stochastic opponent, in the event of playing a  stochastic opponent we will seed the random element of their behaviour for reproducibility.
 
-As we go on we will look in depth into how to overcome the possibility of our algorithm finding a local, rather than, global maximum in Section~\ref{sec:mitigatingLocalMaximums}.
-Some of the questions we will hope to be answering include:
+During the investigation we may find solutions that are not optimal, meaning that the algorithm will have found a solution that will do well against an opponent but hasn't found the best from the solution space.
+These sub optimal solutions are due to the occurrence of local maxima (due to an increasing fitness function) in the space of neighbouring solution sequences to members.
+Section ~\ref{subsec:geneticAlgorithms} discusses how GAs are designed to mitigate local maxima.
+
+Some of the questions we will hope to answer in this chapter include:
 \begin{itemize}
     \item If we have a larger initial population sample to start with, will we reach our maximum best score earlier?
-    \item What about increasing the generations, is there an optimal number of generations to run the algorithm for such that we always find a solution sequence.
+    \item Will increasing the number of generations impact our ability to find an optimal solution? Is there an optimal number of generations to run the algorithm for such that we always find a solution sequence?
     \item If we make each sequence more likely to mutate generation to generation what will happen?
     What about increasing how potent our mutations are?
+    \item How can we overcome the possibility of our algorithm finding a local maximum rather than the global maximum?
 \end{itemize}
 
 \section{Changing Initial Population Size}\label{sec:ChangingInitialPopulationSize}
 The initial population size is the number of starting sequences we use in our algorithms first generation.
-Once this generation concludes the population will go through the series of phases outlined in Figure~\ref{fig:customGAcycle}; altering the population to keep the best performers against our opponent to continue on to subsequent generations.
-During any given generation the population defines the maximum potential range of scores that we can achieve against our opponent.
-For example, having 2 members with distinct sequences in our population would provide us with 2 distinct new sequences after mutation.
-Because of this we can reasonably assume the larger our population the larger the number of distinct scores leading to a larger chance of finding the solution sequence with the optimal score;
-hence we should converge to the solution sequence in less generations.
+Once this generation concludes the population will go through the series of phases outlined in Figure~\ref{fig:customGAcycle}.
+This will alter the population to keep the fittest members to continue on to subsequent generations.
+We will look into population size because, during any generation the size of the population influences the range of scores that we can achieve against our opponent.
+The more unique members we have the more unique evaluations of the fitness function exist.
+Because of this we can reasonably assume the larger our population gets the chance of finding the solution sequence with the optimal score will increase.
+Hence with a larger population we should converge to the solution sequence in less generations.
+For this section we analysed a range of populations to understand how solutions are affected when we run our algorithm through the set of population sizes \(|P| \in [25,50,100,150,200,250,500]\).
 
-The implementation of analysing a range of populations requires us to understand how the solution distance is affected as we run our algorithm through a set of population sizes, say \(|P| \in [25,50,100,150,200,250,500]\).
-The code in appendix Snippet~\ref{apcode:populationChecker.py} is an implementation how we go about analysing and storing the tests on generation sizes listed.
-It leverages the use of the function \mintinline{python}{runGeneticAlgo} show in appendix Snippet~\ref{apcode:runGeneticAlgo.py}.
+As the first example of these parameter tests, the code used will be shown in Appendix Snippet~\ref{apcode:populationChecker.py} as an implementation how this analysis was conducted.
+It leverages the use of the function \mintinline{python}{runGeneticAlgo} show in Appendix Snippet~\ref{apcode:runGeneticAlgo.py}.
 This code will output data in the form of Table~\ref{table:popCheckerDataTable}.
 
-EFFICIENCY NOTE\@: Increasing the size of our population will have an impact on computation time;
-each generation must process the full population in a linear fashion causing a computation overhead of \(O(n)\).
-For an increase to be useful a in any time restricted scenario our algorithm would need to show a higher order benefit in our distance to convergence, or in our average score per turn.
+As a note on efficiency; increasing the size of our population will have an impact on computation time.
+Each generation must process the full population in a linear fashion causing a computation overhead of \(O(n)\).
+For an increase to be useful a in any time restricted scenario our algorithm would need to show a higher order benefit in our generations to convergence, or in an increase of average score per turn.
 However We are not working in a time restricted scenario, and so we should just select the best overall initial population size independent of computation overhead.
-In a perfect world where everything was time independent we would brute force every possible sequence combination
 
 \begin{table*}
     \centering
@@ -85,178 +90,179 @@ In a perfect world where everything was time independent we would brute force ev
     \caption{Output data table}\label{table:popCheckerDataTable}
 \end{table*}
 
+After running the tests for the populations stated above we can group the data by population size and observations on how changing this parameter affects different opponents can be made.
+Figure~\ref{fig:INIT-POP-bs-v-gens-all} shows the best score in the population for each opponent as the generations increase for every population size.
+We see that the initial population size has a significant effect on finding better sequences.
+This figure shows if there is a larger initial population there is typically a higher best score shown once concluding all of the generations.
+It doesn't, however, ensure that we find the solution sequence, as is shown in the lack of long plateaus of best score across opponents.
+
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/INIT_POP_bs_v_gens_all.pdf}
-    \caption{\textbf{Initial Population Size Analysis}Best score per turn vs generation for different initial population sizes}\label{fig:INIT-POP-bs-v-gens-all}
+    \caption{\textbf{Initial Population Size Analysis:} Best score per turn vs generation for different initial population sizes}\label{fig:INIT-POP-bs-v-gens-all}
 \end{figure}
 
-By grouping this data by the population we observe how initial populations affect different opponents.
-Its clear that from Figure~\ref{fig:INIT-POP-bs-v-gens-all} that the initial population size has a significant effect on finding better sequences.
-We can see if there is a larger initial population there is typically a higher best score shown once concluding all of the generations.
-It doesn't, however, ensure that we find the solution sequence;
-as is shown in the lack of long plateaus in the lines.
-
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/INIT_POP_mean_bs_diff_v_init_pop_all.pdf}
-    \caption{\textbf{Initial Population Size Analysis} Scatter of mean best score vs different initial populations}\label{fig:INIT-POP-mean-bs-v-init-pop-all}
-\end{figure}
-
-The improvement's from this effect are non-linear from observation of Figure~\ref{fig:INIT-POP-mean-bs-v-init-pop-all}.
+The improvements from the effect of population increase are non-linear from observation of Figure~\ref{fig:INIT-POP-mean-bs-v-init-pop-all}.
+This figure shows the change in mean best score across population in the final generation against the population size.
 The change in final best score for a population of 50 compared with a population of 250 is large in comparison to the same relative increase from 250 to 500.
 This may suggest there are more efficient approaches to improving our final best score after a certain initial population is reached.
 
+\begin{figure}[ht]
+    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/INIT_POP_mean_bs_diff_v_init_pop_all.pdf}
+    \caption{\textbf{Initial Population Size Analysis:} Scatter of mean best score vs different initial populations}\label{fig:INIT-POP-mean-bs-v-init-pop-all}
+\end{figure}
+
 None of these results have found a solution sequence (or at least we cant tell from the graph).
 It is clear that larger initial populations do, on a relative scale, much better than small ones.
-There are no large plateaus for the graph, so as we continue our research the initial population size will be increased to 150 to keep computation times manageable.
+There are no large plateaus for the graph, so as we continue our research the initial population size will be increased to 150 to keep test computation times manageable.
+The actual parameter we will use in the full analysis will be given consideration in Section~\ref{sec:conclusionOfApproach}.
 
 \section{Generation Length Analysis}\label{sec:generationlengthanalysis}
-Another major component parameter of a genetic algorithm is the number of generations it will run before outputting a final sequence.
+Another major component parameter of a genetic algorithm is the number of generations it will run for before outputting a final set of members with solution sequences.
 The number of generations has an influence on a number of different things within the algorithm:
-
 \begin{itemize}
-    \item The total combinations of features, (sequence elements), that the algorithm can test. The higher generations the more combinations we can test.
-    \item The number of low performers we can remove in our population over the course of its run. The more generations the more bad performers we remove, by definition of tha algorithm we have a non decreasing sequence of best scores; removing more will lead to a a population of better or equal scoring members. 
+    \item {The total combinations of features that the algorithm can evaluate. 
+    The more generations it runs for the more combinations of members we can evaluate a fitness for.}
+    \item {The total number of low performers it removes in the population over the course of its run. 
+    Each generation removes a proportion of its lowest fitness members.
+    By definition of the algorithm we have a non-decreasing sequence of fitness scores; removing more lower fitness members will lead to a population of better or equal scoring members. }
 \end{itemize}
+Generation size differs from other parameters in the fact this is purely performance based, there is no changes to the inner mechanics of the algorithm only the amount of time it will run for.
+A genetic algorithm with 1 generation is just a series of tests split into 2 results sets --- good performers and bad performers.
+As we extend the number of generations we want be more focused on what happens to measured quantities normalised by generations, rather than any absolute improvement.
 
-For our goal of finding the optimal solution sequence for each opponent it would be useful to extend the generations as far as possible;
-this would provide the most combinations of features possible.
-In this Section we explore the effect of increasing generations on reaching a solution sequence.
-Like in previous experiments with other variables we will use a set of sizes for our parameter to run our analysis for each size, here we will take generation lengths \(G \in [50,150,250,350,450,500]\).\footnote{We will be using a population of 150 as this was the best average for score vs computation time for analysis.}
-The code in appendix Snippet~\ref{apcode:generationChecker.py} shows how we will approach the generation analysis.
+As a note on efficiency, the goal of finding the optimal solution sequence for each opponent would be solved by extending the generations to infinity, i.e exhaustively search the whole solution space.
+This, however, is not a feasible solution, and so this section looks in to the effect of increasing generations has on improving a solution sequence with respect to the generations its run.
+Here we will take generation lengths \(G \in [50,150,250,350,450,500]\) during these tests and a population size of 150.
+The code in Appendix Snippet~\ref{apcode:generationChecker.py} shows how the approach the generation analysis was undertaken.
 
-Generation size differs from other parameters in the fact this is purely performance based.
-A genetic algorithm with 1 generation is just a series of tests;
-with the results split into 2 sets --- winners and losers.
-As we extend the generations we would be more focused on what happens to certain averages of results across the whole run, rather than absolute improvement.
+Figure~\ref{fig:GENS-mean-bs-diff-v-gens-all} shows how the mean best score across the population changes generation to generation normalized by generation.
+It shows that over 150 generations the best scores against Alternator across its population increased, on average, by 0.0035 per generation.
+From this we can observe how the number of generations has a declining effect the overall change in our mean best score per generation.
+This trend is to be expected, when we are close to a maximum it is more difficult to randomly select which element in the sequence needs changing to improve a members score.
+On this result we can conclude as we increase generations there is less and less benefit per generation.
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/GENS_mean_bs_diff_v_gens_all.pdf}
     \caption{\textbf{Generation Analysis:} Mean Best Score diff vs total generation lengths}\label{fig:GENS-mean-bs-diff-v-gens-all}
 \end{figure}
 
-If we look at Figure~\ref{fig:GENS-mean-bs-diff-v-gens-all} we can observe how, on average, the number of generations has a declining effect the overall change in our mean best score per generation.
-A decrease of score per generation trend is to be expected;
-when we are close to a maximum it is more difficulty to randomly select which element in the sequence needs changing to improve our score.
-On this result we can conclude as we increase generations there is less and less benefit per generation.
-There is, however, still a benefit to extending the generations but we may have better performance by altering another parameter of the algorithm.
-The probably of finding a solution as we narrow in on a maximum decreases due to the number of elements that, when changed, will provide a better score.
-Increasing the mutation frequency at this point may mean that more members of the population that could potentially mutate the elements needed to improve the sequence.
-
-Figure~\ref{fig:GENS-max-bs-v-gens-all} shows the proximity the optimal solution sequence once the analysis has concluded.
-A good score is a score of 3 or more;
-this can change from player to player, and is never explicitly obvious.
-We can see that after a number of generations that solutions sometimes get `stuck' in a local maximum score.
+Figure~\ref{fig:GENS-max-bs-v-gens-all} shows the maximum best score in a population once the analysis has concluded.
+For most of the opponents 250 generations seems reasonable to reach a solution sequence as shown in the Alternator and Tit For Tat.
+However, there are clear signs of local maximums occurring in the EvolvedFSM16 example.
+In Figure~\ref{fig:GENS-max-bs-v-gens-all} EvolvedFSM16 has reached a better sequence in 150 generations than 500\footnote{These are independent trials and have different sequences.}, meaning that increasing the generation length doesn't necessarily mean finding a global maximum.
+The complexities with local maximums during the generations lie with mutation rates and crossovers.
+We will cover this in Section~\ref{sec:mitigatingLocalMaximums}
 
 \begin{figure}[ht] 
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/GENS_max_bs_v_gens_all.pdf}
 \caption{\textbf{Generation Analysis:} Max best score vs total number of generations}\label{fig:GENS-max-bs-v-gens-all}
 \end{figure}
 
-After 250 generations we \textit{seem} to have reached a solution state for our opponents Tit for tat and alternator but not for grudger.
-From the combination of the plots, having more generations means that there is, on average, less of an improvement per generation.
-It is clear that a higher number of generations is required to find a better solution sequence for an opponent.
-From now on, 250 is the number of generations we will use to find our solution sequence during the analysis.
-
-For most of the opponents 250 generations seems reasonable to reach a solution sequence as shown in the Alternator and Tit For Tat.
-However, there are clear signs of local maximums occurring in the EvolvedFSM16 example.
-In Figure~\ref{fig:GENS-max-bs-v-gens-all} EvolvedFSM16 has reached a better sequence in 150 generations than 500\footnote{These are independent trials and have different sequences.}; meaning that increasing the generation length doesn't necessarily mean a local maximum.
-The complexities with local maximums during the generations lie with mutation rates and crossovers.
-We will cover this in Section~\ref{sec:mitigatingLocalMaximums}
-
-We will want to find the optimal solution and so, from these results, we will want to extend the generation length as far as possible.
-An infinite number of generations would be preferable, but we don't have an eternity, hence a selection of a relatively large generation size will be adequate when coming to the final series of tests.
+It is clear that a higher number of generations is preferred to find a better solution sequence.
+As the number of generations increase each generation provides less of an improvement to the best scores.
+This is due to the probability of finding a better solution sequence decreasing as we continue to improve a population.
+The benefits of extending the generations are incredibly useful and due to the amount of computation time we can probably incorporate a high number of generations. 
+However we may have better performance by altering another parameter of the algorithm.
+The actual parameter we will use in the full analysis will be given consideration in Section~\ref{sec:conclusionOfApproach}.
 
 \section{Changing Mutation Rate}\label{sec:changeingmutationrate}
-By changing the way in which we mutate our elements within a sequence, we might be able to more effectively narrow in on an optimal solution sequence.
-The default settings are a frequency of 0.1; meaning for every 10 members of our population that continue into the next generation one of these has some elements in its sequence changed, and a potency of 1;
-meaning that every sequence that was altered only has 1 element altered.
-Here we will look into these 2 different concepts and see how they might improve our distance to an optimal sequence and whether we can escape local maximums.
+This section looks at changing the amount of mutations that occur in our population and the number elements within a sequence each mutation effects. 
+The default settings are a mutation frequency, $M_f$, of 0.1, meaning for every 10 members of our population that continue into the next generation one of these has some elements in its sequence changed.
+And a mutation potency, $M_p$, of 1, meaning that every sequence that is mutated only has 1 element altered.
 \begin{itemize}
-    \item Is it beneficial for more/less than 1 in 10 members to be mutated generation to generation? (More frequent mutation)
-    \item Is changing one or more actions of a members' sequence the best way of mutating a candidate (More potent mutation)
+    \item Is it beneficial for more/less than 1 in 10 members to be mutated generation to generation? (higher frequent mutation)
+    \item Is changing one or more actions of a members' sequence the best way of mutating a member? (higher potent mutation)
 \end{itemize}
 
-These are two separate questions, so first we will look at increasing the potency of our mutation.
+These are two separate questions; first we will look at increasing the potency of our mutation.
 Once we have found some information on how this effects our solution, we can look into the frequency of our mutations with the new potency as a permanent setting.
 
-EFFICIENCY NOTE\@: This approach allows for an \(O(1)\) factor of scaling.
-This makes changes in mutation a great candidate for an approach to reduce our solution sequence distance compared with other approaches, for example increasing the population size.
+As a not on efficiency, this approach allows for an \(O(1)\) factor of computation scaling.
+Changes in mutation are great candidates for an approach to reduce the number of generations to a solution sequence compared with other approaches.
 
 \subsection{Changing Mutation Potency}\label{subsec:changingMutationPotency}
-Changing the potency of the algorithm will generate the noise in our sequence generation to generation.
-Increasing the potency also has the effect of increasing the hamming distance\footnote{Hamming distance: \(d(s_1,s_2)\) = the number of differing positions between 2 sequences \(s_1\) and \(s_2\).
+Changing the potency of the algorithm will provide small changes in a members features generation to generation.
+Increasing the potency also has the effect of increasing the Hamming distance\footnote{Hamming distance: \(d(s_1,s_2)\) = the number of differing positions between 2 sequences \(s_1\) and \(s_2\).
 For example: \(d(111,110) = d(CCC,CCD) = 1 \). This is covered in details in section~\ref{sec:distance_matracies}} between original and the mutated sequence.
  
 Increasing potency too much has the potential for an algorithm that is too unstable for convergence. 
 We can imagine a sequence as a vector in 200 dimensional space then a mutation for the \(i^{th}\) sequence element is the same as changing the vector in its \(i^{th}\) dimension.
 Shortening this example to a vector in 3 dimensions (or a sequence of length 3) then a mutation is much more easily visualised.
-It is clear that a mutation potency should be kept low as to keep consecutively mutated sequences more similar;
-we will only be looking at mutating our sequences at up to 10 percent of their elements.
+Mutation potency should be kept low to keep consecutively mutated sequences more similar, keeping results of the mutation within a small neighbourhood of the original.
 We will look into having mutation potencies \(M_p \in [1,2,3,5,10,15,20]\).
+
+Figure~\ref{fig:MUT-POT-bs-v-gen-all} shows the best score as the algorithm progresses through generations.
+There no clear benefit from increasing the mutation potency.
+For example, in the Collective Strategy plot, having 15 genes changed per mutation still does not improve our score as much as changing only 2 or 3.
+This may be down to chance of the random parameters used, however looking at more opponents than just Collective Strategy (EvolvedFSM16 for example) we find there is no clear benefit to increasing the mutation potency with respect to the overall best score against an opponent.
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_POT_bs_v_gen_all.pdf}
     \caption{\textbf{Mutation Potency Analysis:} Best score vs generation for different mutation potencies}\label{fig:MUT-POT-bs-v-gen-all}
 \end{figure}
 
+Figure~\ref{fig:MUT-POT-bs-diff-v-pot-all} shows the trend of average increase of final best score across the population per generation against the mutation potency.
+The increase in mean best score difference is not substantial and is most likely be down to chance in the areas it does change.
+We see there is no sign these variables are correlated and hence can assume this parameter has negligible effect on the outcome of our sequence.
+The actual parameter we will use in the full analysis will be given consideration in Section~\ref{sec:conclusionOfApproach}.
+
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_POT_bs_diff_v_pot_all.pdf}
     \caption{\textbf{Mutation Potency Analysis:} Average best score diff vs mutation potencies}\label{fig:MUT-POT-bs-diff-v-pot-all}
 \end{figure}
 
-Figure~\ref{fig:MUT-POT-bs-v-gen-all} shows no clear benefit from increasing the mutation potency.
-We can see that having changed 15 genes in our sequence each time we are still not improving our score as much as changing only 1.
-This may be down to chance (and if the test is rerun this may disappear), however looking at more opponents than just Grudger we find there is no clear benefit to increasing the mutation potency with respect to the overall best score value against an opponent.
-If we look at what our average increase of score per mutation, Figure~\ref{fig:MUT-POT-bs-diff-v-pot-all}, we there is still no sign that there is a significant improvement to our sequence.
-The increase in mean best score difference is not substantial and is most likely be down to chance in the areas it does change.
-
 \subsection{Changing Mutation Frequency}\label{subsec:changingMutationFrequency}
 In contrast to changing the mutation potency, increasing the frequency should allow us to generate more unique sequences generation to generation.
 We will look at what happens when we run the genetic algorithm on a set of mutation frequencies \(M_f \in [0.1,0.2,0.3,0.4,0.5]\).
-The code in appendix Snippet~\ref{apcode:mutationFrequencyChecker.py} shows the algorithm that will complete this analysis.
+The code in Appendix Snippet~\ref{apcode:mutationFrequencyChecker.py} shows the code that completed this analysis.
+
+Figure~\ref{fig:MUT-FREQ-bs-v-gen-all} shows how the best score improved generation to generation for each opponent across different mutation frequencies.
+The results show there is little effect on the best score as we increase the mutation frequency.
+However there is an interesting result that can be seen on the Grudger and EvolvedFSM16 plots; the algorithm has found 3-4 clearly different solution sequences each with different scores.
+In the Grudger plot, we can see that the mutation frequencies of 0.15 and 0.2 produced higher scoring solutions than the other mutation frequencies.
+In the EvolvedFSM16 Plot we have the same result.
+There is no positive (or negative) correlation displayed in any of the opponents however.
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_FREQ_bs_v_gen_all.pdf}
     \caption{\textbf{Mutation Frequency Analysis:} Best score vs generation for different mutation frequencies}\label{fig:MUT-FREQ-bs-v-gen-all}
 \end{figure}
 
-The results on changing the mutation rate don't obviously effect that generations until convergence from this overview.
-There is an interesting result that can be seen on the Grudger and EvolvedFSM16 plots in Figure~\ref{fig:MUT-FREQ-bs-v-gen-all};
-the algorithm has found 3-4 clearly different maximums.
-In the Grudger plot, we can see that the mutation frequencies of 0.15 and 0.2 produced higher scoring solutions than the other mutation frequencies.
-In the EvolvedFSM16 Plot we have the same result.
-This shows that we have found different solution sequences across each level of frequency, however there is no linear correlation as a frequency of 0.25 gets a lower best score than a frequency of 0.15.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_FREQ_bs_diff_v_freq_all.pdf}
-    \caption{\textbf{Mutation Frequency Analysis:} Average best score diff vs mutation frequencies}\label{fig:MUT-FREQ-bs-diff-v-freq-all}
-\end{figure}
+% \begin{figure}[ht]
+%     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_FREQ_bs_diff_v_freq_all.pdf}
+%     \caption{\textbf{Mutation Frequency Analysis:} Average best score diff vs mutation frequencies}\label{fig:MUT-FREQ-bs-diff-v-freq-all}
+% \end{figure}
 
 \subsection{Conclusions of altering Mutation parameters}
-It was found there is not much of an improvement on our algorithm to changing either of these parameters.
-The default of $M_f=0.1$ and $M_p=1$ will be used in further analysis 
+In the previous sections no improvements were found from altering any of the two parameters. 
+The default of $M_f=0.1$ and $M_p=1$ will be used in further analysis, and the actual parameters we will use in the full analysis will be given consideration in Section~\ref{sec:conclusionOfApproach}.
 
+These sections did show, in a clear manner, that there were local maxima found. 
+Section~\ref{subsec:changingMutationFrequency} showed clearly that sub optimal solutions for EvolvedFSM16 and Grudger were common.
+Section~\ref{sec:mitigatingLocalMaximums} will discuss approaches we can take to reduce the chances of this happening.
 
 \section{Mitigating local maximum solutions}\label{sec:mitigatingLocalMaximums}
-Local maximums have occurred only for sequences when competing against the opponent Grudger and EvolvesFSM16.
-Figure~\ref{fig:MUT-FREQ-bs-v-gen-all} shows that there are clearly multiple distinct plateaus that are reached in terms of best score for the Grudger opponent, and the final best scores for any frequency are much lower than the known optimal solution, with a score of 3.01.
+Local maxima have clearly occurred only for solutions when the algorithm calculates sequences for opponents Grudger and EvolvedFSM16.
+There may be other occurrences we have not observed.
+Each stochastic opponent is also incredibly difficult to understand whether a solution is actually found, this is discussed further ing Section~\ref{sec:stochasticOpponents}
 
-The difference between the Grudger and the other opponents considered is that the Grudger has a singularity point where its behaviour changes.
-The change in behaviour is not uncommon, Tit For Tat works in a similar way and in both cases our algorithm has managed to identify this behaviour and adapt to overcome its negative effects.
+
+Figure~\ref{fig:MUT-FREQ-bs-v-gen-all} shows that there are clearly multiple distinct score plateaus that are reached for the Grudger opponent.
+The difference between Grudger and the other opponents considered is that the Grudger has a singularity where its behaviour changes.
+The change in behaviour is not uncommon, Tit For Tat, Collective Strategy and others work in a similar way and in all cases the algorithm has managed to identify this behaviour and adapt to overcome its negative effects.
 
 Grudger is an opponent which it is possible to attain a local maximum score and be `trapped' in this solution sequence.
-From the output sequences below it appears that the sequence is being changed into becoming 2 sections of opposing moves.
 If we look at a random start sequence and then the end sequence after 250 generations we can see that the genetic algorithm is learning defect after some point and cooperate before.
-This is due to the fact a good solution will end in lots off defections after it has already defected, but cooperate beforehand to avoid this harsh behaviour.
+This is due to the fact a `good' solution will cooperate to the point of a defection and end in lots of defections after it has already defected counter Grudgers' harsh behaviour (see Section~\ref{sec:strategiesOfInterest} for the Grudger strategy).
 
 %Grudger best start: \(C:[6,8,2,1,2,1,6,1,2,2,4,2,1,1,2,10,1,1,1,3,1,3,1,1,1,1,2,2,1,1,1,2,3,5,2,2,2,1,1,2,1,1,4,1,2,1,1,1,2,3,1,1,2,2,1,7,3,2,1,2,3,1,1,5,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,4,2,1,1,3,1,1,2,3,4,1,1,3,2,4,2,1,2,3]\)
 Grudger best start: C$6,8,2,1,2,1,6\ldots$ (No pattern is obvious.)
 
 Grudger best end: C$22,178$
 
-We may be able to identify a way to mitigate this singularity effect by looking at the difference between 2 similar solutions.
+We may be able to identify a way to mitigate this singularity effect by looking at the difference between 2 opponents whose strategy differs by their forgiveness parameter.
 Grudger and Tit For Tat differ in their strategies in two ways:
-
 \begin{itemize}
     \begin{item}
         Grudger never changes its mind.
@@ -264,32 +270,31 @@ Grudger and Tit For Tat differ in their strategies in two ways:
         The algorithm then only has a single opportunity to observe this per population per generation meaning the behaviour is much less frequently encountered.
     \end{item}
     \begin{item}
-        Grudger will not become `smart' again.
-        This means that the move genetic algorithm picks up the effect of a single defection in its sequence it starts playing a `dumb' opponent.
+        Grudger will not forgive and becomes a `dumb' only defect opponent.
+        This means that the move the algorithm picks up the effect of a single defection in its sequence it starts playing a `dumb' opponent.
         A random start of Cs and Ds puts the likelihood of at least 1 defection occurring in the first 10 moves at above \(99.99\% \).
         This swap from `smart' to `dumb' will, most likely, always occur in the first 10 moves;
         the only way of extending the `smart' player is to add a cooperation to the end of the starting Cs.
     \end{item}
 \end{itemize}
 
-Snippet~\ref{code:gudgerTotalities} shows two totality games against grudger, one of all Cs and one of all Ds.
-These are edge cases and would be incredibly rarely encountered as a starting point in the random initial population.
+To investigate this we will play two totality games against grudger, one of all Cs and one of all Ds, shown in Snippet~\ref{code:gudgerTotalities}. 
+These games show we should be converging on a totality of Cs rather than what its doing, finding the totality of Ds after a number of cooperations.
+This is probably because the algorithm initially limits its best score per turn once the first generation is complete and a cut-off has been established for each of the initial population.
+The crossover method between generations then doesn't provide enough of a mix up to allow the algorithm to escape the local minimum by switching a subsection with a sufficiently different potentially better subsection.
+Then when it comes to mutating, there is little any number of mutations can do to drastically change large sections of the sequence without having a huge effect on the score
+
+
+These totalities are edge cases and would be rarely encountered as a starting point in the random initial population.
 Because of this, the algorithm has to shuffle towards the potential benefit of using these totalities rather than start with analysing them.
 Our case against grudger requires the algorithm to attempt this shuffle towards a totality after encountering the grudging effect.
-This would then require the algorithm to select (using random selection out of 200) the first defection move and change it (only 1 in 10 members are mutated) to a cooperation move.
-This likelihood is incredibly small, and starting at common or uniform sequences would be more beneficial, as posed in Section~\ref{sec:alteringinitialpopulation}.
+This would then require the algorithm to select the first defection move and change it to a cooperation move all by chance.
+The likelihood of this occurring is incredibly small, and starting at common or uniform sequences would be more beneficial to searching to solution space, as posed in Section~\ref{sec:alteringinitialpopulation}.
 
 \begin{figure}
     \inputminted{python}{code_snippets/grudgerTotalities.py}
     \caption{Grudger matches against totalities}\label{code:gudgerTotalities}
 \end{figure}
-
-% TODO: need this para? I feel like I'm repeating myself
-As Snippet~\ref{code:gudgerTotalities} shows, we should be converging on a totality of Cs rather than what its doing;
-finding the totality of Ds.
-This is probably because the algorithm initially limits its best score per turn once the first generation is complete and a cut-off has been established for each of the initial population.
-The crossover method between generations then doesn't provide enough of a mix up to allow the algorithm to escape the local minimum by switching a subsection with a sufficiently different potentially better subsection.
-Then when it comes to mutating, there is little any number of mutations can do to drastically change large sections of the sequence without having a huge effect on the score.
 
 \subsection{Ineffective Approach of Altering Crossover And Mutation}\label{subsec:ineffectiveApproachOfAlteringCrossoverAndMutation}
 The process of converging to Ds when building a solution against grudger then sheds light on the process the algorithm takes to find a solution.
