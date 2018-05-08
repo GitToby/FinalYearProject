@@ -62,7 +62,7 @@ Because of this we can reasonably assume the larger our population gets the chan
 Hence with a larger population we should converge to the solution sequence in less generations.
 For this section we analysed a range of populations to understand how solutions are affected when we run our algorithm through the set of population sizes \(|P| \in [25,50,100,150,200,250,500]\).
 
-As the first example of these parameter tests, the code used will be shown in Appendix Snippet~\ref{apcode:populationChecker.py} as an implementation how this analysis was conducted.
+The code used for this these tests will be shown in Appendix Snippet~\ref{apcode:populationChecker.py} as an implementation how this analysis was conducted.
 It leverages the use of the function \mintinline{python}{runGeneticAlgo} show in Appendix Snippet~\ref{apcode:runGeneticAlgo.py}.
 This code will output data in the form of Table~\ref{table:popCheckerDataTable}.
 
@@ -96,8 +96,8 @@ We see that the initial population size has a significant effect on finding bett
 This figure shows if there is a larger initial population there is typically a higher best score shown once concluding all of the generations.
 It doesn't, however, ensure that we find the solution sequence, as is shown in the lack of long plateaus of best score across opponents.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/INIT_POP_bs_v_gens_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/INIT_POP_bs_v_gens_all.pdf}
     \caption{\textbf{Initial Population Size Analysis:} Best score per turn vs generation for different initial population sizes}\label{fig:INIT-POP-bs-v-gens-all}
 \end{figure}
 
@@ -106,8 +106,8 @@ This figure shows the change in mean best score across population in the final g
 The change in final best score for a population of 50 compared with a population of 250 is large in comparison to the same relative increase from 250 to 500.
 This may suggest there are more efficient approaches to improving our final best score after a certain initial population is reached.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/INIT_POP_mean_bs_diff_v_init_pop_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/INIT_POP_mean_bs_diff_v_init_pop_all.pdf}
     \caption{\textbf{Initial Population Size Analysis:} Scatter of mean best score vs different initial populations}\label{fig:INIT-POP-mean-bs-v-init-pop-all}
 \end{figure}
 
@@ -141,8 +141,8 @@ From this we can observe how the number of generations has a declining effect th
 This trend is to be expected, when we are close to a maximum it is more difficult to randomly select which element in the sequence needs changing to improve a members score.
 On this result we can conclude as we increase generations there is less and less benefit per generation.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/GENS_mean_bs_diff_v_gens_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/GENS_mean_bs_diff_v_gens_all.pdf}
     \caption{\textbf{Generation Analysis:} Mean Best Score diff vs total generation lengths}\label{fig:GENS-mean-bs-diff-v-gens-all}
 \end{figure}
 
@@ -153,8 +153,8 @@ In Figure~\ref{fig:GENS-max-bs-v-gens-all} EvolvedFSM16 has reached a better seq
 The complexities with local maximums during the generations lie with mutation rates and crossovers.
 We will cover this in Section~\ref{sec:mitigatingLocalMaximums}
 
-\begin{figure}[ht] 
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/GENS_max_bs_v_gens_all.pdf}
+\begin{figure}[h] 
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/GENS_max_bs_v_gens_all.pdf}
 \caption{\textbf{Generation Analysis:} Max best score vs total number of generations}\label{fig:GENS-max-bs-v-gens-all}
 \end{figure}
 
@@ -196,8 +196,8 @@ There no clear benefit from increasing the mutation potency.
 For example, in the Collective Strategy plot, having 15 genes changed per mutation still does not improve our score as much as changing only 2 or 3.
 This may be down to chance of the random parameters used, however looking at more opponents than just Collective Strategy (EvolvedFSM16 for example) we find there is no clear benefit to increasing the mutation potency with respect to the overall best score against an opponent.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_POT_bs_v_gen_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/MUT_POT_bs_v_gen_all.pdf}
     \caption{\textbf{Mutation Potency Analysis:} Best score vs generation for different mutation potencies}\label{fig:MUT-POT-bs-v-gen-all}
 \end{figure}
 
@@ -206,8 +206,8 @@ The increase in mean best score difference is not substantial and is most likely
 We see there is no sign these variables are correlated and hence can assume this parameter has negligible effect on the outcome of our sequence.
 The actual parameter we will use in the full analysis will be given consideration in Section~\ref{sec:conclusionOfApproach}.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_POT_bs_diff_v_pot_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/MUT_POT_bs_diff_v_pot_all.pdf}
     \caption{\textbf{Mutation Potency Analysis:} Average best score diff vs mutation potencies}\label{fig:MUT-POT-bs-diff-v-pot-all}
 \end{figure}
 
@@ -223,14 +223,14 @@ In the Grudger plot, we can see that the mutation frequencies of 0.15 and 0.2 pr
 In the EvolvedFSM16 Plot we have the same result.
 There is no positive (or negative) correlation displayed in any of the opponents however.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_FREQ_bs_v_gen_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/MUT_FREQ_bs_v_gen_all.pdf}
     \caption{\textbf{Mutation Frequency Analysis:} Best score vs generation for different mutation frequencies}\label{fig:MUT-FREQ-bs-v-gen-all}
 \end{figure}
 
 
-% \begin{figure}[ht]
-%     \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/MUT_FREQ_bs_diff_v_freq_all.pdf}
+% \begin{figure}[h]
+%     \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/MUT_FREQ_bs_diff_v_freq_all.pdf}
 %     \caption{\textbf{Mutation Frequency Analysis:} Average best score diff vs mutation frequencies}\label{fig:MUT-FREQ-bs-diff-v-freq-all}
 % \end{figure}
 
@@ -243,12 +243,12 @@ Section~\ref{subsec:changingMutationFrequency} showed clearly that sub optimal s
 Section~\ref{sec:mitigatingLocalMaximums} will discuss approaches we can take to reduce the chances of this happening.
 
 \section{Mitigating Local Maximum Solutions}\label{sec:mitigatingLocalMaximums}
-Local maxima have clearly occurred only for solutions when the algorithm calculates sequences for opponents Grudger and EvolvedFSM16.
+Local maxima have clearly occurred when the algorithm calculates sequences for opponents Grudger and EvolvedFSM16.
 There may be other occurrences we have not observed.
 Each stochastic opponent is also incredibly difficult to understand whether a solution is actually found, this is discussed further ing Section~\ref{sec:stochasticOpponents}
 
 
-Figure~\ref{fig:MUT-FREQ-bs-v-gen-all} shows that there are clearly multiple distinct score plateaus that are reached for the Grudger opponent.
+Figure~\ref{fig:MUT-FREQ-bs-v-gen-all} shows that there are clearly multiple distinct score plateaus reached for the Grudger opponent.
 The difference between Grudger and the other opponents considered is that the Grudger has a singularity where its behaviour changes.
 The change in behaviour is not uncommon, Tit For Tat, Collective Strategy and others work in a similar way and in all cases the algorithm has managed to identify this behaviour and adapt to overcome its negative effects.
 
@@ -257,7 +257,7 @@ If we look at a random start sequence and then the end sequence after 250 genera
 This is due to the fact a `good' solution will cooperate to the point of a defection and end in lots of defections after it has already defected counter Grudgers' harsh behaviour (see Section~\ref{sec:strategiesOfInterest} for the Grudger strategy).
 
 %Grudger best start: \(C:[6,8,2,1,2,1,6,1,2,2,4,2,1,1,2,10,1,1,1,3,1,3,1,1,1,1,2,2,1,1,1,2,3,5,2,2,2,1,1,2,1,1,4,1,2,1,1,1,2,3,1,1,2,2,1,7,3,2,1,2,3,1,1,5,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,4,2,1,1,3,1,1,2,3,4,1,1,3,2,4,2,1,2,3]\)
-Grudger best start: C$6,8,2,1,2,1,6\ldots$ (No pattern is obvious.)
+Grudger best start: C$6,8,2,1,2,1,6,1,2,2,4,2,1,1,\ldots$ (No pattern is obvious.)
 
 Grudger best end: C$22,178$
 
@@ -284,7 +284,7 @@ This is probably because the algorithm initially limits its best score per turn 
 The crossover method between generations then doesn't provide enough of a mix up to allow the algorithm to escape the local minimum by switching a subsection with a sufficiently different, potentially better, subsection.
 Then when it comes to mutating, there is little any number of mutations can do to drastically change large sections of the solution sequence without knowing exactly where to target.
 
-\begin{figure}
+\begin{figure}[h]
     \inputminted{python}{code_snippets/grudgerTotalities.py}
     \caption{Grudger matches against totalities}\label{code:gudgerTotalities}
 \end{figure}
@@ -311,7 +311,7 @@ to the mixture:
 \[|oooooooooooooooooooo|\text{ and } |xxxxxxxxxxxxxxxxxxxx|= |ooxxooxxooxxooxxooxx|\]
 This will allow the mutation to alter the subsections in a more interlaced manner, hopefully overcoming the pitfalls of sparse mutations to escape local maximums.
 
-\begin{figure}
+\begin{figure}[h]
     \inputminted{python}{code_snippets/oldCrossover.py}
     \caption{Old Crossover algorithm}\label{fig:oldCrossover}
 \end{figure}
@@ -320,12 +320,12 @@ Our new crossover method is shown in Figure~\ref{fig:newCrossover}.
 As shown, the algorithm splits the two sequences into 10 section and the new sequence is formed from alternating sections.
 Figure~\ref{fig:newCrossoverEX} shows an example of the new crossover method.
 
-\begin{figure}
+\begin{figure}[h]
     \inputminted{python}{code_snippets/newCrossover.py}
     \caption{New Crossover algorithm}\label{fig:newCrossover}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \inputminted{python}{code_snippets/newCrossoverEX.py}
     \caption{Example of new crossover algorithm}\label{fig:newCrossoverEX}
 \end{figure}
@@ -365,7 +365,7 @@ Single Change Sequences
 
 Matching Tail Sequences
 \begin{itemize}
-    \item \(\{C:[i,200-(i+j),j]\} \quad i,j \in [1,5]\) | 25 $\times$ 2 sequences
+    \item \(\{C:[i,200-(i+j),j]\} \quad i,j \in [1,5]\}\) | 25 $\times$ 2 sequences
 \end{itemize}
 
 Alternating
@@ -373,7 +373,7 @@ Alternating
     \item \(C:[\ (i,i)^{100/i}] \quad i \in \{1,2,4,5\}\) | 4 $\times$ 2 sequences
 \end{itemize}
 
-3 Block Handshakes*\footnote{This was added after the first test with the new population}
+3 Block Handshakes*\footnote{This was added after the first test, with different population sizes, with the new population}
 \begin{itemize}
     \item \(C:[\ i,j,k,200-(i+j+k)] \quad i,j,k \in \{0,1,2,3\}\) | 32 $\times$ 2 sequences
 \end{itemize}
@@ -381,14 +381,14 @@ Alternating
 For each of these starting members, a sequence with a defection move to start but with the same pattern will also be added to the set of starting sequences.
 This in total gives 164 (after code~\ref{code:initialPopulationCode}) constructions of sequences, we will then make up the difference to the population limit using a set of random sequences.
 
-Now that the Initial population has been altered we can conduct the analysis in Sections~\ref{sec:ChangingInitialPopulationSize},~\ref{subsec:populationSize},~\ref{sec:generationlengthanalysis},~\ref{sec:changeingmutationrate} and \ref{subsec:changingMutationPotency} again.
+Now that the Initial population has been altered we can conduct the analysis in Sections~\ref{sec:ChangingInitialPopulationSize},~\ref{sec:generationlengthanalysis},~\ref{subsec:changingMutationPotency} and~\ref{sec:subsec:changingMutationFrequency} again.
 
 \subsection{Population Size}\label{subsec:populationSize}
 Figure~\ref{fig:NEW-INIT-POP-bs-v-gen-all} shows the best score generation to generation for each population size.
-We will have \(|P| \in [102,200,250,500]\) due to starting with the 102 initial members (*this was increased to 164 after this test).
+We will have \(|P| \in [102,200,250,500]\) due to starting with the 102 initial members (*this was the initial size of pre set population, this increased to 164 after this test).
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_INIT_POP_bs_v_gen_all_old.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/NEW_INIT_POP_bs_v_gen_all_old.pdf}
     \caption{Best Score vs generations for pre-set initial populations on top of random sequences}\label{fig:NEW-INIT-POP-bs-v-gen-all}
 \end{figure}
 
@@ -414,7 +414,7 @@ The Random and other stochastic opponents are a special cases that require more 
 The new initial population, now of size 164, will include all combinations of C \& D of length 4, followed by finishing on all Cs or Ds as shown in the Totalities \& handshakes section of Snippet~\ref{code:initialPopulationCode}.
 Further tests will also supplement this population with random members for \(|P| \in [164,200,250,500]\)
 
-\begin{figure}
+\begin{figure}[h]
     \inputminted{python}{code_snippets/initialPopulationCode.py}
     \caption{Initial Population Code}\label{code:initialPopulationCode}
 \end{figure}
@@ -424,9 +424,9 @@ After adding the extra members of the initial population we can see that now the
 Also shown is the Random and ZD extort players, these are examples of Stochastic players which are still not finding optimal solutions due to the observation of seeding stochastic opponents.
 These classes of opponent are examined further in Section~\ref{sec:stochasticOpponents}.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_INIT_POP_bs_v_gen_non_performers.pdf}
-    \caption{Non optimal sequence players after changing initial population}\label{fig:NEW-INIT-POP-bs-v-gen-non-performers}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/NEW_INIT_POP_bs_v_gen_non_performers.pdf}
+    \caption{\textbf{New Population:} Non optimal sequence players after changing initial population}\label{fig:NEW-INIT-POP-bs-v-gen-non-performers}
 \end{figure}
 
 It is clear the change of initial population is beneficial.
@@ -437,8 +437,8 @@ Figure~\ref{fig:NEW-GEN-bs-v-gen-all} shows how the best score is affected while
 This figure is also displaying with a population size of \(|P|=200\), 164 of which are pre defined.
 It shows no real improvement from increasing the generations, the actual parameter we will use in the full analysis will be given consideration based off conclusions made in Section~\ref{sec:generationlengthanalysis}.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_GEN_bs_v_gen_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/NEW_GEN_bs_v_gen_all.pdf}
     \caption{\textbf{New Population:} Generation Length analysis for best score mean against generation length.}\label{fig:NEW-GEN-bs-v-gen-all}
 \end{figure}
 
@@ -447,8 +447,8 @@ Figure~\ref{fig:NEW-MUT-POT-bs-v-gen-all} shows the best score generation to gen
 The figure shows no real improvement from increasing this variable of the algorithm.
 The actual parameter we will use in the full analysis will be given consideration based off conclusions made in Section~\ref{subsec:changingMutationPotency}.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_MUT_POT_bs_v_gen_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/NEW_MUT_POT_bs_v_gen_all.pdf}
     \caption{\textbf{New Population:} Best score against generation for different mutation potency levels}\label{fig:NEW-MUT-POT-bs-v-gen-all}
 \end{figure}
 
@@ -458,8 +458,8 @@ Figure~\ref{fig:NEW-MUT-FREQ-bs-gen-all} shows the best score generation to gene
 The figure shows no real improvement from increasing this variable of the algorithm.
 The actual parameter we will use in the full analysis will be given consideration based off conclusions made in Section~\ref{subsec:changingMutationFrequency}.
 
-\begin{figure}[ht]
-    \includegraphics[width=0.95\textwidth, keepaspectratio, center]{./img/plots/NEW_MUT_FREQ_bs_v_gen_all.pdf}
+\begin{figure}[h]
+    \includegraphics[width=0.8\textwidth, keepaspectratio, center]{./img/plots/NEW_MUT_FREQ_bs_v_gen_all.pdf}
     \caption{\textbf{New Population:} Best score against generation for different mutation frequencies}\label{fig:NEW-MUT-FREQ-bs-gen-all}
 \end{figure}
 
@@ -481,7 +481,7 @@ The concept of a stochastic opponent can be somewhat `overridden' by seeding the
 Currently the only way of doing this is by seeing the whole Axelrod library upon initialising the opponent instance.
 Snippet~\ref{code:wrappingFunction} shows the code for wrapping any given opponent with the global seed command.
 
-\begin{figure}
+\begin{figure}[h]
     \inputminted{python}{code_snippets/classWrappingFunction.py}
     \caption{A function for wrapping a player with a global seed function call}\label{code:wrappingFunction}
 \end{figure}

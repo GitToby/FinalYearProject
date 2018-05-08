@@ -1,6 +1,6 @@
 % !TEX root = ../main.tex
 \chapter{Results and Discussion}\label{ch:results}
-This chapter will look into the results we gained after running the analysis across all opponents.
+This chapter will look into the results produced after running the analysis across all opponents.
 Details of the distribution of the results and basic output from the computation are given in section~\ref{sec:descriptive_data}.
 
 The analysis performed in this chapter contains data for opponents listed in Appendix~\ref{apndx:opponents}.
@@ -8,7 +8,7 @@ Opponents without results due to being incomplete are all the Long Run Time (LRT
 As these become available they will be added to the analysis.
 % TODO: add the extra data if it becomes available
 
-Each opponent was submitted to the compute engine using the standard analysis factory class \mintinline{python}{AnalysisRun}, shown in Figure~\ref{apcode:AnalysisRun.py}, using native multi-threading on a Linux OS to improve individual opponent analysis run times and the overall scalability of the project.
+Each opponent was submitted to the compute engine using the standard analysis factory class \mintinline{python}{AnalysisRun}, shown in Figure~\ref{apcode:AnalysisRun.py}, using native OS multi-threading to improve individual opponent analysis run times and the overall scalability of the project.
 We ran the code over a period of days resulting in 200+ output files of data which could then be analysed.
 
 \section{Resulting Data}\label{sec:descriptive_data}
@@ -62,8 +62,8 @@ Table~\ref{table:meta_data} shows the first few rows of this information.
 When analysing the overall best sequences for each opponent we can pick out some interesting and descriptive data.
 The distribution on best scores are showing in Figure~\ref{fig:best_score_hist}, its kernel density estimate (KDE) \cite{tukey1977exploratory} exaggerates that fact we have a skew towards the higher scores with a fat tail on 4.5 to 5.
 This shows we can average a score higher than 3.0 against the majority of opponents per turn.
-From this we can infer that there is a way of outplaying many of the opponents in the Axelrod Library (i.e. we can perform better than a game where both players would have an avg score of $3.0$ from mutual cooperations).
-If there is a way of identifying an opponent then we would be able to tip the scales in a tournament in our favour by playing the sequences shown.
+From this we can infer that there is a way of outplaying many of the opponents in the Axelrod Library (i.e. we can perform better than a game where both players would have an average score of $3.0$ from mutual cooperations).
+If there is a way of identifying an opponent then we would be able to tip the scales in a tournament by scoring 3 or more every turn by playing the sequences shown.
 
 \begin{figure}[ht]
     \includegraphics[width=0.95\textwidth, center]{./img/descriptive/best_score_hist.pdf}
@@ -129,7 +129,7 @@ From this diagram it is clear that some of the predictions above were true; the 
 There is however much more noise for sequences at the top of the scoreboard, resulting in the large distances between the scores.
 
 Figure~\ref{fig:sequence_plot_score} also shows some interesting results about picking up points in patterns.
-Some opponents (aprox half way down on right image) work using ratios, we can trick them for half the game and take advantage for the remainder.
+Some opponents (approximately half way down on right image) work using ratios, we can trick them for half the game and take advantage for the remainder.
 Others are much shorter term solution, alternating between $C$ and $D$ every other turn ($1/4$ down the left image).
 When scoring in the mid range (bottom of right, top of left) there seems to be patterns too; totalities of $C$ are to be expected but there are some results that seem to be tricking an opponent for the first number of moved before defecting for the rest of the game.
 At the higher score ranges there seems to be lots of noise, many of these opponents are rather complicated in their Strategy, the top 12 non totalities are listed below:
@@ -194,7 +194,7 @@ The bottom of the left figure shows many occurrences of the largest group, $C199
 Grouping strategies by their solution sequence seems to be very restrictive for providing relationships between strategies and solutions. 
 It may be beneficial to apply some binary pattern recognition to the solutions, the solutions all seem quite chaotic that could have patterns in other areas of mathematics.
 
-Of the likely sequences that were predicted to occur as solutions, as described in Section~\ref{sec:alteringinitialpopulation}, 29 of them appeared as actual solution sequences. 
+Of the initial sequences that were predicted to occur as solutions and set as our starting population, as described in Section~\ref{sec:alteringinitialpopulation}, 29 of them appeared as actual solution sequences. 
 This is shown below.
 
 \begin{multicols}{3}
@@ -230,6 +230,8 @@ This is shown below.
 	    \item  D200 with 113 opponents
     \end{itemize}
 \end{multicols}
+
+
 \section{Clustering Analysis}
 Here we will look at ways of grouping opponents based on their best response sequences and what that means for scores and potential hidden relationships between strategies.
 These clustering algorithms are not meant for predictive purposes and are all forms of unsupervised learning; there is not enough metadata present in each strategy definition to use as features for supervised prediction of our best response sequences.
@@ -247,7 +249,7 @@ Section~\ref{sec:solutionGroups} looks in depth as to how opponents are distribu
     \caption{K means clustering with 2,3 and 4 clusters}\label{fig:k_means}
 \end{figure}
 
-\subsection{Regression Trees}
+\subsection{Regression Trees~\cite{breiman2017classification}}
 Regression trees are a way of looking at reducing the variance of a parameter through attributes of observed instances. 
 SciKit Learn has an implementation of regression trees, the code used to generate the data in this subsection is shown in Appendix code~\ref{apcode:reg_tree.py}.
 
@@ -311,7 +313,7 @@ This problem is looked into in more detail in Section~\ref{sec:follow_up}.
 \end{table*}
 
 
-The results given in this chapter represent a descriptive overview of what data we have produced.
 We have looked at various methods of grouping and reducing the solutions to try and observe a clear reason for an opponent having a certain solution; yet within the data we have created there seems to be no clear sign of correlation.
-If the information here is assessed further it would be beneficial to gather more data on each opponent to work with. 
+If the information here is to be assessed further it would be beneficial to gather more data on each opponent to work with. 
 The lack of usable opponent meta-data means that the GA, currently, is the only reasonable method of identifying solution sequences. 
+
