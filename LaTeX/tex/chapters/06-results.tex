@@ -285,14 +285,15 @@ Section~\ref{sec:follow_up} looks into this in more detail.
 
 
 \section{Conclusion}\label{sec:results_conclusion}
-This chapter includes the most useful results from the analysis conducted on the data output.
+This chapter includes the most clear results from the analysis conducted on the data output.
 The results are showing signs of patterns between the complexities in the solution sequence and the strategies they correspond to.
-However there is no strong correlation or predictor that can be seen to allow accurate prediction of how to beat an opponent
+The goal, as described in Section~\ref{sec:briefOverview}, to identify solutions for every opponent has been satisfied.
+However there is no strong correlation or predictor identified to allow accurate prediction of a strategies solution to beat an opponent given only basic parameters of an opponent.
 
-The data produced by this report allows us to easily identify basic responses to certain predetermined tournaments.
+The data produced by this report allows us to easily identify best responses to certain predetermined tournaments where all the solution information is known.
 For example, in a tournament against players Defector Hunter, Solution B1, Willing and Tricky Defector we can play $C1,199$ and easily come out on top.
 The code in Appendix Section~\ref{apcode:tournCode.py} produced the results in Table~\ref{table:table_test_opsponents}.
-It is clear that our solution sequence came out on top for this set of opponents, however if we played this against a different set we would score very low.
+It is clear that our solution sequence came out on top for this set of opponents, however if we played this in a different tournament we would score very low.
 If all players in the tournament have the same solution then selecting the absolute sequence to play is trivial, however if we have multiple solutions then the problem becomes one of identifying which opponent we are playing in any round.
 This problem is looked into in more detail in Section~\ref{sec:follow_up}. 
 
@@ -314,6 +315,7 @@ This problem is looked into in more detail in Section~\ref{sec:follow_up}.
 
 
 We have looked at various methods of grouping and reducing the solutions to try and observe a clear reason for an opponent having a certain solution; yet within the data we have created there seems to be no clear sign of correlation.
+Each section of analysis has its own takeaways but there is no theme being displayed throughout the results.
 If the information here is to be assessed further it would be beneficial to gather more data on each opponent to work with. 
 The lack of usable opponent meta-data means that the GA, currently, is the only reasonable method of identifying solution sequences. 
 
