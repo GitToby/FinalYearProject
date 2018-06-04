@@ -7,3 +7,6 @@ The project involves researching the best responses to strategies in the Iterate
 My code is split into 2 sections, code and report.
 The code section contains examples and notebooks used for research.
 The Latex section contains the final report source and compiled pdf.
+
+The data has been open sourced and can be found here:
+https://zenodo.org/record/1261701
