@@ -102,8 +102,8 @@ There were two distance measures considered: Hamming Distance and Cosine Distanc
 $$d(S_i,S_j) = S_i \cdot S_j^T $$
 This corresponds to 
 $$ 1-\frac{\sum^n_{i,j=0}\delta_{ij}}{n}\text{ where } \delta_{ij} = \begin{cases} 
-    1 & i=j \\
-    0 & i\ne j 
+    1 & S_i=S_j \\
+    0 & S_i\ne S_j 
 \end{cases} $$
 
 The Hamming Distance represents the count of the elements that differ in any two sequences. 
